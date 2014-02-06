@@ -6,14 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".Main" >
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="startScanner"
-        android:text="Scan Barcode"
-     />
+    tools:context=".ShowTechSpecs" >
 
     <TextView
         android:id="@+id/textView1"
