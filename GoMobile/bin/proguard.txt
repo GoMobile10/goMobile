@@ -1,0 +1,12 @@
+# view AndroidManifest.xml #generated:28
+-keep class com.gomobile.Main { <init>(...); }
+
+# view AndroidManifest.xml #generated:45
+-keep class com.gomobile.ShowTechSpecs { <init>(...); }
+
+# view AndroidManifest.xml #generated:37
+-keep class com.gomobile.technicalservices.BarcodeScanner { <init>(...); }
+
+# onClick res/layout/main.xml #generated:11
+-keepclassmembers class * { *** startScanner(...); }
+

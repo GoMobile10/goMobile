@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.gomobile"
+    package="com.gomobile"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="15" />
+        android:targetSdkVersion="14" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,7 +26,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.gomobile.Main"
+            android:name="com.gomobile.Main"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,17 +35,17 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.gomobile.technicalservices.BarcodeScanner"
+            android:name="com.gomobile.technicalservices.BarcodeScanner"
             android:label="@string/title_activity_barcode_scanner"
-            android:parentActivityName="com.example.gomobile.Main" >
+            android:parentActivityName="com.gomobile.Main" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.gomobile.Main" />
         </activity>
         <activity
-            android:name="com.example.gomobile.ShowTechSpecs"
+            android:name="com.gomobile.ShowTechSpecs"
             android:label="@string/title_activity_show_tech_specs"
-            android:parentActivityName="com.example.gomobile.technicalservices.BarcodeScanner" >
+            android:parentActivityName="com.gomobile.technicalservices.BarcodeScanner" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.gomobile.technicalservices.BarcodeScanner" />
