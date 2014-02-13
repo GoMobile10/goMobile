@@ -9,18 +9,18 @@ import android.support.v4.app.NavUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import com.gomobile.R;
 
-public class ShowTechSpecs extends Activity {
+import com.gomobile.scanner.model.Component;
 
+public class LowDetailView extends Activity {
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent intent = getIntent();
-	    String message = intent.getStringExtra("Test");
-		setContentView(R.layout.activity_show_tech_specs);
-        TextView textView = (TextView) findViewById(R.id.textView1);// new TextView(this);
-        textView.setText(message);
+	    String message =  intent.getStringExtra("Test");
+		setContentView(R.layout.activity_low_detail_view);
+		this.display(new Component(message, 42));
 		// Show the Up button in the action bar.
 		setupActionBar();
 	}
@@ -57,6 +57,13 @@ public class ShowTechSpecs extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void display(Component comp){
+		TextView textView = (TextView) findViewById(R.id.textViewName);
+		textView.setText(comp.name);
+		textView = (TextView) findViewById(R.id.textViewPrice);
+		textView.setText(comp.price);
 	}
 
 }

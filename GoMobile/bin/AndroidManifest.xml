@@ -43,7 +43,7 @@
                 android:value="com.example.gomobile.Main" />
         </activity>
         <activity
-            android:name="com.gomobile.ShowTechSpecs"
+            android:name="com.gomobile.LowDetailView"
             android:label="@string/title_activity_show_tech_specs"
             android:parentActivityName="com.gomobile.technicalservices.BarcodeScanner" >
             <meta-data

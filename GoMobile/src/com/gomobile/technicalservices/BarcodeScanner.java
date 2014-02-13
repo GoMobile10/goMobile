@@ -7,7 +7,8 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
-import com.gomobile.ShowTechSpecs;
+import com.gomobile.LowDetailView;
+import com.gomobile.scanner.model.Component;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.interfaces.ScanditSDK;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKListener;
@@ -94,9 +95,10 @@ public class BarcodeScanner  extends Activity implements ScanditSDKListener {
             }
         }
         onPause();
-        Intent intent = new Intent(this, ShowTechSpecs.class);
+        Intent intent = new Intent(this, LowDetailView.class);
 //      EditText editText = (EditText) findViewById(R.id.edit_message);
-        intent.putExtra("Test", symbology + ": " + cleanedBarcode);
+        intent.putExtra("Test",cleanedBarcode);// symbology + ": " + 
+//        intent.putExtra("Component", new Component(cleanedBarcode,42));
         startActivity(intent);
     }
     
