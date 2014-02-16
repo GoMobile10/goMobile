@@ -10,6 +10,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <uses-feature android:name="android.hardware.camera" />
@@ -49,6 +50,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.gomobile.technicalservices.BarcodeScanner" />
+        </activity>
+        <activity
+            android:name="com.gomobile.technicalservices.DataConnectionActivity"
+            android:label="@string/title_activity_data_connection" >
         </activity>
     </application>
 

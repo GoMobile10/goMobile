@@ -9,5 +9,6 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_barcode_scanner">BarcodeScanner</string>
     <string name="title_activity_show_tech_specs">ShowTechSpecs</string>
+    <string name="title_activity_data_connection">DataConnectionActivity</string>
 
 </resources>
