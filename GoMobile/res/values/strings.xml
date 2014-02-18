@@ -8,6 +8,7 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="title_activity_barcode_scanner">BarcodeScanner</string>
-    <string name="title_activity_show_tech_specs">ShowTechSpecs</string>
+    <string name="title_activity_low_detail_view">LowDetailView</string>
+    <string name="title_activity_detail_view">DetailView</string>
 
 </resources>

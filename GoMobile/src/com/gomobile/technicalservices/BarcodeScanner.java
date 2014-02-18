@@ -1,20 +1,22 @@
 package com.gomobile.technicalservices;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
 import com.gomobile.LowDetailView;
+import com.gomobile.ScannerController;
 import com.gomobile.scanner.model.Component;
+import com.gomobile.scanner.model.Part;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.interfaces.ScanditSDK;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKListener;
 
 
-public class BarcodeScanner  extends Activity implements ScanditSDKListener {
+public class BarcodeScanner  extends ActionBarActivity implements ScanditSDKListener {
 	
 //	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 	private ScanditSDK mPicker;
@@ -95,6 +97,7 @@ public class BarcodeScanner  extends Activity implements ScanditSDKListener {
             }
         }
         onPause();
+        ScannerController.getInstance().setComponentInUse(new Part(cleanedBarcode, 42));
         Intent intent = new Intent(this, LowDetailView.class);
 //      EditText editText = (EditText) findViewById(R.id.edit_message);
         intent.putExtra("Test",cleanedBarcode);// symbology + ": " + 

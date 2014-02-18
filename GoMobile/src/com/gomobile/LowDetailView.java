@@ -1,18 +1,20 @@
 package com.gomobile;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.gomobile.scanner.model.Component;
+import com.gomobile.scanner.model.Part;
+import com.gomobile.technicalservices.BarcodeScanner;
 
-public class LowDetailView extends Activity {
+public class LowDetailView extends ActionBarActivity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +22,7 @@ public class LowDetailView extends Activity {
 		Intent intent = getIntent();
 	    String message =  intent.getStringExtra("Test");
 		setContentView(R.layout.activity_low_detail_view);
-		this.display(new Component(message, 42));
+		this.display(ScannerController.getInstance().getComponentInUse());
 		// Show the Up button in the action bar.
 		setupActionBar();
 	}
@@ -38,32 +40,38 @@ public class LowDetailView extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.show_tech_specs, menu);
+		getMenuInflater().inflate(R.menu.low_detail_view, menu);
 		return true;
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
+			case android.R.id.home:
+				// This ID represents the Home or Up button. In the case of this
+				// activity, the Up button is shown. Use NavUtils to allow users
+				// to navigate up one level in the application structure. For
+				// more details, see the Navigation pattern on Android Design:
+				//
+				// http://developer.android.com/design/patterns/navigation.html#up-vs-back
+				//
+				NavUtils.navigateUpFromSameTask(this);
+				return true;
+			case R.id.action_scanner:
+				startActivity(new Intent(this, BarcodeScanner.class));
+			    return true;
+			case R.id.action_detail_view:
+				startActivity(new Intent(this, DetailView.class));
+			    return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 	
 	public void display(Component comp){
 		TextView textView = (TextView) findViewById(R.id.textViewName);
-		textView.setText(comp.name);
+		textView.setText(comp.getName());
 		textView = (TextView) findViewById(R.id.textViewPrice);
-		textView.setText(comp.price);
+		textView.setText(String.valueOf(comp.getPrice()));
 	}
 
 }
