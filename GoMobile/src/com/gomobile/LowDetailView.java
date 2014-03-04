@@ -2,29 +2,57 @@ package com.gomobile;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
+import com.gomobile.navigation.Navigation;
 import com.gomobile.scanner.model.Component;
 import com.gomobile.scanner.model.Part;
 import com.gomobile.technicalservices.BarcodeScanner;
 
-public class LowDetailView extends ActionBarActivity {
+public class LowDetailView extends ActionBarActivity implements SensorEventListener  {
+
+	SensorManager sm;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		Intent intent = getIntent();
 	    String message =  intent.getStringExtra("Test");
 		setContentView(R.layout.activity_low_detail_view);
+		//navigation
+		sm =(SensorManager)getSystemService(SENSOR_SERVICE);
+		
 		this.display(ScannerController.getInstance().getComponentInUse());
 		// Show the Up button in the action bar.
 		setupActionBar();
+	}
+	
+	@Override
+	protected void onResume() {
+	  super.onResume();
+	  sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
+	    SensorManager.SENSOR_DELAY_FASTEST);
+	  sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), 
+	    SensorManager.SENSOR_DELAY_FASTEST);
+	}
+	
+	@Override
+	protected void onPause() {
+	  super.onPause();
+	  sm.unregisterListener(this);
 	}
 
 	/**
@@ -72,6 +100,38 @@ public class LowDetailView extends ActionBarActivity {
 		textView.setText(comp.getName());
 		textView = (TextView) findViewById(R.id.textViewPrice);
 		textView.setText(String.valueOf(comp.getPrice()));
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+	    if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)
+	    {
+	    	Navigation.getInstance().setNavigationBase();
+	        return true;
+	    }
+	    return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		switch (Navigation.getInstance().onSensorChanged(event)) {
+			case Navigation.NAVIGATE_RIGHT :
+				startActivity(new Intent(this, DetailView.class));
+				break;
+
+			case Navigation.NAVIGATE_LEFT :
+				startActivity(new Intent(this, BarcodeScanner.class));
+				break;
+			default : 
+				break;
+		}
 	}
 
 }

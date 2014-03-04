@@ -2,6 +2,7 @@ package com.gomobile;
 
 import java.util.ArrayList;
 
+import com.gomobile.navigation.Navigation;
 import com.gomobile.scanner.model.Component;
 
 public class ScannerController {

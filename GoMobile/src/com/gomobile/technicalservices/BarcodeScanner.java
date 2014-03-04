@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.gomobile.LowDetailView;
 import com.gomobile.ScannerController;
+import com.gomobile.navigation.Navigation;
 import com.gomobile.scanner.model.Component;
 import com.gomobile.scanner.model.Part;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
@@ -44,7 +45,7 @@ public class BarcodeScanner  extends ActionBarActivity implements ScanditSDKList
         mPicker.getOverlayView().addListener(this);
         
         // Show a search bar in the scan user interface.
-        mPicker.getOverlayView().showSearchBar(true);
+        // mPicker.getOverlayView().showSearchBar(true);
 	}
 
 	@Override
@@ -101,7 +102,8 @@ public class BarcodeScanner  extends ActionBarActivity implements ScanditSDKList
         Intent intent = new Intent(this, LowDetailView.class);
 //      EditText editText = (EditText) findViewById(R.id.edit_message);
         intent.putExtra("Test",cleanedBarcode);// symbology + ": " + 
-//        intent.putExtra("Component", new Component(cleanedBarcode,42));
+//      intent.putExtra("Component", new Component(cleanedBarcode,42));
+//        Navigation.getInstance().setNavigationBase();
         startActivity(intent);
     }
     
