@@ -2,6 +2,7 @@ package com.gomobile;
 
 import com.gomobile.R;
 import com.gomobile.technicalservices.BarcodeScanner;
+import com.gomobile.technicalservices.DataConnectionActivity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,6 +17,9 @@ public class Main extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		
+		Intent intent = new Intent(this, DataConnectionActivity.class);
+		startActivity(intent);
 	}
 
 	@Override
@@ -27,7 +31,7 @@ public class Main extends Activity {
 	
 	public void startScanner(View view){
 		Intent intent = new Intent(this, BarcodeScanner.class);
-	    startActivity(intent);		
+	    startActivity(intent);
 	}
 
 }
