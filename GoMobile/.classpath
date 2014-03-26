@@ -15,9 +15,5 @@
 	<classpathentry kind="lib" path="libs/jackson-annotations-2.2.3.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-core-2.2.3.jar"/>
 	<classpathentry kind="lib" path="libs/jackson-databind-2.2.3.jar"/>
-	<classpathentry kind="lib" path="libs/AfariaSLL-7.00.6169.0.jar"/>
-	<classpathentry kind="lib" path="libs/DataVaultLib-2.3.3.13.jar"/>
-	<classpathentry kind="lib" path="libs/perflib-1.1.5.jar"/>
-	<classpathentry kind="lib" path="libs/sap-e2etrace-2.3.3.13.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
