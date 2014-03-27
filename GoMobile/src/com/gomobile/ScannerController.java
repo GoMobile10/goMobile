@@ -2,25 +2,31 @@ package com.gomobile;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
+
 import com.gomobile.navigation.Navigation;
 import com.gomobile.scanner.model.Component;
 
 public class ScannerController {
-		
-	private Component componentInUse;
-	private int listSize = 10;
-	private ArrayList<Component> history = new ArrayList<Component>();
 	
-	public void setComponentInUse(Component component){
-		if(history.size() == listSize){
-			history.remove(9);
-		}
-		history.add(componentInUse);
-		this.componentInUse = component;
-	}
+	private History history = new History();
 	
 	public Component getComponentInUse(){
-		return componentInUse;
+		return history.getComponentInUse();
+	}
+	
+	public boolean setComponentInUse(Component comp){
+		history.add(comp);
+		if(history.isSameType(comp)){
+			//TODO
+			return true;
+		}else{
+	        return false;
+		}
+	}
+	
+	public Component getComponentBefore() {
+		return history.getComponentBefore();
 	}
 	
 	
@@ -36,4 +42,5 @@ public class ScannerController {
 		return instance;
 	}
 	//singleton end
+
 }

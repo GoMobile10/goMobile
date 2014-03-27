@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.gomobile.ComparisionView;
 import com.gomobile.LowDetailView;
 import com.gomobile.ScannerController;
 import com.gomobile.navigation.Navigation;
@@ -98,12 +99,12 @@ public class BarcodeScanner  extends ActionBarActivity implements ScanditSDKList
             }
         }
         onPause();
-        ScannerController.getInstance().setComponentInUse(new Part(cleanedBarcode, 42));
-        Intent intent = new Intent(this, LowDetailView.class);
-//      EditText editText = (EditText) findViewById(R.id.edit_message);
-        intent.putExtra("Test",cleanedBarcode);// symbology + ": " + 
-//      intent.putExtra("Component", new Component(cleanedBarcode,42));
-//        Navigation.getInstance().setNavigationBase();
+//      ScannerController.getInstance().setComponentInUse(new Part(cleanedBarcode, 42));
+        Intent intent;
+		if(ScannerController.getInstance().setComponentInUse(new Part(cleanedBarcode, 42, "Brakes")))
+        	intent = new Intent(this, ComparisionView.class);
+        else
+        	intent = new Intent(this, LowDetailView.class);
         startActivity(intent);
     }
     

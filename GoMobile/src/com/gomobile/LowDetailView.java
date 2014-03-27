@@ -28,9 +28,6 @@ public class LowDetailView extends ActionBarActivity implements SensorEventListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		Intent intent = getIntent();
-	    String message =  intent.getStringExtra("Test");
 		setContentView(R.layout.activity_low_detail_view);
 		//navigation
 		sm =(SensorManager)getSystemService(SENSOR_SERVICE);
