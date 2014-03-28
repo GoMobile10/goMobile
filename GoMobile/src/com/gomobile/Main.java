@@ -17,71 +17,39 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 
-public class Main extends ActionBarActivity implements SensorEventListener {
+public class Main extends ViewWithNavigation {
 
-	SensorManager sm;
-	
-	@Override
-	protected void onResume() {
-	  super.onResume();
-	  sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-	    SensorManager.SENSOR_DELAY_FASTEST);
-	  sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), 
-	    SensorManager.SENSOR_DELAY_FASTEST);
-	}
-	
-	@Override
-	protected void onPause() {
-	  super.onPause();
-	  sm.unregisterListener(this);
-	}
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		sm = (SensorManager)getSystemService(SENSOR_SERVICE);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
-	
-	public void startScanner(){
+	public void startScanner() {
 		Intent intent = new Intent(this, BarcodeScanner.class);
-	    startActivity(intent);		
+		startActivity(intent);
+	}
+
+	void navigateRight() {
+		startScanner();
 	}
 
 	@Override
-	public void onAccuracyChanged(Sensor sensor, int accuracy) {
+	void navigateLeft() {
 		// TODO Auto-generated method stub
-		
-	}
-	
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-	    if(keyCode == KeyEvent.KEYCODE_VOLUME_DOWN)
-	    {
-	    	Navigation.getInstance().setNavigationBase();
-	        return true;
-	    }
-	    return super.onKeyDown(keyCode, event);
 	}
 
 	@Override
-	public void onSensorChanged(SensorEvent event) {
-		switch (Navigation.getInstance().onSensorChanged(event)) {
-			case Navigation.NAVIGATE_RIGHT :
-				startScanner();
-				break;
-			default : 
-				break;
-		}
+	void navigateUp() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	void navigateDown() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -9,6 +9,8 @@ public class Navigation {
 	
 	public static final int NAVIGATE_RIGHT = 1;
 	public static final int NAVIGATE_LEFT = 2;
+	public static final int NAVIGATE_UP = 3;
+	public static final int NAVIGATE_DOWN = 4;
 	
 	Sensor accelerometer;
 	Sensor magnatometer;
