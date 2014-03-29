@@ -48,7 +48,7 @@ public class DataConnectionTask extends AsyncTask<String, Integer, String> {
 		@Override
 		public PasswordAuthentication getPasswordAuthentication() {
 		    Log.i("REQUESTING SCHEM", getRequestingScheme());
-		    return new PasswordAuthentication("A_WACHN", "GoMobile2013".toCharArray());
+		    return new PasswordAuthentication("S_SCHMI", "GoMobile2013".toCharArray());
 		}
 	    });
 	    
