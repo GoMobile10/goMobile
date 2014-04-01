@@ -3,7 +3,6 @@ package com.gomobile.navigation;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-import android.support.v4.app.ShareCompat.IntentReader;
 
 public class Navigation {
 	
@@ -57,8 +56,8 @@ public class Navigation {
 	            //this calculation gives me the Azimuth in the same format that OrientationSensor
 	            //azimuth += (azimuth >= 0) ? 0 : 360;
 	         
-	            float FALSE_PITCH = (float) Math.toDegrees(orientation[1]);
-	            float FALSE_ROLL = (float) Math.toDegrees(orientation[2]);
+//	            float FALSE_PITCH = (float) Math.toDegrees(orientation[1]);
+//	            float FALSE_ROLL = (float) Math.toDegrees(orientation[2]);
 	            
 //	            answer.setText("AZI: "+(int)azimuth+"\nPIT: "+(int)FALSE_PITCH+"\nROL: "+(int)FALSE_ROLL);
 	        }

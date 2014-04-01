@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.gomobile.scanner.model.Component;
 
+@SuppressWarnings("serial")
 public class History extends ArrayList<Component>{
 
 	private int listSize = 10;

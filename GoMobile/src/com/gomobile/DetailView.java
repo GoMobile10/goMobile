@@ -1,27 +1,14 @@
 package com.gomobile;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-import com.gomobile.navigation.Navigation;
+import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.scanner.model.Component;
-import com.gomobile.technicalservices.BarcodeScanner;
 
 public class DetailView extends ViewWithNavigation  {
-
-	SensorManager sm;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -39,24 +26,24 @@ public class DetailView extends ViewWithNavigation  {
 	}
 
 	@Override
-	void navigateRight() {
+	public void navigateRight() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	void navigateLeft() {
+	public void navigateLeft() {
 		startActivity(new Intent(this, LowDetailView.class));		
 	}
 
 	@Override
-	void navigateUp() {
+	public void navigateUp() {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	void navigateDown() {
+	public void navigateDown() {
 		// TODO Auto-generated method stub
 		
 	}

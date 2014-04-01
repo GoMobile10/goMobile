@@ -1,35 +1,26 @@
 package com.gomobile;
 
-import android.annotation.TargetApi;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
-import com.gomobile.navigation.Navigation;
+import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.scanner.model.Component;
-import com.gomobile.scanner.model.Part;
 import com.gomobile.technicalservices.BarcodeScanner;
 
 public class LowDetailView extends ViewWithNavigation {
 
-	SensorManager sm;
-
+	private static boolean compare = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_low_detail_view);
-		this.display(ScannerController.getInstance().getComponentInUse());
+		Bundle intentExtras = getIntent().getExtras();
+		if(intentExtras != null && intentExtras.containsKey("compare"))
+			compare = getIntent().getExtras().getBoolean("compare");
+		
+		display(ScannerController.getInstance().getComponentInUse());
 	}
 
 	// @Override
@@ -63,22 +54,25 @@ public class LowDetailView extends ViewWithNavigation {
 		textView.setText(String.valueOf(comp.getPrice()));
 	}
 
-	void navigateRight() {
+	public void navigateRight() {
 		startActivity(new Intent(this, DetailView.class));
 	}
 
-	void navigateLeft() {
-		startActivity(new Intent(this, BarcodeScanner.class));
+	public void navigateLeft() {
+		if(compare)
+			startActivity(new Intent(this, ComparisionView.class));
+		else
+			startActivity(new Intent(this, BarcodeScanner.class));
 	}
 
 	@Override
-	void navigateUp() {
+	public void navigateUp() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	void navigateDown() {
+	public void navigateDown() {
 		// TODO Auto-generated method stub
 
 	}

@@ -1,21 +1,10 @@
 package com.gomobile;
 
-import com.gomobile.R;
-import com.gomobile.navigation.Navigation;
-import com.gomobile.technicalservices.BarcodeScanner;
-
-import android.app.Activity;
 import android.content.Intent;
-import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.View;
-import android.widget.EditText;
+
+import com.gomobile.navigation.ViewWithNavigation;
+import com.gomobile.technicalservices.BarcodeScanner;
 
 public class Main extends ViewWithNavigation {
 
@@ -30,24 +19,24 @@ public class Main extends ViewWithNavigation {
 		startActivity(intent);
 	}
 
-	void navigateRight() {
+	public void navigateRight() {
 		startScanner();
 	}
 
 	@Override
-	void navigateLeft() {
+	public void navigateLeft() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	void navigateUp() {
+	public void navigateUp() {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	void navigateDown() {
+	public void navigateDown() {
 		// TODO Auto-generated method stub
 
 	}

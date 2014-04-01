@@ -1,23 +1,12 @@
-package com.gomobile;
+package com.gomobile.navigation;
 
-import com.gomobile.navigation.Navigation;
-import com.gomobile.scanner.model.Component;
-import com.gomobile.technicalservices.BarcodeScanner;
-
-import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.TextView;
 
 public abstract class ViewWithNavigation extends Activity implements
 		SensorEventListener {
@@ -83,11 +72,11 @@ public abstract class ViewWithNavigation extends Activity implements
 		}
 	}
 
-	abstract void navigateRight();
+	public abstract void navigateRight();
 
-	abstract void navigateLeft();
+	public abstract void navigateLeft();
 
-	abstract void navigateUp();
+	public abstract void navigateUp();
 
-	abstract void navigateDown();
+	public abstract void navigateDown();
 }
