@@ -10,5 +10,6 @@
     <string name="title_activity_barcode_scanner">BarcodeScanner</string>
     <string name="title_activity_low_detail_view">LowDetailView</string>
     <string name="title_activity_detail_view">DetailView</string>
+    <string name="title_activity_comparision_view">ComparisionView</string>
 
 </resources>

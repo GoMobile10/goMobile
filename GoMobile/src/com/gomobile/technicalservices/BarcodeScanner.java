@@ -1,23 +1,24 @@
 package com.gomobile.technicalservices;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
 
+import com.gomobile.ComparisionView;
 import com.gomobile.LowDetailView;
 import com.gomobile.ScannerController;
-import com.gomobile.navigation.Navigation;
-import com.gomobile.scanner.model.Component;
 import com.gomobile.scanner.model.Part;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.interfaces.ScanditSDK;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKListener;
 
 
-public class BarcodeScanner  extends ActionBarActivity implements ScanditSDKListener {
+public class BarcodeScanner extends Activity implements ScanditSDKListener {
 	
 //	public final static String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";
 	private ScanditSDK mPicker;
@@ -98,13 +99,38 @@ public class BarcodeScanner  extends ActionBarActivity implements ScanditSDKList
             }
         }
         onPause();
-        ScannerController.getInstance().setComponentInUse(new Part(cleanedBarcode, 42));
-        Intent intent = new Intent(this, LowDetailView.class);
-//      EditText editText = (EditText) findViewById(R.id.edit_message);
-        intent.putExtra("Test",cleanedBarcode);// symbology + ": " + 
-//      intent.putExtra("Component", new Component(cleanedBarcode,42));
-//        Navigation.getInstance().setNavigationBase();
-        startActivity(intent);
+    
+		if(ScannerController.getInstance().setComponentInUse(new Part(cleanedBarcode, 42, "Brakes")))        	
+			displayComparisionView().show();
+		else{
+			Intent intent = new Intent(this, LowDetailView.class);
+			intent.putExtra("compare", false);
+			startActivity(intent);
+		}
+    }
+    
+    private AlertDialog displayComparisionView(){
+    	 AlertDialog.Builder builder = new AlertDialog.Builder(this);
+  		// Add the buttons
+  		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+  		           public void onClick(DialogInterface dialog, int id) {
+  		        	   startActivity(new Intent(BarcodeScanner.this,ComparisionView.class)); 
+  		           }
+  		       });
+  		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+  		           public void onClick(DialogInterface dialog, int id) {
+  		        	   		Intent intent = new Intent(BarcodeScanner.this, LowDetailView.class);
+  		        	   		intent.putExtra("compare", false);
+  		        	   		startActivity(intent);
+  		           }
+  		       });
+
+  		// 2. Chain together various setter methods to set the dialog characteristics
+  		builder.setMessage("Do you wanna compare it").setTitle("Compare?");
+
+  		// 3. Get the AlertDialog from create()
+  		AlertDialog dialog = builder.create();
+  		return dialog;
     }
     
     /** 

@@ -7,9 +7,10 @@ public abstract class Component {
 	private String type;
 	public boolean bike;
 
-	public Component(String name, int price){
+	public Component(String name, int price, String type){
 		this.name = name;
 		this.price = price;
+		this.type = type;
 	}
 
 	public String getName() {
@@ -22,6 +23,10 @@ public abstract class Component {
 	
 	public boolean isBike(){
 		return this.bike;
+	}
+	
+	public boolean isSameType(Component comp){
+		return this.type.equalsIgnoreCase(comp.type);
 	}
 	
 
