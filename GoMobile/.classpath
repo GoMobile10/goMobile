@@ -7,13 +7,5 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
 	<classpathentry kind="lib" path="libs/scanditsdk-barcodepicker-android-3.5.2.jar"/>
-	<classpathentry kind="lib" path="libs/SDMCache-1.3.0.jar"/>
-	<classpathentry kind="lib" path="libs/SDMCommon-1.3.0.jar"/>
-	<classpathentry kind="lib" path="libs/SDMConnectivity-1.3.0.jar"/>
-	<classpathentry kind="lib" path="libs/SDMParser-1.3.0.jar"/>
-	<classpathentry kind="lib" path="libs/SDMPersistence-1.3.0.jar"/>
-	<classpathentry kind="lib" path="libs/jackson-annotations-2.2.3.jar"/>
-	<classpathentry kind="lib" path="libs/jackson-core-2.2.3.jar"/>
-	<classpathentry kind="lib" path="libs/jackson-databind-2.2.3.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
