@@ -30,7 +30,6 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		
 		// Instantiate the default barcode picker
 		picker = new ScanditSDKAutoAdjustingBarcodePicker(this, sScanditSdkAppKey,ScanditSDKAutoAdjustingBarcodePicker.CAMERA_FACING_BACK) ;
 		// Specify the object that will receive the callback events

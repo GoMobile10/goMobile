@@ -2,6 +2,7 @@ package com.gomobile.technicalservices;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -12,9 +13,13 @@ import javax.xml.xpath.XPathFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import android.util.Log;
 
 import com.gomobile.R;
+import com.gomobile.data.controller.BikeDataController;
+import com.gomobile.scanner.model.Bike;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -30,15 +35,22 @@ public class DataConnectionActivity extends Activity {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_data_connection);
 	
-	String queryResult = "";
-	String[] urls = {this.ODATA_SERVICE_URL};
+	TextView dataInfoView = (TextView) findViewById(R.id.queryResultTextView);
+	BikeDataController dataController = new BikeDataController();
+	Bike exampleBike = dataController.getBikeByEAN(7613257813441L);
 	
-	DataConnectionTask connectionTask = new DataConnectionTask();
-	connectionTask.setTextView((TextView) findViewById(R.id.queryResultTextView));
-	connectionTask.execute(urls);
+	dataInfoView.setText(exampleBike.getName() + "\n" + exampleBike.getPrice() + " EUR");
 	
-	
-	System.out.println(queryResult);
+//	USED FOR CONNECTING THE SAP SYSTEM
+//	String queryResult = "";
+//	String[] urls = {this.ODATA_SERVICE_URL};
+//	
+//	DataConnectionTask connectionTask = new DataConnectionTask();
+//	connectionTask.setTextView((TextView) findViewById(R.id.queryResultTextView));
+//	connectionTask.execute(urls);
+//	
+//	
+//	System.out.println(queryResult);
     }
 
     @Override
