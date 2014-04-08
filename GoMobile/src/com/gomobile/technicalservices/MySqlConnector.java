@@ -56,7 +56,7 @@ public class MySqlConnector {
 	
 	private Connection getConnection() throws SQLException, ClassNotFoundException{
 		Class.forName("com.mysql.jdbc.Driver");
-		Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/go_mobile_db", "root", "wacht01");
+		Connection connection = DriverManager.getConnection("jdbc:mysql://134.155.56.118:3306/go_mobile_db", "GoMobileApp", "GoMobile2013");
 		
 		return connection;
 	}

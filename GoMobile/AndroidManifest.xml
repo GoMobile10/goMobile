@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="9"
         android:targetSdkVersion="18" />
 
     <uses-permission android:name="android.permission.CAMERA" />
@@ -29,7 +29,7 @@
         <activity
             android:name="com.gomobile.technicalservices.DataConnectionActivity"
             android:label="@string/title_activity_data_connection"
-            android:parentActivityName="com.gomobile.Main" >
+            android:parentActivityName="com.gomobile.Main" >-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.gomobile.Main" />

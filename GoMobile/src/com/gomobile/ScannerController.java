@@ -1,11 +1,13 @@
 package com.gomobile;
 
+import com.gomobile.data.controller.BikeDataController;
 import com.gomobile.scanner.model.Component;
 
 public class ScannerController {
 	
 	private History history = new History();
-	
+	private final BikeDataController bikeDataController = new BikeDataController();
+
 	public Component getComponentInUse(){
 		return history.getComponentInUse();
 	}
@@ -37,5 +39,12 @@ public class ScannerController {
 		return instance;
 	}
 	//singleton end
+
+	/**
+	 * @return the bikeDataController
+	 */
+	public BikeDataController getBikeDataController() {
+		return bikeDataController;
+	}
 
 }
