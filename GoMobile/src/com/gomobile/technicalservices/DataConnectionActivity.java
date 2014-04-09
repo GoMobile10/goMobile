@@ -37,18 +37,17 @@ public class DataConnectionActivity extends Activity {
 	
 	TextView dataInfoView = (TextView) findViewById(R.id.queryResultTextView);
 	BikeDataController dataController = new BikeDataController();
-	Bike exampleBike = dataController.getBikeByEAN(7613257813441L);
+//	Bike exampleBike = dataController.getBikeByEAN(7613257813441L);
 	
-	dataInfoView.setText(exampleBike.getName() + "\n" + exampleBike.getPrice() + " EUR");
 	
 //	USED FOR CONNECTING THE SAP SYSTEM
 //	String queryResult = "";
-//	String[] urls = {this.ODATA_SERVICE_URL};
-//	
-//	DataConnectionTask connectionTask = new DataConnectionTask();
-//	connectionTask.setTextView((TextView) findViewById(R.id.queryResultTextView));
-//	connectionTask.execute(urls);
-//	
+	String[] urls = {this.ODATA_SERVICE_URL};
+	
+	DataConnectionTask connectionTask = new DataConnectionTask();
+	connectionTask.setTextView((TextView) findViewById(R.id.queryResultTextView));
+	connectionTask.execute(urls);
+	
 //	
 //	System.out.println(queryResult);
     }

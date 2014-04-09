@@ -1,6 +1,11 @@
 package com.gomobile.data.controller;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import com.gomobile.scanner.model.Bike;
 import com.gomobile.technicalservices.MySqlConnector;
@@ -14,19 +19,22 @@ public class BikeDataController {
 	}
 	
 	public Bike getBikeByEAN(long ean){
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("ean", ean + ""));
+		sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_bike_data.php", nameValuePairs) );
 		
 		Bike bike = null;
 		
 		try{
-		sqlConnector.setQueryString("SELECT bike.description, material.price, bike.category FROM bike, material WHERE bike.bikeean = material.ean AND bike.bikeean = " + ean);
-		String[][] queryResult = sqlConnector.queryResultToArray();
-		
-		String name = queryResult[0][0];
-		int price = Double.valueOf( queryResult[0][1] ).intValue();
-		String type = queryResult[0][2];
-		
-		bike = new Bike(name, price, type);
-		
+			String[] resultFieldNames = {"description", "price", "category"};
+			String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
+			
+			String name = queryResult[0][0];
+			int price = Double.valueOf( queryResult[0][1] ).intValue();
+			String type = queryResult[0][2];
+			
+			bike = new Bike(name, price, type);
+			
 		}
 		catch(ClassNotFoundException cnfe){
 			cnfe.printStackTrace();
@@ -37,7 +45,7 @@ public class BikeDataController {
 		
 		return bike;
 	}
-
+	
 	/**
 	 * @return the sqlConnector
 	 */

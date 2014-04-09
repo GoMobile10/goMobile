@@ -25,6 +25,9 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.gomobile.data.controller.BikeDataController;
+import com.gomobile.scanner.model.Bike;
+
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
@@ -37,54 +40,60 @@ public class DataConnectionTask extends AsyncTask<String, Integer, String> {
     @Override
     protected String doInBackground(String[] url) {
 
-	String queryResult = "";
+//	String queryResult = "";
+//	
+//	HttpURLConnection connection = null;
+//	
+//	try {
+//	    
+//	    Authenticator.setDefault(new Authenticator() {
+//		
+//		@Override
+//		public PasswordAuthentication getPasswordAuthentication() {
+//		    Log.i("REQUESTING SCHEM", getRequestingScheme());
+//		    return new PasswordAuthentication("S_SCHMI", "GoMobile2013".toCharArray());
+//		}
+//	    });
+//	    
+//	    connection = (HttpURLConnection)(new URL(url[0]).openConnection());
+//	    connection.setRequestMethod("GET");
+//	    connection.setDoInput(true);
+//	    connection.connect();
+//	    
+//	    Log.i("RESPONSE MASSAGE", connection.getResponseMessage());
+//	     
+//	    InputStream inStream = (InputStream) connection.getInputStream();
+//	    BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
+//	    StringBuilder stringBuilder = new StringBuilder();
+//	    String line = "";
+//		
+//	    while(line != null){
+//		line = reader.readLine();
+//		stringBuilder.append(line + "\n");
+//	    }
+//	    
+//	    queryResult = stringBuilder.toString();
+//	    inStream.close();
+//				
+//	    Log.i("OData Request", queryResult);
+//	} catch (ClientProtocolException e) {
+//	    Log.e("Data Connection", e.getMessage(), e);
+//	    e.printStackTrace();
+//	} catch (IOException e) {
+//	    Log.e("Data Connection", e.getMessage(), e);
+//	    e.printStackTrace();
+//	} finally{
+//	    connection.disconnect();
+//	    
+//	}
 	
-	HttpURLConnection connection = null;
 	
-	try {
-	    
-	    Authenticator.setDefault(new Authenticator() {
+		//TODO: REFACTORING
+		BikeDataController bikeDataController = new BikeDataController();
+		Bike bike = bikeDataController.getBikeByEAN(7613257813441L);
+		String bikeDescription = bike.getName() + "\n" + bike.getPrice() + " EUR\n" + bike.getType();
 		
-		@Override
-		public PasswordAuthentication getPasswordAuthentication() {
-		    Log.i("REQUESTING SCHEM", getRequestingScheme());
-		    return new PasswordAuthentication("S_SCHMI", "GoMobile2013".toCharArray());
-		}
-	    });
-	    
-	    connection = (HttpURLConnection)(new URL(url[0]).openConnection());
-	    connection.setRequestMethod("GET");
-	    connection.setDoInput(true);
-	    connection.connect();
-	    
-	    Log.i("RESPONSE MASSAGE", connection.getResponseMessage());
-	     
-	    InputStream inStream = (InputStream) connection.getInputStream();
-	    BufferedReader reader = new BufferedReader(new InputStreamReader(inStream));
-	    StringBuilder stringBuilder = new StringBuilder();
-	    String line = "";
-		
-	    while(line != null){
-		line = reader.readLine();
-		stringBuilder.append(line + "\n");
-	    }
-	    
-	    queryResult = stringBuilder.toString();
-	    inStream.close();
-				
-	    Log.i("OData Request", queryResult);
-	} catch (ClientProtocolException e) {
-	    Log.e("Data Connection", e.getMessage(), e);
-	    e.printStackTrace();
-	} catch (IOException e) {
-	    Log.e("Data Connection", e.getMessage(), e);
-	    e.printStackTrace();
-	} finally{
-	    connection.disconnect();
-	    
-	}
-	
-	return queryResult;
+		return bikeDescription;
     }
 
     @Override
