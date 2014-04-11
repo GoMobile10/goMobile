@@ -9,11 +9,13 @@ package com.gomobile;
 
 public final class R {
     public static final class attr {
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /**  Style for buttons within button bars 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static final int buttonBarButtonStyle=0x7f010001;
-        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+        /**  Style for button bars 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static final int buttonBarStyle=0x7f010000;
@@ -38,11 +40,14 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int LinearLayout2=0x7f090009;
         public static final int TextView01=0x7f090008;
         public static final int TextView02=0x7f090005;
-        public static final int action_detail_view=0x7f09000d;
-        public static final int action_scanner=0x7f09000c;
-        public static final int action_settings=0x7f09000b;
+        public static final int action_detail_view=0x7f090010;
+        public static final int action_scanner=0x7f09000f;
+        public static final int action_settings=0x7f09000e;
+        public static final int button1=0x7f09000a;
+        public static final int button2=0x7f09000b;
+        public static final int button3=0x7f09000c;
+        public static final int button4=0x7f09000d;
         public static final int queryResultTextView=0x7f090002;
-        public static final int textView1=0x7f09000a;
         public static final int textView11=0x7f090000;
         public static final int textView12=0x7f090001;
         public static final int textView2=0x7f090003;
@@ -56,8 +61,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_data_connection=0x7f030002;
         public static final int activity_detail_view=0x7f030003;
         public static final int activity_low_detail_view=0x7f030004;
-        public static final int activity_show_tech_specs=0x7f030005;
-        public static final int main=0x7f030006;
+        public static final int main=0x7f030005;
     }
     public static final class menu {
         public static final int barcode_scanner=0x7f080000;
@@ -66,7 +70,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int detail_view=0x7f080003;
         public static final int low_detail_view=0x7f080004;
         public static final int main=0x7f080005;
-        public static final int show_tech_specs=0x7f080006;
     }
     public static final class string {
         public static final int action_settings=0x7f060001;
@@ -76,8 +79,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int hello_world=0x7f060002;
         public static final int title_activity_barcode_reader=0x7f060003;
         public static final int title_activity_barcode_scanner=0x7f060006;
-        public static final int title_activity_data_connection=0x7f060008;
-        public static final int title_activity_show_tech_specs=0x7f060007;
+        public static final int title_activity_comparision_view=0x7f060009;
+        public static final int title_activity_detail_view=0x7f060008;
+        public static final int title_activity_low_detail_view=0x7f060007;
     }
     public static final class style {
         /** 
@@ -123,8 +127,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarButtonStyle com.gomobile:buttonBarButtonStyle}</code></td><td></td></tr>
-           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarStyle com.gomobile:buttonBarStyle}</code></td><td></td></tr>
+           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarButtonStyle com.gomobile:buttonBarButtonStyle}</code></td><td> Style for buttons within button bars </td></tr>
+           <tr><td><code>{@link #ButtonBarContainerTheme_buttonBarStyle com.gomobile:buttonBarStyle}</code></td><td> Style for button bars </td></tr>
            </table>
            @see #ButtonBarContainerTheme_buttonBarButtonStyle
            @see #ButtonBarContainerTheme_buttonBarStyle
@@ -133,22 +137,26 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
             0x7f010000, 0x7f010001
         };
         /**
-          <p>This symbol is the offset where the {@link com.gomobile.R.attr#buttonBarButtonStyle}
-          attribute's value can be found in the {@link #ButtonBarContainerTheme} array.
+          <p>
+          @attr description
+           Style for buttons within button bars 
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
           @attr name com.gomobile:buttonBarButtonStyle
         */
         public static final int ButtonBarContainerTheme_buttonBarButtonStyle = 1;
         /**
-          <p>This symbol is the offset where the {@link com.gomobile.R.attr#buttonBarStyle}
-          attribute's value can be found in the {@link #ButtonBarContainerTheme} array.
+          <p>
+          @attr description
+           Style for button bars 
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
           @attr name com.gomobile:buttonBarStyle
         */
         public static final int ButtonBarContainerTheme_buttonBarStyle = 0;

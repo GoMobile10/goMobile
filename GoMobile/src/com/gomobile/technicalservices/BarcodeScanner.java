@@ -103,7 +103,7 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 			displayComparisionView().show();
 		else{
 			Intent intent = new Intent(this, LowDetailView.class);
-			intent.getIntExtra("scanned_bike_code", Integer.valueOf(cleanedBarcode));
+			intent.putExtra("compare", false);
 			startActivity(intent);
 		}
     }

@@ -9,17 +9,37 @@
     tools:context=".Main" >
 
     <Button
+        android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="startScanner"
-        android:text="Scan Barcode"
-     />
+        android:text="Scan Barcode" />
 
-    <TextView
-        android:id="@+id/textView1"
+    <Button
+        android:id="@+id/button2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=""
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_below="@+id/textViewPrice"
+        android:layout_alignLeft="@+id/button1"
+        android:layout_marginTop="40dp"
+        android:text="Shopping Cart" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_below="@+id/button1"
+        android:layout_marginTop="40dp"
+        android:text="Compare" />
+
+    <Button
+                android:id="@+id/button4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button3"
+        android:layout_marginTop="40dp"
+        android:layout_centerVertical="true"
+        android:text="Combine" />
 
 </RelativeLayout>

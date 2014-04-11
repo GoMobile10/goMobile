@@ -1,7 +1,5 @@
 package com.gomobile.navigation;
 
-import com.gomobile.data.controller.BikeDataController;
-
 import android.app.Activity;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -12,8 +10,6 @@ import android.view.KeyEvent;
 
 public abstract class ViewWithNavigation extends Activity implements
 		SensorEventListener {
-	
-	private final BikeDataController bikeDataController = new BikeDataController();
 
 	SensorManager sm;
 
@@ -84,10 +80,4 @@ public abstract class ViewWithNavigation extends Activity implements
 
 	public abstract void navigateDown();
 
-	/**
-	 * @return the bikeDataController
-	 */
-	public BikeDataController getBikeDataController() {
-		return bikeDataController;
-	}
 }
