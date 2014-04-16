@@ -90,7 +90,8 @@ public class DataConnectionTask extends AsyncTask<String, Integer, String> {
 	
 		//TODO: REFACTORING
 		BikeDataController bikeDataController = new BikeDataController();
-		Bike bike = bikeDataController.getBikeByEAN(7613257813441L);
+		Long ean = Long.valueOf(url[0]);
+		Bike bike = bikeDataController.getBikeByEAN(ean);
 		String bikeDescription = bike.getName() + "\n" + bike.getPrice() + " EUR\n" + bike.getType();
 		
 		return bikeDescription;
