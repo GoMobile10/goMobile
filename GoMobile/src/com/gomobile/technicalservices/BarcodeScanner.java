@@ -107,7 +107,12 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 			Intent intent = new Intent(this, LowDetailView.class);
 //			intent.putExtra("compare", false);
 			
-			intent.putExtra("ean", cleanedBarcode);			
+			BikeDataController bikeDataController = new BikeDataController();
+			Long ean = Long.valueOf(cleanedBarcode);
+			Bike bike = bikeDataController.getBikeByEAN(ean);
+			String bikeDescription = bike.getName() + "\n" + bike.getPrice() + " EUR\n" + bike.getType();
+			
+			intent.putExtra("bike_description", bikeDescription);			
 			startActivity(intent);
 		}
     }

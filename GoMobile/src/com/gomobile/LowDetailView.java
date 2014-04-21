@@ -18,15 +18,10 @@ public class LowDetailView extends ViewWithNavigation {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_low_detail_view);
 		Bundle intentExtras = getIntent().getExtras();
-		String eanCode = intentExtras.getString("ean");
+		String bikeDescription = intentExtras.getString("bike_description");
 		
 		TextView textView = (TextView) findViewById(R.id.textViewName);
-
-		String[] urls = {eanCode};
-		
-		DataConnectionTask connectionTask = new DataConnectionTask();
-		connectionTask.setTextView(textView);
-		connectionTask.execute(urls);
+		textView.setText(bikeDescription);
 		
 		
 //		if(intentExtras != null && intentExtras.containsKey("compare"))
