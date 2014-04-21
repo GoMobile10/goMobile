@@ -79,4 +79,5 @@ public abstract class ViewWithNavigation extends Activity implements
 	public abstract void navigateUp();
 
 	public abstract void navigateDown();
+
 }

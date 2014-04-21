@@ -5,7 +5,7 @@ import com.gomobile.scanner.model.Component;
 public class ScannerController {
 	
 	private History history = new History();
-	
+
 	public Component getComponentInUse(){
 		return history.getComponentInUse();
 	}

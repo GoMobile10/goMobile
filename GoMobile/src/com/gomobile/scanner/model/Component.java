@@ -16,7 +16,11 @@ public abstract class Component {
 	public String getName() {
 		return name;
 	}
-
+	
+	public String getType() {
+		return type;
+	}
+	
 	public int getPrice() {
 		return price;
 	}

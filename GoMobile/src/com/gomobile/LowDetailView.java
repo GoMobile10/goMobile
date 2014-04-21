@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.scanner.model.Component;
 import com.gomobile.technicalservices.BarcodeScanner;
+import com.gomobile.technicalservices.DataConnectionTask;
 
 public class LowDetailView extends ViewWithNavigation {
 
@@ -17,10 +18,16 @@ public class LowDetailView extends ViewWithNavigation {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_low_detail_view);
 		Bundle intentExtras = getIntent().getExtras();
-		if(intentExtras != null && intentExtras.containsKey("compare"))
-			compare = getIntent().getExtras().getBoolean("compare");
+		String bikeDescription = intentExtras.getString("bike_description");
 		
-		display(ScannerController.getInstance().getComponentInUse());
+		TextView textView = (TextView) findViewById(R.id.textViewName);
+		textView.setText(bikeDescription);
+		
+		
+//		if(intentExtras != null && intentExtras.containsKey("compare"))
+//			compare = getIntent().getExtras().getBoolean("compare");
+//		
+//		display(ScannerController.getInstance().getComponentInUse());
 	}
 
 	// @Override

@@ -2,6 +2,7 @@ package com.gomobile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.technicalservices.BarcodeScanner;
@@ -14,13 +15,13 @@ public class Main extends ViewWithNavigation {
 		setContentView(R.layout.main);
 	}
 
-	public void startScanner() {
+	public void startScanner(View view) {
 		Intent intent = new Intent(this, BarcodeScanner.class);
 		startActivity(intent);
 	}
 
 	public void navigateRight() {
-		startScanner();
+		startScanner(this.findViewById(R.layout.main));
 	}
 
 	@Override

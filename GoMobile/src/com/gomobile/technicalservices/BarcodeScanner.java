@@ -12,6 +12,8 @@ import android.widget.Toast;
 import com.gomobile.ComparisionView;
 import com.gomobile.LowDetailView;
 import com.gomobile.ScannerController;
+import com.gomobile.data.controller.BikeDataController;
+import com.gomobile.scanner.model.Bike;
 import com.gomobile.scanner.model.Part;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.interfaces.ScanditSDK;
@@ -25,12 +27,11 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 	public static final String sScanditSdkAppKey = "OGdjwH4aEeOcTdF93c7Gf4Sdj10VaESFvaMfCqnd4Uw";
 	public ScanditSDKAutoAdjustingBarcodePicker picker ;
 	private boolean pause = false;
-	
+		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		
+				
 		// Instantiate the default barcode picker
 		picker = new ScanditSDKAutoAdjustingBarcodePicker(this, sScanditSdkAppKey,ScanditSDKAutoAdjustingBarcodePicker.CAMERA_FACING_BACK) ;
 		// Specify the object that will receive the callback events
@@ -104,7 +105,14 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 			displayComparisionView().show();
 		else{
 			Intent intent = new Intent(this, LowDetailView.class);
-			intent.putExtra("compare", false);
+//			intent.putExtra("compare", false);
+			
+			BikeDataController bikeDataController = new BikeDataController();
+			Long ean = Long.valueOf(cleanedBarcode);
+			Bike bike = bikeDataController.getBikeByEAN(ean);
+			String bikeDescription = bike.getName() + "\n" + bike.getPrice() + " EUR\n" + bike.getType();
+			
+			intent.putExtra("bike_description", bikeDescription);			
 			startActivity(intent);
 		}
     }
