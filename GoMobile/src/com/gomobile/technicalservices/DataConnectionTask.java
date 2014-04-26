@@ -32,11 +32,6 @@ import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.TextView;
 
-/**
- * Misused for testing database connection functions.
- * @author Anton
- *
- */
 public class DataConnectionTask extends AsyncTask<String, Integer, String> {
     
     private TextView textView;
