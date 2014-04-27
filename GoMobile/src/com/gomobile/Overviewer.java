@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import com.gomobile.data.controller.BikeDataController;
 import com.gomobile.model.Bike;
 import com.gomobile.model.Component;
 import com.gomobile.model.Material;
@@ -18,29 +20,33 @@ import com.gomobile.navigation.ViewWithNavigation;
 public class Overviewer extends ViewWithNavigation{
 int itemcounter = 0;
 ListView meineListView;
-ArrayList<Order> assemblingOrders;
+ArrayList<Bike> assemblingOrders;
 ArrayList<Component> pickuplist;
+BikeDataController repairList;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 		
-		System.out.println("Hier!");
-		//assemblingOrders = new ArrayList<String>();
-		assemblingOrders = new ArrayList<Order>();
-		//assemblingOrders.add("AssemblingOrder 1");
-		//assemblingOrders.add("AssemblingOrder 2");
-		//assemblingOrders.add("AssemblingOrder 3");
-		//Generating sample orders
-		pickuplist = new ArrayList<Component>();
-		pickuplist.add(new Component(1234,"Component1",9,"Bremse"));
-		pickuplist.add(new Component(2345,"Component2",5,"Rahmen"));
-		assemblingOrders.add(new Order(1,pickuplist));
-		pickuplist.add(new Component(3456,"Component3",3,"Sattel"));
-		assemblingOrders.add(new Order(2,pickuplist));
-		pickuplist.add(new Component(4567,"Component4",4,"Sattel"));
-		assemblingOrders.add(new Order(3,pickuplist));
+		
+//		System.out.println("Hier!");
+//		//assemblingOrders = new ArrayList<String>();
+//		assemblingOrders = new ArrayList<Order>();
+//		//assemblingOrders.add("AssemblingOrder 1");
+//		//assemblingOrders.add("AssemblingOrder 2");
+//		//assemblingOrders.add("AssemblingOrder 3");
+//		//Generating sample orders
+//		pickuplist = new ArrayList<Component>();
+//		pickuplist.add(new Component(1234,"Component1",9,"Bremse"));
+//		pickuplist.add(new Component(2345,"Component2",5,"Rahmen"));
+//		assemblingOrders.add(new Order(1,pickuplist));
+//		pickuplist.add(new Component(3456,"Component3",3,"Sattel"));
+//		assemblingOrders.add(new Order(2,pickuplist));
+//		pickuplist.add(new Component(4567,"Component4",4,"Sattel"));
+//		assemblingOrders.add(new Order(3,pickuplist));
+		repairList = new BikeDataController();
+		assemblingOrders = repairList.repairOrders();
 		ListAdapter listenAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_activated_1,assemblingOrders);
 		meineListView = (ListView) findViewById(R.id.listView1);
 		
@@ -100,20 +106,15 @@ ArrayList<Component> pickuplist;
 		//startActivity(new Intent(this, Pickuplist.class));
 
         final Intent PickuplistOfOrder = new Intent(this, Pickuplist.class);
-        System.out.println("Ordernumber: "+((Order)assemblingOrders.get(itemcounter)).getOrderNumber());
-        PickuplistOfOrder.putExtra("OrderID", ((Order)assemblingOrders.get(itemcounter)).getOrderNumber());
-//        //ArrayList<Component> temp_pickuplist =  (ArrayList<Component>)((Order)assemblingOrders.get(itemcounter)).getPickuplist();
-//        //System.out.println("temp_pickuplist: "+ temp_pickuplist.size());
-//        
-//        //PickuplistOfOrder.putParcelableArrayListExtra("PL", temp_pickuplist);
-//
+        PickuplistOfOrder.putExtra("EanNumber", (assemblingOrders.get(itemcounter)).getEanNumber());
+
         startActivity(PickuplistOfOrder);
 		
 	}
 
 	@Override
 	public void navigateLeft() {
-//		startActivity(new Intent(this, Main.class));
+		startActivity(new Intent(this, Main.class));
 		
 	}
 

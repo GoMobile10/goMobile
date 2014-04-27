@@ -15,7 +15,7 @@ public class Pickuplist extends ViewWithNavigation {
 		//ArrayList<Part> pickuplist = getIntent().getExtras().getParcelableArrayList("PL");
 		//System.out.println("Pickuplist size: "+pickuplist.size());
 		TextView textView = (TextView) findViewById(R.id.textView1);
-		textView.setText("Pickup List for Order "+getIntent().getExtras().getInt("OrderID"));
+		textView.setText("RepairView  "+getIntent().getExtras().getLong("EanNumber"));
 
 	}
 	

@@ -28,6 +28,21 @@ public class BikeDataController {
 	public BikeDataController(){
 		sqlConnector = new MySqlConnector();
 	}
+	// test bikes - can be deleted
+		Bike biketest1 = new Bike(10,"daniel", 100, "Rennrad");
+		Bike biketest2 = new Bike(1,"arndt", 200, "Elektrorad");
+		
+		ArrayList<Bike> bikeArrrayList = new ArrayList<Bike>();
+		
+		
+		// returns all the bikes which have a defect, stored in an Arraylist
+		public ArrayList<Bike> repairOrders(){
+			bikeArrrayList.add(biketest1);
+			bikeArrrayList.add(biketest2);
+			return bikeArrrayList;
+		}
+		
+		
 
 	/**
 	 * Returns the bike with the specified EAN code.

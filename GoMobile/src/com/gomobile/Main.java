@@ -14,10 +14,6 @@ public class Main extends ViewWithNavigation {
 		setContentView(R.layout.main);
 	}
 
-
-
-
-
 	public void navigateRight() {
 		startActivity(new Intent(this, Overviewer.class));
 	}
@@ -33,7 +29,7 @@ public class Main extends ViewWithNavigation {
 
 	@Override
 	public void navigateUp() {
-		//startActivity(new Intent(this, Overviewer.class));
+		startActivity(new Intent(this, Overviewer.class));
 
 	}
 
