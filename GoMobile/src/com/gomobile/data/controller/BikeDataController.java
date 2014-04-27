@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.gomobile.model.Bike;
+import com.gomobile.model.Material;
 import com.gomobile.technicalservices.MySqlConnector;
 
 /**
@@ -84,6 +85,11 @@ public class BikeDataController {
 			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
 		}
 		
+		return null;
+	}
+	
+	//TODO
+	public Material getMaterialByEan(long ean){
 		return null;
 	}
 
