@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.gomobile.model.Bike;
+import com.gomobile.model.Component;
 import com.gomobile.navigation.ViewWithNavigation;
-import com.gomobile.scanner.model.Component;
 import com.gomobile.technicalservices.BarcodeScanner;
 
 public class ComparisionView extends ViewWithNavigation {
@@ -15,17 +16,17 @@ public class ComparisionView extends ViewWithNavigation {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comparision_view);
     	
-		Component comp1 = ScannerController.getInstance().getComponentInUse();
-    	Component comp2 = ScannerController.getInstance().getComponentBefore();
+		Bike comp1 = (Bike) ScannerController.getInstance().getMaterialInUse();
+    	Bike comp2 = (Bike) ScannerController.getInstance().getMaterialBefore();
     	display(comp1, comp2);
 		
 	}
 
-	public void display(Component comp1, Component comp2) {
+	public void display(Bike comp1, Bike comp2) {
 		TextView textView = (TextView) findViewById(R.id.textView11);
-		textView.setText(comp1.getName());
+		textView.setText(comp1.getDescription());
 		textView = (TextView) findViewById(R.id.textView12);
-		textView.setText(comp2.getName());
+		textView.setText(comp2.getDescription());
 	}
 
 	@Override

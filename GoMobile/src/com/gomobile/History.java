@@ -2,10 +2,11 @@ package com.gomobile;
 
 import java.util.ArrayList;
 
-import com.gomobile.scanner.model.Component;
+import com.gomobile.model.Component;
+import com.gomobile.model.Material;
 
 @SuppressWarnings("serial")
-public class History extends ArrayList<Component>{
+public class History extends ArrayList<Material>{
 
 	private int listSize = 10;
 
@@ -19,26 +20,28 @@ public class History extends ArrayList<Component>{
 	}
 
 	@Override
-	public boolean add(Component object) {
+	public boolean add(Material object) {
 		if(this.size() == listSize){
 			this.remove(9);
 		}
 		return super.add(object);
 	}
 		
-	public boolean isSameType(Component comp){
+	public boolean isSameType(Material comp){
 		try {
-			return getComponentBefore().isSameType(comp);			
+			//TODO 
+			return true;
+//			return getComponentBefore().isSameType(comp);			
 		} catch (IndexOutOfBoundsException e) {
 			return false;
 		}
 	}
 	
-	public Component getComponentBefore(){
+	public Material getMaterialBefore(){
 			return this.get(1);
 	}
 	
-	public Component getComponentInUse(){
+	public Material getMaterialInUse(){
 		return this.get(0);
 	}
 	

@@ -13,8 +13,7 @@ import com.gomobile.ComparisionView;
 import com.gomobile.LowDetailView;
 import com.gomobile.ScannerController;
 import com.gomobile.data.controller.BikeDataController;
-import com.gomobile.scanner.model.Bike;
-import com.gomobile.scanner.model.Part;
+import com.gomobile.model.Bike;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.interfaces.ScanditSDK;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKListener;
@@ -101,20 +100,21 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
         }
         onPause();
     
-		if(ScannerController.getInstance().setComponentInUse(new Part(cleanedBarcode, 42, "Brakes")))        	
-			displayComparisionView().show();
-		else{
+//		if(ScannerController.getInstance().setMaterialInUse(new Part(cleanedBarcode, 42, "Brakes")))        	
+//			displayComparisionView().show();
+//		else{
 			Intent intent = new Intent(this, LowDetailView.class);
 //			intent.putExtra("compare", false);
 			
 			BikeDataController bikeDataController = new BikeDataController();
 			Long ean = Long.valueOf(cleanedBarcode);
 			Bike bike = bikeDataController.getBikeByEAN(ean);
-			String bikeDescription = bike.getName() + "\n" + bike.getPrice() + " EUR\n" + bike.getType();
+			ScannerController.getInstance().setMaterialInUse(bike);
 			
-			intent.putExtra("bike_description", bikeDescription);			
+//			String bikeDescription = bike.getDescription() + "\n" + bike.getPrice() + " EUR\n" + bike.getCategory();
+//			intent.putExtra("bike_description", bikeDescription);			
 			startActivity(intent);
-		}
+//		}
     }
     
     private AlertDialog displayComparisionView(){

@@ -18,7 +18,7 @@ import android.util.Log;
 
 import com.gomobile.R;
 import com.gomobile.data.controller.BikeDataController;
-import com.gomobile.scanner.model.Bike;
+import com.gomobile.model.Bike;
 
 import android.os.Bundle;
 import android.app.Activity;
