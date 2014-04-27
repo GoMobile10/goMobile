@@ -41,12 +41,13 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int LinearLayout2=0x7f090009;
         public static final int TextView01=0x7f090008;
         public static final int TextView02=0x7f090005;
-        public static final int action_detail_view=0x7f09000f;
-        public static final int action_scanner=0x7f09000e;
-        public static final int action_settings=0x7f09000d;
+        public static final int action_detail_view=0x7f090010;
+        public static final int action_scanner=0x7f09000f;
+        public static final int action_settings=0x7f09000e;
         public static final int container=0x7f09000a;
         public static final int listView1=0x7f09000b;
         public static final int queryResultTextView=0x7f090002;
+        public static final int rowTextView=0x7f09000d;
         public static final int textView1=0x7f09000c;
         public static final int textView11=0x7f090000;
         public static final int textView12=0x7f090001;
@@ -67,6 +68,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int fragment_pickuplist=0x7f030008;
         public static final int main=0x7f030009;
         public static final int overviewer=0x7f03000a;
+        public static final int simple_row=0x7f03000b;
     }
     public static final class menu {
         public static final int barcode_scanner=0x7f080000;
