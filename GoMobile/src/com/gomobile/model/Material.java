@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Material {
 
-	private final int eanNumber;
+	private final long eanNumber;
 	private double price;
 	private int weight;
 	private boolean available;
@@ -14,7 +14,7 @@ public class Material {
 	private Deliverer deliverer;
 	private List<Material> compatibleSubComponentList; //List of parts and subcomponents which are compatible with a specific bike
 	
-	public Material(int eanNumber){
+	public Material(long eanNumber){
 		this.eanNumber = eanNumber;
 		this.available = false;
 		this.matType = null;
@@ -83,7 +83,7 @@ public class Material {
 	/**
 	 * @return the eanNumber
 	 */
-	public int getEanNumber() {
+	public long getEanNumber() {
 		return eanNumber;
 	}
 

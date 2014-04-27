@@ -1,16 +1,17 @@
 package com.gomobile;
 
-import com.gomobile.scanner.model.Component;
+import com.gomobile.model.Component;
+import com.gomobile.model.Material;
 
 public class ScannerController {
 	
 	private History history = new History();
 
-	public Component getComponentInUse(){
-		return history.getComponentInUse();
+	public Material getMaterialInUse(){
+		return history.getMaterialInUse();
 	}
 	
-	public boolean setComponentInUse(Component comp){
+	public boolean setMaterialInUse(Material comp){
 		history.add(comp);
 		if(history.isSameType(comp)){
 			//TODO
@@ -20,8 +21,8 @@ public class ScannerController {
 		}
 	}
 	
-	public Component getComponentBefore() {
-		return history.getComponentBefore();
+	public Material getMaterialBefore() {
+		return history.getMaterialBefore();
 	}
 	
 	

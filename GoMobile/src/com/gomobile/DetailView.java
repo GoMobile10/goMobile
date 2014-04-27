@@ -1,12 +1,11 @@
 package com.gomobile;
 
 import android.content.Intent;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.gomobile.model.Bike;
 import com.gomobile.navigation.ViewWithNavigation;
-import com.gomobile.scanner.model.Component;
 
 public class DetailView extends ViewWithNavigation  {
 
@@ -15,14 +14,16 @@ public class DetailView extends ViewWithNavigation  {
 		super.onCreate(savedInstanceState);
 		
 		setContentView(R.layout.activity_detail_view);
-		this.display(ScannerController.getInstance().getComponentInUse());
+		this.display((Bike) ScannerController.getInstance().getMaterialInUse());
 	}
 
-	public void display(Component comp){
+	public void display(Bike comp){
 		TextView textView = (TextView) findViewById(R.id.textViewName);
-		textView.setText(comp.getName());
+		textView.setText(comp.getDescription());
 		textView = (TextView) findViewById(R.id.textViewPrice);
 		textView.setText(String.valueOf(comp.getPrice()));
+		textView = (TextView) findViewById(R.id.textViewCategory);
+		textView.setText(String.valueOf(comp.getCategory()));
 	}
 
 	@Override

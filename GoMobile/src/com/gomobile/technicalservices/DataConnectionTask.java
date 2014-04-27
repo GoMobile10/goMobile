@@ -26,7 +26,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.gomobile.data.controller.BikeDataController;
-import com.gomobile.scanner.model.Bike;
+import com.gomobile.model.Bike;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -97,7 +97,7 @@ public class DataConnectionTask extends AsyncTask<String, Integer, String> {
 		BikeDataController bikeDataController = new BikeDataController();
 		Long ean = Long.valueOf(url[0]);
 		Bike bike = bikeDataController.getBikeByEAN(ean);
-		String bikeDescription = bike.getName() + "\n" + bike.getPrice() + " EUR\n" + bike.getType();
+		String bikeDescription = bike.getDescription() + "\n" + bike.getPrice() + " EUR\n" + bike.getCategory();
 		
 		return bikeDescription;
     }

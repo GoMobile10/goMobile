@@ -38,20 +38,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class id {
         public static final int LinearLayout2=0x7f090009;
-        public static final int TextView01=0x7f090008;
         public static final int TextView02=0x7f090005;
-        public static final int action_detail_view=0x7f090010;
-        public static final int action_scanner=0x7f09000f;
-        public static final int action_settings=0x7f09000e;
+        public static final int action_detail_view=0x7f090011;
+        public static final int action_scanner=0x7f090010;
+        public static final int action_settings=0x7f09000f;
         public static final int button1=0x7f09000a;
         public static final int button2=0x7f09000b;
         public static final int button3=0x7f09000c;
         public static final int button4=0x7f09000d;
         public static final int queryResultTextView=0x7f090002;
+        public static final int rowTextView=0x7f09000e;
         public static final int textView11=0x7f090000;
         public static final int textView12=0x7f090001;
         public static final int textView2=0x7f090003;
         public static final int textView3=0x7f090004;
+        public static final int textViewCategory=0x7f090008;
         public static final int textViewName=0x7f090006;
         public static final int textViewPrice=0x7f090007;
     }
@@ -62,6 +63,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_detail_view=0x7f030003;
         public static final int activity_low_detail_view=0x7f030004;
         public static final int main=0x7f030005;
+        public static final int simple_row=0x7f030006;
     }
     public static final class menu {
         public static final int barcode_scanner=0x7f080000;

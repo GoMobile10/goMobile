@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.gomobile.model.Bike;
+import com.gomobile.model.Component;
 import com.gomobile.navigation.ViewWithNavigation;
-import com.gomobile.scanner.model.Component;
 import com.gomobile.technicalservices.BarcodeScanner;
-import com.gomobile.technicalservices.DataConnectionTask;
 
 public class LowDetailView extends ViewWithNavigation {
 
@@ -18,16 +18,17 @@ public class LowDetailView extends ViewWithNavigation {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_low_detail_view);
 		Bundle intentExtras = getIntent().getExtras();
-		String bikeDescription = intentExtras.getString("bike_description");
+//		String bikeDescription = intentExtras.getString("bike_description");
 		
-		TextView textView = (TextView) findViewById(R.id.textViewName);
-		textView.setText(bikeDescription);
+		display((Bike)ScannerController.getInstance().getMaterialInUse());
+		
+//		TextView textView = (TextView) findViewById(R.id.textViewName);
+//		textView.setText(bikeDescription);
 		
 		
 //		if(intentExtras != null && intentExtras.containsKey("compare"))
 //			compare = getIntent().getExtras().getBoolean("compare");
 //		
-//		display(ScannerController.getInstance().getComponentInUse());
 	}
 
 	// @Override
@@ -54,9 +55,9 @@ public class LowDetailView extends ViewWithNavigation {
 	// return super.onOptionsItemSelected(item);
 	// }
 
-	public void display(Component comp) {
+	public void display(Bike comp) {
 		TextView textView = (TextView) findViewById(R.id.textViewName);
-		textView.setText(comp.getName());
+		textView.setText(comp.getDescription());
 		textView = (TextView) findViewById(R.id.textViewPrice);
 		textView.setText(String.valueOf(comp.getPrice()));
 	}

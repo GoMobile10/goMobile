@@ -11,7 +11,7 @@ import org.apache.http.message.BasicNameValuePair;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.gomobile.scanner.model.Bike;
+import com.gomobile.model.Bike;
 import com.gomobile.technicalservices.MySqlConnector;
 
 /**
@@ -54,9 +54,9 @@ public class BikeDataController {
 					
 					String name = queryResult[0][0];
 					int price = Double.valueOf( queryResult[0][1] ).intValue();
-					String type = queryResult[0][2];
+					String category = queryResult[0][2];
 					
-					bike = new Bike(name, price, type);
+					bike = new Bike(ean, name, price, category);
 					
 				}
 				catch(ClassNotFoundException cnfe){
