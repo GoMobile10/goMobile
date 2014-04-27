@@ -12,20 +12,20 @@ import com.gomobile.technicalservices.BarcodeScanner;
 public class LowDetailView extends ViewWithNavigation {
 
 	private static boolean compare = false;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_low_detail_view);
 		Bundle intentExtras = getIntent().getExtras();
 //		String bikeDescription = intentExtras.getString("bike_description");
-		
+
 		display((Bike)ScannerController.getInstance().getMaterialInUse());
-		
+
 //		TextView textView = (TextView) findViewById(R.id.textViewName);
 //		textView.setText(bikeDescription);
-		
-		
+
+
 //		if(intentExtras != null && intentExtras.containsKey("compare"))
 //			compare = getIntent().getExtras().getBoolean("compare");
 //		

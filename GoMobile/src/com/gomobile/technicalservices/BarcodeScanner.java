@@ -113,6 +113,7 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 			
 //			String bikeDescription = bike.getDescription() + "\n" + bike.getPrice() + " EUR\n" + bike.getCategory();
 //			intent.putExtra("bike_description", bikeDescription);			
+
 			startActivity(intent);
 //		}
     }

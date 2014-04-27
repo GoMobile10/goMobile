@@ -1,7 +1,7 @@
 package com.gomobile.model;
 
 
-public abstract class Component extends Material{
+public class Component extends Material{
 	
 	private String description;
 	
