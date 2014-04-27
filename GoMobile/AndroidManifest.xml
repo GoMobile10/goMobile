@@ -42,6 +42,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gomobile.Main" />
         </activity>
+        
         <activity
             android:name="com.gomobile.LowDetailView"
             android:label="@string/title_activity_low_detail_view"
@@ -62,6 +63,20 @@
             android:name="com.gomobile.ComparisionView"
             android:label="@string/title_activity_comparision_view" >
         </activity>
+        <activity
+            android:name="com.gomobile.Overviewer"
+            android:label="@string/title_activity_Overviewer"
+            android:parentActivityName="com.gomobile.technicalservices.Main" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gomobile.technicalservices.Main" />
+               
+        </activity>
+        <activity
+            android:name="com.gomobile.Pickuplist"
+            android:label="@string/title_activity_pickuplist" >
+        </activity>
+       
     </application>
 
 </manifest>

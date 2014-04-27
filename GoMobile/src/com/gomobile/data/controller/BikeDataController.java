@@ -24,11 +24,11 @@ import com.gomobile.technicalservices.MySqlConnector;
 public class BikeDataController {
 
 	private final MySqlConnector sqlConnector;
-	
+
 	public BikeDataController(){
 		sqlConnector = new MySqlConnector();
 	}
-	
+
 	/**
 	 * Returns the bike with the specified EAN code.
 	 * @param ean the EAN of the bike
@@ -39,25 +39,25 @@ public class BikeDataController {
 
 			@Override
 			protected Bike doInBackground(Long[] params) {
-				
+
 				long ean = params[0];
-				
+
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 				nameValuePairs.add(new BasicNameValuePair("ean", ean + ""));
 				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_bike_data.php", nameValuePairs) );
-				
+
 				Bike bike = null;
-				
+
 				try{
 					String[] resultFieldNames = {"description", "price", "category"};
 					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
-					
+
 					String name = queryResult[0][0];
 					int price = Double.valueOf( queryResult[0][1] ).intValue();
 					String category = queryResult[0][2];
-					
+
 					bike = new Bike(ean, name, price, category);
-					
+
 				}
 				catch(ClassNotFoundException cnfe){
 					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
@@ -68,14 +68,14 @@ public class BikeDataController {
 				catch(Exception e){
 					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
 				}
-				
+
 				return bike;
 			}
-			
+
 		};
-		
+
 		taskToExecute.execute(new Long[]{ean});
-		
+
 		try {
 			return taskToExecute.get();
 		} catch (InterruptedException e) {
@@ -83,7 +83,7 @@ public class BikeDataController {
 		} catch (ExecutionException e) {
 			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
 		}
-		
+
 		return null;
 	}
 

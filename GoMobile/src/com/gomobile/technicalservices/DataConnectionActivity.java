@@ -25,11 +25,6 @@ import android.app.Activity;
 import android.view.Menu;
 import android.widget.TextView;
 
-/**
- * Misused for testing database connection functions.
- * @author Anton
- *
- */
 public class DataConnectionActivity extends Activity {
 
     private final String ODATA_SERVICE_URL = "http://vm20.hcc.uni-magdeburg.de:8000/sap/opu/odata/sap/Z_MAT_SEARCH_EAN/SearchMaterial(EAN='4011200296908')";

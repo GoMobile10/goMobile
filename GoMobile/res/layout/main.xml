@@ -8,38 +8,31 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Main" >
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="startScanner"
-        android:text="Scan Barcode" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewPrice"
-        android:layout_alignLeft="@+id/button1"
-        android:layout_marginTop="40dp"
-        android:text="Shopping Cart" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_below="@+id/button1"
-        android:layout_marginTop="40dp"
-        android:text="Compare" />
-
-    <Button
-                android:id="@+id/button4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button3"
-        android:layout_marginTop="40dp"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:text="Combine" />
+        android:layout_marginRight="25dp"
+        android:text="Procucer App" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="29dp"
+        android:text="Customer App"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Choose your application" />
 
 </RelativeLayout>
