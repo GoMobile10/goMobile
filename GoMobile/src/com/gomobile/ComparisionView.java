@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.gomobile.model.Bike;
-import com.gomobile.model.Component;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.technicalservices.BarcodeScanner;
 

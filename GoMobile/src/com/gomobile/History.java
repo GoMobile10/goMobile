@@ -2,7 +2,6 @@ package com.gomobile;
 
 import java.util.ArrayList;
 
-import com.gomobile.model.Component;
 import com.gomobile.model.Material;
 
 @SuppressWarnings("serial")
@@ -19,19 +18,25 @@ public class History extends ArrayList<Material>{
 		super();
 	}
 
-	@Override
 	public boolean add(Material object) {
 		if(this.size() == listSize){
 			this.remove(9);
 		}
-		return super.add(object);
+		super.add(0,object);
+		//TODO
+		return true;
 	}
 		
-	public boolean isSameType(Material comp){
+	public boolean isSameType(Material mat){
 		try {
 			//TODO 
-			return true;
-//			return getComponentBefore().isSameType(comp);			
+//			Material matBefore = this.getMaterialBefore();	
+//			if(matBefore instanceof Component && mat instanceof Component){
+//				if(matBefore.getCategory().equals(mat.getCategory())){
+//					return true;
+//				}
+//			}
+			return false;
 		} catch (IndexOutOfBoundsException e) {
 			return false;
 		}

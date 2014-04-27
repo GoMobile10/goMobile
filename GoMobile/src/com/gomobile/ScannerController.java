@@ -1,6 +1,5 @@
 package com.gomobile;
 
-import com.gomobile.model.Component;
 import com.gomobile.model.Material;
 
 public class ScannerController {

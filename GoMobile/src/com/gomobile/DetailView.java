@@ -1,5 +1,7 @@
 package com.gomobile;
 
+import java.text.NumberFormat;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -20,10 +22,15 @@ public class DetailView extends ViewWithNavigation  {
 	public void display(Bike comp){
 		TextView textView = (TextView) findViewById(R.id.textViewName);
 		textView.setText(comp.getDescription());
-		textView = (TextView) findViewById(R.id.textViewPrice);
-		textView.setText(String.valueOf(comp.getPrice()));
+
 		textView = (TextView) findViewById(R.id.textViewCategory);
 		textView.setText(String.valueOf(comp.getCategory()));
+		
+		//display price in the correct format		
+		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+		double price = comp.getPrice();
+		textView = (TextView) findViewById(R.id.textViewPrice);
+		textView.setText(currencyFormatter.format(price));
 	}
 
 	@Override

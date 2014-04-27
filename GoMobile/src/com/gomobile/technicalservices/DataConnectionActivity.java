@@ -14,16 +14,14 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import android.app.Activity;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.widget.TextView;
 
 import com.gomobile.R;
 import com.gomobile.data.controller.BikeDataController;
-import com.gomobile.model.Bike;
-
-import android.os.Bundle;
-import android.app.Activity;
-import android.view.Menu;
-import android.widget.TextView;
 
 public class DataConnectionActivity extends Activity {
 
