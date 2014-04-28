@@ -50,7 +50,7 @@ public class BikeDataController {
 				
 
 				try{
-					String[] resultFieldNames = {"description", "price", "category", "EAN"};
+					String[] resultFieldNames = {"Description", "Price", "Category", "EAN"};
 					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
 					Bike nextBike = null;
 

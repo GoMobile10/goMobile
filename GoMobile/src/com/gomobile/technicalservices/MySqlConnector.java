@@ -109,7 +109,9 @@ public class MySqlConnector {
 			Log.e("STREAM READING ERROR", "Error converting result " + e.getLocalizedMessage());
 		}
 		
-		return result;
+		Log.i("QUERY RESULT STRING:", result);
+		
+		return result.replaceAll("<br />", "");
 	}
 	
 	
