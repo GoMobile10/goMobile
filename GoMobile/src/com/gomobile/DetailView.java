@@ -2,12 +2,16 @@ package com.gomobile;
 
 import java.text.NumberFormat;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gomobile.model.Bike;
+import com.gomobile.model.BikeComponentInterface;
 import com.gomobile.navigation.ViewWithNavigation;
+import com.gomobile.shoppingcart.ShoppingCart;
 
 public class DetailView extends ViewWithNavigation  {
 
@@ -35,8 +39,9 @@ public class DetailView extends ViewWithNavigation  {
 
 	@Override
 	public void navigateRight() {
-		// TODO Auto-generated method stub
-		
+		Context context = getApplicationContext();
+		BikeComponentInterface item = (BikeComponentInterface)ScannerController.getInstance().getMaterialInUse();
+		ShoppingCart.getInstance().add(item,context);		
 	}
 
 	@Override

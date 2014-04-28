@@ -11,6 +11,7 @@ public class ScannerController {
 	}
 	
 	public boolean setMaterialInUse(Material comp){
+		//TODO already exists
 		history.add(comp);
 		if(history.isSameType(comp)){
 			//TODO

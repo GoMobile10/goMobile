@@ -1,7 +1,7 @@
 package com.gomobile.model;
 
 
-public class Component extends Material{
+public class Component extends Material implements BikeComponentInterface{
 	
 	private String description;
 	

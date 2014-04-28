@@ -1,11 +1,13 @@
 package com.gomobile.model;
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
 public class Material {
 
 	private final long eanNumber;
+	//TODO never calculate prices with double/float -> use BigDecimal or int
 	private double price;
 	private int weight;
 	private boolean available;

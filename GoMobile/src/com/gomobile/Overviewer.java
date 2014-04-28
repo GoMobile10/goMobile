@@ -41,7 +41,7 @@ ArrayList<Component> pickuplist;
 		assemblingOrders.add(new Order(2,pickuplist));
 		pickuplist.add(new Component(4567,"Component4",4,"Sattel"));
 		assemblingOrders.add(new Order(3,pickuplist));
-		ListAdapter listenAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_activated_1,assemblingOrders);
+		ListAdapter listenAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,assemblingOrders);
 		meineListView = (ListView) findViewById(R.id.listView1);
 		
 		meineListView.setAdapter(listenAdapter);

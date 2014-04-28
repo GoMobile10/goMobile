@@ -8,22 +8,32 @@ import android.widget.TextView;
 
 import com.gomobile.model.Bike;
 import com.gomobile.navigation.ViewWithNavigation;
+import com.gomobile.shoppingcart.ShoppingCartView;
 import com.gomobile.technicalservices.BarcodeScanner;
 
 public class LowDetailView extends ViewWithNavigation {
 
 	private static boolean compare = false;
+	private static boolean shoppingCart = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_low_detail_view);
-//		Bundle intentExtras = getIntent().getExtras();
+		
+		Bundle intentExtras = getIntent().getExtras();
+
 //		String bikeDescription = intentExtras.getString("bike_description");
 		display((Bike)ScannerController.getInstance().getMaterialInUse());
 
-//		if(intentExtras != null && intentExtras.containsKey("compare"))
-//			compare = getIntent().getExtras().getBoolean("compare");
+		if(intentExtras != null ){
+			if(intentExtras.containsKey("compare"))
+				compare = getIntent().getExtras().getBoolean("compare");
+			if(intentExtras.containsKey("shoppingCart")){
+				shoppingCart = getIntent().getExtras().getBoolean("shoppingCart");
+				//display the item
+			}
+		}
 //		
 	}
 
@@ -43,10 +53,17 @@ public class LowDetailView extends ViewWithNavigation {
 	}
 
 	public void navigateLeft() {
-		if(compare)
+		if(compare){
 			startActivity(new Intent(this, ComparisionView.class));
-		else
-			startActivity(new Intent(this, BarcodeScanner.class));
+			compare = false;
+		}else
+		if(shoppingCart){
+			startActivity(new Intent(this, ShoppingCartView.class));
+			shoppingCart = false;
+		}else{
+		
+		startActivity(new Intent(this, BarcodeScanner.class));	
+		}
 	}
 
 	@Override

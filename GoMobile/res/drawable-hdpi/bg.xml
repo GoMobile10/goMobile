@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<!--  <selector xmlns:android="http://schemas.android.com/apk/res/android">-->
 
-    <item android:state_pressed="false"><shape>
+    <!--  <item android:state_pressed="false"><shape>
         <gradient android:angle="270" android:endColor="#BB00D5FF" android:startColor="#BB00D5FF" />
 
         <corners android:bottomLeftRadius="9dp" android:topRightRadius="9dp" />
@@ -10,13 +10,20 @@
         <gradient android:angle="270" android:endColor="#BB0987CD" android:startColor="#BB0987CD" />
 
         <corners android:bottomLeftRadius="9dp" android:topRightRadius="9dp" />
-    </shape></item>
-    <item android:state_activated="true"><shape>
-        <gradient android:angle="270" android:endColor="#BB0987CD" android:startColor="#BB0987CD" />
+    </shape></item>-->
+    <!-- <item android:state_selected="true"><shape>
+        <gradient android:angle="270" android:endColor="#BB00D5FF" android:startColor="#BB00D5FF" />
 
         <corners android:bottomLeftRadius="9dp" android:topRightRadius="9dp" />
-    </shape></item>
-
+    </shape></item> -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:state_checked="true" android:drawable="@color/black_overlay" />	
+	<!-- <item android:state_active="true" android:drawable="@color/black_overlay" />
+   	<item android:state_selected="true" android:drawable="@color/black_overlay" />
+    <item android:state_focused="true" android:drawable="@color/black_overlay" />
+    <item android:state_pressed="true" android:drawable="@color/black_overlay" /> -->
+    <item android:drawable="@android:color/white" />
+</selector>
     
 
-</selector>
+<!--    </selector>-->

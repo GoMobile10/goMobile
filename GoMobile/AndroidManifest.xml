@@ -42,7 +42,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gomobile.Main" />
         </activity>
-        
         <activity
             android:name="com.gomobile.LowDetailView"
             android:label="@string/title_activity_low_detail_view"
@@ -70,13 +69,15 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.gomobile.technicalservices.Main" />
-               
         </activity>
         <activity
             android:name="com.gomobile.Pickuplist"
             android:label="@string/title_activity_pickuplist" >
         </activity>
-       
+        <activity
+            android:name="com.gomobile.shoppingcart.ShoppingCartView"
+            android:label="@string/title_activity_shopping_cart_view" >
+        </activity>
     </application>
 
 </manifest>
