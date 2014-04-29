@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/repairPicTeaser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="1dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="45dp"
+        android:maxWidth="45dp"
+        android:src="@drawable/bike_wheelfront" />
+
+    <TextView
+        android:id="@+id/repairNameTeaser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="1dp"
+        android:layout_toRightOf="@+id/repairPicTeaser"
+        android:minWidth="200dp"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="italic|bold" />
+
+    <TextView
+        android:id="@+id/repairDateTeaser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/repairNameTeaser"
+        android:layout_below="@+id/repairNameTeaser"
+        android:layout_margin="1dp"
+        android:maxWidth="200dp"
+        android:minWidth="200dp"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/repairDateTeaser"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="1dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="1dp"
+        android:text="Medium Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15sp"
+        android:textStyle="italic" />
+
+</RelativeLayout>

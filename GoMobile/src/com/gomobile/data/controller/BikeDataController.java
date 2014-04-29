@@ -28,9 +28,12 @@ public class BikeDataController {
 	public BikeDataController(){
 		sqlConnector = new MySqlConnector();
 	}
+
 	
 	public ArrayList<Bike> getBikeList(String[] conditions){
 		AsyncTask<String, Integer, ArrayList<Bike>> taskToExecute = new AsyncTask<String, Integer, ArrayList<Bike>>(){
+
+
 
 			@Override
 			protected ArrayList<Bike> doInBackground(String[] params) {

@@ -12,8 +12,9 @@
     <string name="title_activity_detail_view">DetailView</string>
     <string name="title_activity_comparision_view">ComparisionView</string>
     <string name="title_activity_Overviewer">Overviewer</string>
-      <string name="title_activity_order_pickup_list">OrderPickupList</string>
-       <string name="title_activity_pickuplist">Pickuplist</string>
+    <string name="title_activity_order_pickup_list">OrderPickupList</string>
+    <string name="title_activity_pickuplist">Pickuplist</string>
+    <string name="title_activity_pickuplist_1">Repair Overview: </string>
+    <string name="title_activity_pickuplist_2">Repair Description: </string>
     
-
 </resources>
