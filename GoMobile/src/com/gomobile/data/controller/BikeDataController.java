@@ -29,6 +29,82 @@ public class BikeDataController {
 		sqlConnector = new MySqlConnector();
 	}
 
+	
+	public ArrayList<Bike> getBikeList(String[] conditions){
+		AsyncTask<String, Integer, ArrayList<Bike>> taskToExecute = new AsyncTask<String, Integer, ArrayList<Bike>>(){
+
+
+
+			@Override
+			protected ArrayList<Bike> doInBackground(String[] params) {
+
+				String where_condition = "BikeEAN=EAN"; //default join condition
+				
+				//here params are conditions
+				for(int i = 0; i < params.length; i++){
+					where_condition = where_condition + " AND " + params[i];
+				}
+
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				nameValuePairs.add(new BasicNameValuePair("where_condition", where_condition));
+				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_bike_list.php", nameValuePairs) );
+
+				ArrayList<Bike> resultList = new ArrayList<Bike>();
+				
+
+				try{
+					String[] resultFieldNames = {"Description", "Price", "Category", "EAN"};
+					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
+					Bike nextBike = null;
+
+					int rowCount = queryResult.length;
+					
+					for(int i = 0; i < rowCount; i++){
+						String name = queryResult[i][0];
+						int price = Double.valueOf( queryResult[i][1] ).intValue();
+						String category = queryResult[i][2];
+						Long ean = Long.valueOf(queryResult[i][3]);
+						
+						nextBike = new Bike(ean, name, price, category);
+						resultList.add(nextBike);
+					}
+					
+
+				}
+				catch(ClassNotFoundException cnfe){
+					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+				}
+				catch(SQLException se){
+					Log.e("BIKE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+				}
+				catch(Exception e){
+					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+				}
+
+				return resultList;
+			}
+
+		};
+
+		taskToExecute.execute(conditions);
+
+		try {
+			return taskToExecute.get();
+		} catch (InterruptedException e) {
+			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		} catch (ExecutionException e) {
+			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		}
+
+		return null;
+	}
+	
+	// returns all the bikes which have a defect, stored in a List
+	public ArrayList<Bike> repairOrders(){
+			String[] conditions = {"isDefect='1'"};
+			return this.getBikeList(conditions);
+	}
+		
 	/**
 	 * Returns the bike with the specified EAN code.
 	 * @param ean the EAN of the bike

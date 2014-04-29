@@ -2,33 +2,47 @@ package com.gomobile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gomobile.navigation.ViewWithNavigation;
 
 public class Pickuplist extends ViewWithNavigation {
 
+	ImageView repairPicture;
+	TextView repairDescription;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pickuplist);
-		//ArrayList<Part> pickuplist = getIntent().getExtras().getParcelableArrayList("PL");
-		//System.out.println("Pickuplist size: "+pickuplist.size());
-		TextView textView = (TextView) findViewById(R.id.textView1);
-		textView.setText("Pickup List for Order "+getIntent().getExtras().getInt("OrderID"));
+		//Fill the TextView 
+		TextView textView = (TextView) findViewById(R.id.date);
+		textView.setText("Bike: "
+				+ getIntent().getExtras().getString("Description"));
+		repairPicture = (ImageView) findViewById(R.id.repairPic);
+		repairDescription = (TextView) findViewById(R.id.repairDescription);
+
+		switch ((int) getIntent().getExtras().getLong("EanNumber")) {
+		case 0:
+			repairPicture
+					.setImageResource(com.gomobile.R.drawable.bike_wheelfront);
+			repairDescription
+					.setText("The bike wheel is flat.\nThe bike rim is bent.");
+			break;
+		case 1:
+			repairPicture.setImageResource(com.gomobile.R.drawable.bike_frame);
+			repairDescription
+					.setText("The frame is broken.\nThe broken part is marked.");
+			break;
+		}
+		repairPicture = (ImageView) findViewById(R.id.repairPic);
 
 	}
-	
-	
-	
-	
-	
+
 	public void navigateRight() {
-		
+
 	}
-	
-	
-	
 
 	@Override
 	public void navigateLeft() {
@@ -38,7 +52,7 @@ public class Pickuplist extends ViewWithNavigation {
 
 	@Override
 	public void navigateUp() {
-		//startActivity(new Intent(this, Overviewer.class));
+		// startActivity(new Intent(this, Overviewer.class));
 
 	}
 

@@ -33,6 +33,16 @@ public class Navigation {
 
 	public int onSensorChanged(SensorEvent event) {
 
+		// --------- MOBILE NAVIGATION VALUES ---------
+
+		int accValue = 4;
+		int azimutValue = 25;
+
+		// --------- GLAS NAVIGATION VALUES ---------
+
+		// int accValue = 4;
+		// int azimutValue = 25;
+
 		// checks witch sensor is active
 		switch (event.sensor.getType()) {
 		case Sensor.TYPE_ACCELEROMETER:
@@ -57,27 +67,23 @@ public class Navigation {
 			// OrientationSensor
 			azimuth += (azimuth >= 0) ? 0 : 360;
 
-			// float FALSE_PITCH = (float) Math.toDegrees(orientation[1]);
-			// float FALSE_ROLL = (float) Math.toDegrees(orientation[2]);
-
-			// answer.setText("AZI: "+(int)azimuth+"\nPIT: "+(int)FALSE_PITCH+"\nROL: "+(int)FALSE_ROLL);
 		}
 
 		if (navigated == false) {
 
 			// checks if accelerometer value X goes down
-			if (mZ_Value + 3 <= aZ_Value) {
+			if (mZ_Value + accValue <= aZ_Value) {
 				navigated = true;
 				return NAVIGATE_DOWN;
 			}
 			// checks if accelerometer value X goes up
-			if (mZ_Value - 3 >= aZ_Value) {
+			if (mZ_Value - accValue >= aZ_Value) {
 				navigated = true;
 				return NAVIGATE_UP;
 			}
-
+			// checks the values if there is a switch between 360 and 0
 			if (Z_Value > 340) {
-				if (azimuth < 30) {
+				if (azimuth < azimutValue) {
 					navigated = true;
 					return NAVIGATE_RIGHT;
 				}
@@ -86,6 +92,7 @@ public class Navigation {
 					return NAVIGATE_LEFT;
 				}
 			}
+			// checks the values if there is a switch between 0 and 360
 			if (Z_Value < 25) {
 				if (azimuth > 50 && azimuth < 100) {
 					navigated = true;
@@ -97,12 +104,13 @@ public class Navigation {
 					return NAVIGATE_LEFT;
 				}
 			}
+			// checks the normal values
 			if (Z_Value >= 25 && Z_Value <= 340) {
-				if (Z_Value - 20 > azimuth) {
+				if (Z_Value - azimutValue > azimuth) {
 					navigated = true;
 					return NAVIGATE_LEFT;
 				}
-				if (Z_Value + 25 < azimuth) {
+				if (Z_Value + azimutValue < azimuth) {
 					navigated = true;
 					return NAVIGATE_RIGHT;
 				}
