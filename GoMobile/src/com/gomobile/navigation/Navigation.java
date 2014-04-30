@@ -10,6 +10,7 @@ public class Navigation {
 	public static final int NAVIGATE_LEFT = 2;
 	public static final int NAVIGATE_UP = 3;
 	public static final int NAVIGATE_DOWN = 4;
+	public boolean navigatedActive = false;
 
 	Sensor accelerometer;
 	Sensor magnatometer;
@@ -30,13 +31,14 @@ public class Navigation {
 	float orientation[] = new float[3];
 
 	boolean navigated = false;
+	
 
 	public int onSensorChanged(SensorEvent event) {
 
 		// --------- MOBILE NAVIGATION VALUES ---------
 
 		int accValue = 4;
-		int azimutValue = 40; //changed from 25 to 40 for live demo TE
+		int azimutValue = 40; // changed from 25 to 40 for live demo TE
 
 		// --------- GLAS NAVIGATION VALUES ---------
 
@@ -68,51 +70,53 @@ public class Navigation {
 			azimuth += (azimuth >= 0) ? 0 : 360;
 
 		}
+		if (navigatedActive == true) {
 
-		if (navigated == false) {
+			if (navigated == false) {
 
-			// checks if accelerometer value X goes down
-			if (mZ_Value + accValue <= aZ_Value) {
-				navigated = true;
-				return NAVIGATE_DOWN;
-			}
-			// checks if accelerometer value X goes up
-			if (mZ_Value - accValue >= aZ_Value) {
-				navigated = true;
-				return NAVIGATE_UP;
-			}
-			// checks the values if there is a switch between 360 and 0
-			if (Z_Value > 340) {
-				if (azimuth < azimutValue) {
+				// checks if accelerometer value X goes down
+				if (mZ_Value + accValue <= aZ_Value) {
 					navigated = true;
-					return NAVIGATE_RIGHT;
+					return NAVIGATE_DOWN;
 				}
-				if (Z_Value - 25 > azimuth && azimuth > 200) {
+				// checks if accelerometer value X goes up
+				if (mZ_Value - accValue >= aZ_Value) {
 					navigated = true;
-					return NAVIGATE_LEFT;
+					return NAVIGATE_UP;
 				}
-			}
-			// checks the values if there is a switch between 0 and 360
-			if (Z_Value < 25) {
-				if (azimuth > 50 && azimuth < 100) {
-					navigated = true;
-					return NAVIGATE_RIGHT;
-				} else {
+				// checks the values if there is a switch between 360 and 0
+				if (Z_Value > 340) {
+					if (azimuth < azimutValue) {
+						navigated = true;
+						return NAVIGATE_RIGHT;
+					}
+					if (Z_Value - 25 > azimuth && azimuth > 200) {
+						navigated = true;
+						return NAVIGATE_LEFT;
+					}
 				}
-				if (azimuth > 300) {
-					navigated = true;
-					return NAVIGATE_LEFT;
+				// checks the values if there is a switch between 0 and 360
+				if (Z_Value < 25) {
+					if (azimuth > 50 && azimuth < 100) {
+						navigated = true;
+						return NAVIGATE_RIGHT;
+					} else {
+					}
+					if (azimuth > 300) {
+						navigated = true;
+						return NAVIGATE_LEFT;
+					}
 				}
-			}
-			// checks the normal values
-			if (Z_Value >= 25 && Z_Value <= 340) {
-				if (Z_Value - azimutValue > azimuth) {
-					navigated = true;
-					return NAVIGATE_LEFT;
-				}
-				if (Z_Value + azimutValue < azimuth) {
-					navigated = true;
-					return NAVIGATE_RIGHT;
+				// checks the normal values
+				if (Z_Value >= 25 && Z_Value <= 340) {
+					if (Z_Value - azimutValue > azimuth) {
+						navigated = true;
+						return NAVIGATE_LEFT;
+					}
+					if (Z_Value + azimutValue < azimuth) {
+						navigated = true;
+						return NAVIGATE_RIGHT;
+					}
 				}
 			}
 		}

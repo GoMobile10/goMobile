@@ -61,6 +61,10 @@
         <activity
             android:name="com.gomobile.ComparisionView"
             android:label="@string/title_activity_comparision_view" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                 android:value="com.gomobile.technicalservices.BarcodeScanner" />
+                
         </activity>
         <activity
             android:name="com.gomobile.Overviewer"

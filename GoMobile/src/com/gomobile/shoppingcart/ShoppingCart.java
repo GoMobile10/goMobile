@@ -81,8 +81,8 @@ public class ShoppingCart {
 
 	private ShoppingCart() {
 		BikeDataController bdc = new BikeDataController();
-		add(bdc.getBikeByEAN(7613257813441L));
-		add(bdc.getBikeByEAN(7613257813441L));
+//		add(bdc.getBikeByEAN(7613257813441L));
+//		add(bdc.getBikeByEAN(7613257813441L));
 		add(bdc.getBikeByEAN(8717185926842L));
 
 	}

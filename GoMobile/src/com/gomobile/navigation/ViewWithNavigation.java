@@ -47,10 +47,27 @@ public abstract class ViewWithNavigation extends Activity implements
 
 		if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
 			Navigation.getInstance().setNavigationBase();
+			Navigation.getInstance().navigatedActive = true;
+			return true;
+		}
+
+		if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+			Navigation.getInstance().navigatedActive = false;
+			
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+//	@Override
+//	public boolean onKeyUp(int keyCode, KeyEvent event) {
+//
+//		if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+//			Navigation.getInstance().navigatedActive = false;
+//			
+//			return true;
+//		}
+//		return super.onKeyDown(keyCode, event);
+//	}
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
