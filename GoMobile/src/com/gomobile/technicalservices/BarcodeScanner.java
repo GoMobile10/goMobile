@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.gomobile.ComparisionView;
@@ -14,6 +15,7 @@ import com.gomobile.LowDetailView;
 import com.gomobile.ScannerController;
 import com.gomobile.data.controller.BikeDataController;
 import com.gomobile.model.Bike;
+import com.gomobile.navigation.ViewWithNavigation;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.interfaces.ScanditSDK;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKListener;
@@ -26,6 +28,8 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 	public static final String sScanditSdkAppKey = "OGdjwH4aEeOcTdF93c7Gf4Sdj10VaESFvaMfCqnd4Uw";
 	public ScanditSDKAutoAdjustingBarcodePicker picker ;
 	private boolean pause = false;
+	private boolean showDialog = false;
+	private AlertDialog dialog;
 		
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,45 +104,42 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
         }
         onPause();
     
-//		if(ScannerController.getInstance().setMaterialInUse(new Part(cleanedBarcode, 42, "Brakes")))        	
-//			displayComparisionView().show();
-//		else{
+        BikeDataController bikeDataController = new BikeDataController();
+        Long ean = Long.valueOf(cleanedBarcode);
+        Bike bike = bikeDataController.getBikeByEAN(ean);
+//        Bike bike = new Bike(1234, "Test", 499, "Bla");
+		if(ScannerController.getInstance().setMaterialInUse(bike)){   	
+			dialog = displayComparisionView();
+			showDialog = true;
+			dialog.show();
+		}else{
 			Intent intent = new Intent(this, LowDetailView.class);
-//			intent.putExtra("compare", false);
-			
-			BikeDataController bikeDataController = new BikeDataController();
-			Long ean = Long.valueOf(cleanedBarcode);
-			Bike bike = bikeDataController.getBikeByEAN(ean);
-			ScannerController.getInstance().setMaterialInUse(bike);
-			
-//			String bikeDescription = bike.getDescription() + "\n" + bike.getPrice() + " EUR\n" + bike.getCategory();
-//			intent.putExtra("bike_description", bikeDescription);			
-
 			startActivity(intent);
-//		}
+		}
     }
     
     private AlertDialog displayComparisionView(){
     	 AlertDialog.Builder builder = new AlertDialog.Builder(this);
   		// Add the buttons
-  		builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+  		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
   		           public void onClick(DialogInterface dialog, int id) {
   		        	   startActivity(new Intent(BarcodeScanner.this,ComparisionView.class)); 
   		           }
   		       });
-  		builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+  		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
   		           public void onClick(DialogInterface dialog, int id) {
   		        	   		Intent intent = new Intent(BarcodeScanner.this, LowDetailView.class);
-  		        	   		intent.putExtra("compare", false);
+//  		        	   		intent.putExtra("compare", false);
   		        	   		startActivity(intent);
   		           }
   		       });
 
   		// 2. Chain together various setter methods to set the dialog characteristics
   		builder.setMessage("Do you wanna compare it").setTitle("Compare?");
-
+  		
   		// 3. Get the AlertDialog from create()
   		AlertDialog dialog = builder.create();
+  		
   		return dialog;
     }
     
@@ -162,4 +163,5 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
     	mPicker.stopScanning();
         finish();
     }
+
 }

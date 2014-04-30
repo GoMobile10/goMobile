@@ -72,13 +72,16 @@ public class BikeDataController {
 
 				}
 				catch(ClassNotFoundException cnfe){
-					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+				cnfe.printStackTrace();
+//					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
 				}
 				catch(SQLException se){
-					Log.e("BIKE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+					se.printStackTrace();
+//					Log.e("BIKE DATA RETRIEVING ERROR", se.getLocalizedMessage());
 				}
 				catch(Exception e){
-					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+					e.printStackTrace();
+//					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
 				}
 
 				return resultList;
@@ -91,9 +94,11 @@ public class BikeDataController {
 		try {
 			return taskToExecute.get();
 		} catch (InterruptedException e) {
-			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+			e.printStackTrace();
+//			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
 		} catch (ExecutionException e) {
-			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+			e.printStackTrace();
+//			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
 		}
 
 		return null;
@@ -101,7 +106,7 @@ public class BikeDataController {
 	
 	// returns all the bikes which have a defect, stored in a List
 	public ArrayList<Bike> repairOrders(){
-			String[] conditions = {"isDefect='1'"};
+			String[] conditions = {"isDefect = 1"};
 			return this.getBikeList(conditions);
 	}
 		
@@ -125,14 +130,18 @@ public class BikeDataController {
 				Bike bike = null;
 
 				try{
-					String[] resultFieldNames = {"description", "price", "category"};
+					String[] resultFieldNames = {"description", "price", "category"};/*, "weight", "IsAvailable"};*/
 					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
 
 					String name = queryResult[0][0];
 					int price = Double.valueOf( queryResult[0][1] ).intValue();
 					String category = queryResult[0][2];
-
 					bike = new Bike(ean, name, price, category);
+					/*int weight = Integer.valueOf( queryResult[0][3]);
+					boolean isAvailable = Integer.valueOf(queryResult[0][4]) == 1;
+
+					bike = new Bike(ean, name, price, category, weight, isAvailable);*/
+
 
 				}
 				catch(ClassNotFoundException cnfe){

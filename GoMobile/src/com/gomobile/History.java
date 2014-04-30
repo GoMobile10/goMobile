@@ -2,6 +2,7 @@ package com.gomobile;
 
 import java.util.ArrayList;
 
+import com.gomobile.model.Bike;
 import com.gomobile.model.Material;
 
 @SuppressWarnings("serial")
@@ -29,13 +30,13 @@ public class History extends ArrayList<Material>{
 		
 	public boolean isSameType(Material mat){
 		try {
-			//TODO 
-//			Material matBefore = this.getMaterialBefore();	
-//			if(matBefore instanceof Component && mat instanceof Component){
-//				if(matBefore.getCategory().equals(mat.getCategory())){
-//					return true;
-//				}
-//			}
+			
+			Material matBefore = this.getMaterialBefore();	
+			if(matBefore instanceof Bike && mat instanceof Bike){
+				if(((Bike)matBefore).getCategory().equals(((Bike)mat).getCategory())){
+					return true;
+				}
+			}
 			return false;
 		} catch (IndexOutOfBoundsException e) {
 			return false;

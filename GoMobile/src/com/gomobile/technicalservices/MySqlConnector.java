@@ -62,7 +62,7 @@ public class MySqlConnector {
 			for(int i = 0; i < rowCount; i++){
 				JSONObject json_data = jArray.getJSONObject(i);
 			
-				for(int j = 0; j < columnCount; j++){
+				for(int j = 0; j < fieldNames.length; j++){
 					resultArray[i][j] = json_data.getString(fieldNames[j]);
 				}
 			}

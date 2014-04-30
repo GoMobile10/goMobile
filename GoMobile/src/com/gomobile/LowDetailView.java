@@ -61,14 +61,13 @@ public class LowDetailView extends ViewWithNavigation {
 			startActivity(new Intent(this, ShoppingCartView.class));
 			shoppingCart = false;
 		}else{
-		
-		startActivity(new Intent(this, BarcodeScanner.class));	
+			startActivity(new Intent(this, BarcodeScanner.class));	
 		}
 	}
 
 	@Override
 	public void navigateUp() {
-		// TODO Auto-generated method stub
+		startActivity(new Intent(this,ShoppingCartView.class));
 	}
 
 	@Override

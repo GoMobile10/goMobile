@@ -1,5 +1,7 @@
 package com.gomobile;
 
+import java.text.NumberFormat;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
@@ -22,10 +24,19 @@ public class ComparisionView extends ViewWithNavigation {
 	}
 
 	public void display(Bike comp1, Bike comp2) {
-		TextView textView = (TextView) findViewById(R.id.textView11);
+		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
+
+		TextView textView = (TextView) findViewById(R.id.textNameCompare1);
 		textView.setText(comp1.getDescription());
-		textView = (TextView) findViewById(R.id.textView12);
+		textView = (TextView) findViewById(R.id.textPriceCompare1);
+		textView.setText(currencyFormatter.format(comp1.getPrice()));
+		
+		textView = (TextView) findViewById(R.id.textNameCompare2);
 		textView.setText(comp2.getDescription());
+		textView = (TextView) findViewById(R.id.textPriceCompare2);
+		textView.setText(currencyFormatter.format(comp2.getPrice()));
+		
+		
 	}
 
 	@Override

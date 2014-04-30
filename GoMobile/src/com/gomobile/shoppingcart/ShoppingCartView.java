@@ -3,7 +3,9 @@ package com.gomobile.shoppingcart;
 import java.text.NumberFormat;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -12,6 +14,7 @@ import com.gomobile.R;
 import com.gomobile.ScannerController;
 import com.gomobile.model.Material;
 import com.gomobile.navigation.ViewWithNavigation;
+import com.gomobile.technicalservices.BarcodeScanner;
 
 /**
  * Displays the shopping cart
@@ -75,7 +78,8 @@ public class ShoppingCartView extends ViewWithNavigation {
 
 	@Override
 	public void navigateLeft() {
-
+		Intent intent = new Intent(this, BarcodeScanner.class);
+		startActivity(intent);
 	}
 
 	@Override
@@ -84,6 +88,8 @@ public class ShoppingCartView extends ViewWithNavigation {
 			listPosition = 0;
 		} else {
 			mainListView.setItemChecked(listPosition - 1, true);
+			View itemView = (View)mainListView.getItemAtPosition(listPosition);
+			itemView.setBackgroundColor(Color.LTGRAY);
 			listPosition = listPosition - 1;
 		}
 

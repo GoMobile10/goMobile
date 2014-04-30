@@ -36,7 +36,7 @@ public class Navigation {
 		// --------- MOBILE NAVIGATION VALUES ---------
 
 		int accValue = 4;
-		int azimutValue = 25;
+		int azimutValue = 40; //changed from 25 to 40 for live demo TE
 
 		// --------- GLAS NAVIGATION VALUES ---------
 
@@ -117,7 +117,7 @@ public class Navigation {
 			}
 		}
 		// after navigating move back to the initial angle
-		if ((Z_Value + 7 == (int) azimuth || Z_Value - 7 == (int) azimuth)
+		if ((Z_Value + 10 == (int) azimuth || Z_Value - 10 == (int) azimuth)
 				&& navigated == true) {
 			navigated = false;
 		}
@@ -125,6 +125,7 @@ public class Navigation {
 	}
 
 	public void setNavigationBase() {
+		navigated = false;
 		mZ_Value = aZ_Value;
 		Z_Value = (int) azimuth;
 	}

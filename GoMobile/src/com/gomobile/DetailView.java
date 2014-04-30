@@ -12,6 +12,7 @@ import com.gomobile.model.Bike;
 import com.gomobile.model.BikeComponentInterface;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.shoppingcart.ShoppingCart;
+import com.gomobile.shoppingcart.ShoppingCartView;
 
 public class DetailView extends ViewWithNavigation  {
 
@@ -35,6 +36,12 @@ public class DetailView extends ViewWithNavigation  {
 		double price = comp.getPrice();
 		textView = (TextView) findViewById(R.id.textViewPrice);
 		textView.setText(currencyFormatter.format(price));
+		
+		/*textView = (TextView) findViewById(R.id.textViewWeight);
+		textView.setText(String.valueOf(comp.getWeight()));
+		
+		textView = (TextView) findViewById(R.id.textViewAvailability);
+		textView.setText((comp.isAvailable()) ? "In Stock" : "Sorry, this bike is not available");*/
 	}
 
 	@Override
@@ -51,8 +58,7 @@ public class DetailView extends ViewWithNavigation  {
 
 	@Override
 	public void navigateUp() {
-		// TODO Auto-generated method stub
-		
+		startActivity(new Intent(this,ShoppingCartView.class));		
 	}
 
 	@Override

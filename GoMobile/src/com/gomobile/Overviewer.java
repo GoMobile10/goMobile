@@ -95,7 +95,7 @@ public class Overviewer extends ViewWithNavigation {
 				textDate.setText("30.04.2014");
 
 				break;
-			case 1:
+			case 1 /*83 42*/:
 				imageView.setImageResource(com.gomobile.R.drawable.bike_frame);
 				textDate.setText("01.05.2014");
 
