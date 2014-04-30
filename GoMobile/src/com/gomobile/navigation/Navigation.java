@@ -38,7 +38,7 @@ public class Navigation {
 		// --------- MOBILE NAVIGATION VALUES ---------
 
 		int accValue = 4;
-		int azimutValue = 40; // changed from 25 to 40 for live demo TE
+		int azimutValue = 35; // changed from 25 to 40 for live demo TE
 
 		// --------- GLAS NAVIGATION VALUES ---------
 
