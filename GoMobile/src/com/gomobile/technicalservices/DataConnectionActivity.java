@@ -34,8 +34,6 @@ public class DataConnectionActivity extends Activity {
 	setContentView(R.layout.activity_data_connection);
 	
 	TextView dataInfoView = (TextView) findViewById(R.id.queryResultTextView);
-	BikeDataController dataController = new BikeDataController();
-//	Bike exampleBike = dataController.getBikeByEAN(7613257813441L);
 	
 	
 //	USED FOR CONNECTING THE SAP SYSTEM
@@ -43,7 +41,7 @@ public class DataConnectionActivity extends Activity {
 	String[] urls = {this.ODATA_SERVICE_URL};
 	
 	DataConnectionTask connectionTask = new DataConnectionTask();
-	connectionTask.setTextView((TextView) findViewById(R.id.queryResultTextView));
+	connectionTask.setTextView(dataInfoView);
 	connectionTask.execute(urls);
 	
 //	
