@@ -17,6 +17,12 @@ public class Bike extends Material implements BikeComponentInterface{
 		this.category = category;
 	}
 	
+	public Bike(long eanNumber, String name) {
+		super(eanNumber);
+		this.description = name;
+		
+	}
+	
 	public Bike(long eanNumber, String name, int price, String category, int weight, boolean isAvailable) {
 		this(eanNumber, name, price, category);
 		this.setAvailable(isAvailable);

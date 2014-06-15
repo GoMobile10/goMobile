@@ -13,6 +13,7 @@ import android.util.Log;
 
 import com.gomobile.model.Bike;
 import com.gomobile.technicalservices.MySqlConnector;
+import com.gomobile.technicalservices.SAPConnector;
 
 /**
  * This class is a controller class and provides data consumption functionality.
@@ -24,9 +25,12 @@ import com.gomobile.technicalservices.MySqlConnector;
 public class BikeDataController {
 
 	private final MySqlConnector sqlConnector;
+	private final SAPConnector SAPConnector;
 
 	public BikeDataController(){
 		sqlConnector = new MySqlConnector();
+		SAPConnector = new SAPConnector();
+		
 	}
 
 	
@@ -122,38 +126,42 @@ public class BikeDataController {
 			protected Bike doInBackground(Long[] params) {
 
 				long ean = params[0];
-
-				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-				nameValuePairs.add(new BasicNameValuePair("ean", ean + ""));
-				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_bike_data.php", nameValuePairs) );
-
+				SAPConnector.setODATA_SERVICE_URL("http://vm20.hcc.uni-magdeburg.de:8000/sap/opu/odata/sap/Z_MAT_SEARCH_EAN/SearchMaterial(EAN='" + ean +"')/?$format=json");
+//
+//				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+//				nameValuePairs.add(new BasicNameValuePair("ean", ean + ""));
+//				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_bike_data.php", nameValuePairs) );
+//
 				Bike bike = null;
-
-				try{
-					String[] resultFieldNames = {"description", "price", "category"};/*, "weight", "IsAvailable"};*/
-					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
-
-					String name = queryResult[0][0];
-					int price = Double.valueOf( queryResult[0][1] ).intValue();
-					String category = queryResult[0][2];
-					bike = new Bike(ean, name, price, category);
-					/*int weight = Integer.valueOf( queryResult[0][3]);
-					boolean isAvailable = Integer.valueOf(queryResult[0][4]) == 1;
-
-					bike = new Bike(ean, name, price, category, weight, isAvailable);*/
-
-
-				}
-				catch(ClassNotFoundException cnfe){
-					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
-				}
-				catch(SQLException se){
-					Log.e("BIKE DATA RETRIEVING ERROR", se.getLocalizedMessage());
-				}
-				catch(Exception e){
-					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
-				}
-
+				String name = SAPConnector.getJSONDATA().get("Material");
+				long eanfromquery = Long.valueOf(SAPConnector.getJSONDATA().get("EAN"));
+				bike = new Bike(eanfromquery, name);
+//
+//				try{
+//					String[] resultFieldNames = {"description", "price", "category"};/*, "weight", "IsAvailable"};*/
+//					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
+//
+//					String name = queryResult[0][0];
+//					int price = Double.valueOf( queryResult[0][1] ).intValue();
+//					String category = queryResult[0][2];
+//					bike = new Bike(ean, name, price, category);
+//					/*int weight = Integer.valueOf( queryResult[0][3]);
+//					boolean isAvailable = Integer.valueOf(queryResult[0][4]) == 1;
+//
+//					bike = new Bike(ean, name, price, category, weight, isAvailable);*/
+//
+//
+//				}
+//				catch(ClassNotFoundException cnfe){
+//					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+//				}
+//				catch(SQLException se){
+//					Log.e("BIKE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+//				}
+//				catch(Exception e){
+//					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+//				}
+//
 				return bike;
 			}
 
