@@ -1,18 +1,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context="com.gomobile.Pickuplist"
     tools:ignore="MergeRootFrame" >
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/date"
+            android:id="@+id/headline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/title_activity_pickuplist_1"
@@ -20,7 +20,7 @@
         </TextView>
 
         <LinearLayout
-            android:layout_width="400dp"
+            android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal" >
 
@@ -32,9 +32,9 @@
         	</ImageView>
         	
 			<LinearLayout
-            	android:layout_width="400dp"
-            	android:layout_height="match_parent"
-            	android:orientation="vertical">
+			    android:layout_width="wrap_content"
+			    android:layout_height="match_parent"
+			    android:orientation="vertical" >
             	
             	<TextView
             	    android:id="@+id/repairDes"
@@ -49,21 +49,36 @@
 			    
         		<TextView
         		    android:id="@+id/repairDescription"
-        		    android:layout_width="156dp"
-        		    android:layout_height="150dp"
+        		    android:layout_width="133dp"
+        		    android:layout_height="match_parent"
         		    android:layout_margin="5dp"
         		    android:text="@string/title_activity_pickuplist_2" >
-"
+
         		</TextView>
-        	</LinearLayout>	
+        	</LinearLayout>
+
+			<LinearLayout
+			    android:layout_width="310dp"
+			    android:layout_height="match_parent"
+			    android:orientation="vertical" >
+
+				<TextView
+				    android:id="@+id/textView1"
+				    android:layout_width="wrap_content"
+				    android:layout_height="wrap_content"
+				    android:text="Pickup Spare Parts"
+				    android:textSize="15sp"
+				    android:textStyle="bold" />
+
+				<ListView
+				    android:id="@+id/listView1"
+				    android:layout_width="310dp"
+				    android:layout_height="match_parent" >
+				</ListView>
+
+			</LinearLayout>
 
     	</LinearLayout>
-        
-        <ListView
-           	android:id="@+id/listView1"
-           	android:layout_width="214dp"
-           	android:layout_height="match_parent" >
-       	</ListView>
         
 
     </LinearLayout>

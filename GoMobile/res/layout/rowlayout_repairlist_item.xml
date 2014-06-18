@@ -28,7 +28,7 @@
         android:textStyle="italic|bold" />
 
     <TextView
-        android:id="@+id/repairDateTeaser"
+        android:id="@+id/repairDescriptionTeaser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/repairNameTeaser"

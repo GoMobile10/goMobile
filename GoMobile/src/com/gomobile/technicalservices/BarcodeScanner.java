@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.gomobile.ComparisionView;
 import com.gomobile.LowDetailView;
+import com.gomobile.Pickuplist;
 import com.gomobile.ScannerController;
 import com.gomobile.data.controller.BikeDataController;
 import com.gomobile.model.Bike;
@@ -19,6 +20,7 @@ import com.gomobile.navigation.ViewWithNavigation;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.interfaces.ScanditSDK;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKListener;
+import com.mysql.jdbc.StringUtils;
 
 
 public class BarcodeScanner extends Activity implements ScanditSDKListener {
@@ -107,14 +109,26 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
         BikeDataController bikeDataController = new BikeDataController();
         Long ean = Long.valueOf(cleanedBarcode);
         Bike bike = bikeDataController.getBikeByEAN(ean);
+        System.out.println("didScanBarcode: "+ cleanedBarcode);
 //        Bike bike = new Bike(1234, "Test", 499, "Bla");
 		if(ScannerController.getInstance().setMaterialInUse(bike)){   	
 			dialog = displayComparisionView();
 			showDialog = true;
 			dialog.show();
 		}else{
-			Intent intent = new Intent(this, LowDetailView.class);
-			startActivity(intent);
+			Intent intent = getIntent();
+			System.out.println("Boolean pickupspareparts: "+intent.getBooleanExtra("pickupspareparts", false));
+			if( (intent.getBooleanExtra("pickupspareparts", false)) == true){
+				//If sparepart pickup ...
+				System.out.println("didScanBarcode in pickup spareparts mode");
+				intent = new Intent(this, Pickuplist.class);
+				intent.putExtra("scannedEAN", cleanedBarcode);
+				startActivity(intent);
+			}else{
+				System.out.println("didScanBarcode: go to low detail view!");
+				intent = new Intent(this, LowDetailView.class);
+				startActivity(intent);
+			}
 		}
     }
     

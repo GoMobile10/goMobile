@@ -58,13 +58,14 @@ public class BikeDataController {
 				
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 				nameValuePairs.add(new BasicNameValuePair("where_condition", where_condition));
+				System.out.println("nameValuePairs: "+ nameValuePairs.toString());
 				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_bike_list.php", nameValuePairs) );
-
+				System.out.println("Querry String: " + sqlConnector.getPHPRequestOutput("get_bike_list.php", nameValuePairs));
 				ArrayList<Bike> resultList = new ArrayList<Bike>();
 				
 
 				try{
-					String[] resultFieldNames = {"Description", "Price", "Category", "EAN"};
+					String[] resultFieldNames = {"Description", "Price", "Category", "EAN","isDefect"};
 					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
 					Bike nextBike = null;
 
@@ -75,8 +76,9 @@ public class BikeDataController {
 						int price = Double.valueOf( queryResult[i][1] ).intValue();
 						String category = queryResult[i][2];
 						Long ean = Long.valueOf(queryResult[i][3]);
-						
-						nextBike = new Bike(ean, name, price, category);
+						int isDefect = Integer.valueOf( queryResult[i][4] ).intValue();
+						System.out.println("isDefect?: "+ isDefect);
+						nextBike = new Bike(ean, name, price, category,isDefect);
 						resultList.add(nextBike);
 					}
 					
@@ -117,7 +119,7 @@ public class BikeDataController {
 	
 	// returns all the bikes which have a defect, stored in a List
 	public ArrayList<Bike> repairOrders(){
-			String[] conditions = {"isDefect = 1"};
+			String[] conditions = {"isDefect=1"};
 			return this.getBikeList(conditions);
 	}
 		
