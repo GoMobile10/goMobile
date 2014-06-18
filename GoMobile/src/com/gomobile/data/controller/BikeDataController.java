@@ -49,6 +49,8 @@ public class BikeDataController {
 					where_condition = where_condition + " AND " + params[i];
 				}
 
+				System.out.println("Where clause: " + where_condition);
+				
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 				nameValuePairs.add(new BasicNameValuePair("where_condition", where_condition));
 				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_bike_list.php", nameValuePairs) );

@@ -18,6 +18,11 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
+/**
+* This class retrieves data from a SAP oData Service.
+* @author Anton & Anna
+*
+*/
 public class SAPConnector {
 	
 	private String ODATA_SERVICE_URL;
@@ -37,7 +42,11 @@ public class SAPConnector {
 		ODATA_SERVICE_URL = oDATA_SERVICE_URL;
 	}
 
-
+	/**
+	 * Send an oData request and return the result.
+	 * @param url The URL of the RESTService 
+	 * @return queryResult The result of the request as string.
+	 */
 	public String getODataQueryString(String url){
 		String queryResult = "";
 		
@@ -96,10 +105,13 @@ public class SAPConnector {
 			return queryResult;
 	}
 	
-	
+	/**
+	 * Converts a JSON String into a map.
+	 * @return resultMap A Map, which contains the JSON data objects as key value pairs.
+	 */
 	public Map<String,String> getJSONDATA(){
 		
-		Map<String,String> resultString = new HashMap<String, String>();
+		Map<String,String> resultMap = new HashMap<String, String>();
 		
 		//parse json data
 				try{
@@ -109,14 +121,14 @@ public class SAPConnector {
 					JSONObject metadataobject = rootobject.getJSONObject("d");					
 					String Material = metadataobject.getString("Material");
 					String EAN = metadataobject.getString("EAN");
-					resultString.put("Material", Material);
-					resultString.put("EAN", EAN);
+					resultMap.put("Material", Material);
+					resultMap.put("EAN", EAN);
 				
 				}catch(JSONException e){
 					Log.e("JSON PARSING ERROR", "Error parsing data " + e.getLocalizedMessage());
 				}
 				
-				return resultString;
+				return resultMap;
 	}
 
 }
