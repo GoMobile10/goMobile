@@ -2,7 +2,10 @@ package com.gomobile.data.controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.http.NameValuePair;
@@ -12,6 +15,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.gomobile.model.Bike;
+import com.gomobile.model.Component;
+import com.gomobile.model.RepairOrder;
 import com.gomobile.technicalservices.MySqlConnector;
 import com.gomobile.technicalservices.SAPConnector;
 
@@ -128,42 +133,42 @@ public class BikeDataController {
 			protected Bike doInBackground(Long[] params) {
 
 				long ean = params[0];
-				SAPConnector.setODATA_SERVICE_URL("http://vm20.hcc.uni-magdeburg.de:8000/sap/opu/odata/sap/Z_MAT_SEARCH_EAN/SearchMaterial(EAN='" + ean +"')/?$format=json");
-//
-//				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//				nameValuePairs.add(new BasicNameValuePair("ean", ean + ""));
-//				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_bike_data.php", nameValuePairs) );
-//
+//				SAPConnector.setODATA_SERVICE_URL("http://vm20.hcc.uni-magdeburg.de:8000/sap/opu/odata/sap/Z_MAT_SEARCH_EAN/SearchMaterial(EAN='" + ean +"')/?$format=json");
+
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				nameValuePairs.add(new BasicNameValuePair("ean", ean + ""));
+				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_bike_data.php", nameValuePairs) );
+
 				Bike bike = null;
-				String name = SAPConnector.getJSONDATA().get("Material");
-				long eanfromquery = Long.valueOf(SAPConnector.getJSONDATA().get("EAN"));
-				bike = new Bike(eanfromquery, name);
-//
-//				try{
-//					String[] resultFieldNames = {"description", "price", "category"};/*, "weight", "IsAvailable"};*/
-//					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
-//
-//					String name = queryResult[0][0];
-//					int price = Double.valueOf( queryResult[0][1] ).intValue();
-//					String category = queryResult[0][2];
-//					bike = new Bike(ean, name, price, category);
-//					/*int weight = Integer.valueOf( queryResult[0][3]);
-//					boolean isAvailable = Integer.valueOf(queryResult[0][4]) == 1;
-//
-//					bike = new Bike(ean, name, price, category, weight, isAvailable);*/
-//
-//
-//				}
-//				catch(ClassNotFoundException cnfe){
-//					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
-//				}
-//				catch(SQLException se){
-//					Log.e("BIKE DATA RETRIEVING ERROR", se.getLocalizedMessage());
-//				}
-//				catch(Exception e){
-//					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
-//				}
-//
+//				String name = SAPConnector.getJSONDATA().get("Material");
+//				long eanfromquery = Long.valueOf(SAPConnector.getJSONDATA().get("EAN"));
+//				bike = new Bike(eanfromquery, name);
+
+				try{
+					String[] resultFieldNames = {"description", "price", "category"};/*, "weight", "IsAvailable"};*/
+					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
+
+					String name = queryResult[0][0];
+					int price = Double.valueOf( queryResult[0][1] ).intValue();
+					String category = queryResult[0][2];
+					bike = new Bike(ean, name, price, category);
+					/*int weight = Integer.valueOf( queryResult[0][3]);
+					boolean isAvailable = Integer.valueOf(queryResult[0][4]) == 1;
+
+					bike = new Bike(ean, name, price, category, weight, isAvailable);*/
+
+
+				}
+				catch(ClassNotFoundException cnfe){
+					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+				}
+				catch(SQLException se){
+					Log.e("BIKE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+				}
+				catch(Exception e){
+					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+				}
+
 				return bike;
 			}
 
@@ -182,6 +187,191 @@ public class BikeDataController {
 		return null;
 	}
 
+	public List<RepairOrder> getRepairOrders (String condition){
+		AsyncTask<String, Integer, List<RepairOrder>> taskToExecute = new AsyncTask<String, Integer, List<RepairOrder>>(){
+
+			@Override
+			protected List<RepairOrder> doInBackground(String[] params) {
+
+				String condition = params[0];
+				List<RepairOrder> resultList = new ArrayList<RepairOrder>();
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				nameValuePairs.add(new BasicNameValuePair("where_condition", condition));
+				String requestResult = sqlConnector.getPHPRequestOutput("get_repairorder_list.php", nameValuePairs);
+				sqlConnector.setQueryResultString(requestResult);
+				
+				try{
+					String[][] jsonArray = sqlConnector.queryResultToArray(new String[]{"OrderID", "BikeEAN", "employeeid", "deliverydate", "cost", "repairdescription"});
+					int rowCount = jsonArray.length;
+					
+					for (int i = 0; i < rowCount; i++){
+						RepairOrder tempRepairOrder = new RepairOrder();
+						tempRepairOrder.setOrderID(Integer.valueOf(jsonArray[i][0]));
+						
+						Bike bike = new Bike(Long.valueOf(jsonArray[i][1]), null);
+						
+						tempRepairOrder.setDefectBike(bike);
+						tempRepairOrder.setEmployeeID(Integer.valueOf(jsonArray[i][2]));
+						
+						String[] dateAsArray = jsonArray[i][3].split("-");
+						Calendar deliverDateCalendar = Calendar.getInstance();
+						deliverDateCalendar.set(Integer.valueOf(dateAsArray[0]), Integer.valueOf(dateAsArray[1]), Integer.valueOf(dateAsArray[2]));
+						tempRepairOrder.setDeliveryDateCalendar(deliverDateCalendar);
+						
+						tempRepairOrder.setCost(Float.valueOf(jsonArray[i][4]));
+						tempRepairOrder.setRepairDescription(jsonArray[i][5]);
+						resultList.add(tempRepairOrder);
+					}
+					
+				}
+				catch(ClassNotFoundException cnfe){
+					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+				}
+				catch(SQLException se){
+					Log.e("BIKE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+				}
+				catch(Exception e){
+					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+				}
+		
+		
+				return resultList;
+			
+			}
+		};
+		
+		taskToExecute.execute(new String[]{condition});
+
+		try {
+			List<RepairOrder> resultList = taskToExecute.get();
+			
+			for(RepairOrder repairOrder : resultList){
+				Bike bike = getBikeByEAN(repairOrder.getDefectBike().getEanNumber());
+				repairOrder.setDefectBike(bike);
+				this.setComponentMap(repairOrder);
+			}
+			
+			return resultList;
+		} catch (InterruptedException e) {
+			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		} catch (ExecutionException e) {
+			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		}
+
+		return null;
+	}
+	
+	/**
+	 * Fills the map for a repair order that corresponds to a bike.
+	 * Each entry contains a defect component as the key and the wished replacement component as the value.
+	 * @param repairOrder
+	 */
+	private void setComponentMap(RepairOrder repairOrder){
+		AsyncTask<RepairOrder, Integer, String[][]> taskToExecute = new AsyncTask<RepairOrder, Integer, String[][]>(){
+
+			@Override
+			protected String[][] doInBackground(RepairOrder[] params) {
+
+				RepairOrder repairOrder = params[0];
+				
+				//TODO: implement logic
+				try{
+					List<RepairOrder> resultList = new ArrayList<RepairOrder>();
+					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+					nameValuePairs.add(new BasicNameValuePair("where_condition", "defectbikeEAN = " + repairOrder.getDefectBike().getEanNumber()));
+					String requestResult = sqlConnector.getPHPRequestOutput("get_repairorder_list.php", nameValuePairs);
+					sqlConnector.setQueryResultString(requestResult);
+					
+					return sqlConnector.queryResultToArray(new String[]{"OrderID", "defectcomponentean", "replacementcomponentean"});
+					
+				}
+				catch(ClassNotFoundException cnfe){
+					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+				}
+				catch(SQLException se){
+					Log.e("BIKE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+				}
+				catch(Exception e){
+					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+				}
+		
+				return null;
+			
+			}
+		};
+		
+		try{
+			taskToExecute.execute(new RepairOrder[]{repairOrder});
+			String[][] jsonArray = taskToExecute.get();
+			int rowCount = jsonArray.length;
+			
+			for(int i = 0; i < rowCount; i++){
+				Component defectComponent = getComponentByEAN(Long.valueOf(jsonArray[i][1]));
+				Component replacementComponent = getComponentByEAN(Long.valueOf(jsonArray[i][2]));
+				repairOrder.setDefectReplacementComponentMap(new HashMap<Component, Component>());
+				repairOrder.getDefectReplacementComponentMap().put(defectComponent, replacementComponent);
+				
+			}
+		}
+		catch(Exception e){
+			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		}
+
+	}
+	
+	public Component getComponentByEAN(long ean){
+		AsyncTask<Long, Integer, Component> taskToExecute = new AsyncTask<Long, Integer, Component>(){
+
+			@Override
+			protected Component doInBackground(Long[] params) {
+
+				long ean = params[0];
+
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				nameValuePairs.add(new BasicNameValuePair("ean", ean + ""));
+				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_component_data.php", nameValuePairs) );
+
+				Component component = null;
+
+				try{
+					String[] resultFieldNames = {"description", "price", "AverageAssemblingTime"};
+					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
+
+					String description = queryResult[0][0];
+					int price = Double.valueOf( queryResult[0][1] ).intValue();
+					int averageAssemblingTime = Integer.valueOf(queryResult[0][2]);
+					
+					component = new Component(ean, description, averageAssemblingTime, null);
+					component.setPrice(price);
+					
+				}
+				catch(ClassNotFoundException cnfe){
+					Log.e("BIKE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+				}
+				catch(SQLException se){
+					Log.e("BIKE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+				}
+				catch(Exception e){
+					Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+				}
+
+				return component;
+			}
+
+		};
+
+		taskToExecute.execute(new Long[]{ean});
+
+		try {
+			return taskToExecute.get();
+		} catch (InterruptedException e) {
+			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		} catch (ExecutionException e) {
+			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		}
+
+		return null;
+	}
 
 	/**
 	 * @return the sqlConnector

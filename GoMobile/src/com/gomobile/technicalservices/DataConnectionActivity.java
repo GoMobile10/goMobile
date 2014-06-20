@@ -22,7 +22,13 @@ import android.widget.TextView;
 
 import com.gomobile.R;
 import com.gomobile.data.controller.BikeDataController;
+import com.gomobile.model.RepairOrder;
 
+/**
+ * Misused for testing data management functionality on an android device.
+ * @author Anton
+ *
+ */
 public class DataConnectionActivity extends Activity {
 
     private final String ODATA_SERVICE_URL = "http://vm20.hcc.uni-magdeburg.de:8000/sap/opu/odata/sap/Z_MAT_SEARCH_EAN/SearchMaterial(EAN='4011200296908')";
@@ -34,18 +40,14 @@ public class DataConnectionActivity extends Activity {
 	setContentView(R.layout.activity_data_connection);
 	
 	TextView dataInfoView = (TextView) findViewById(R.id.queryResultTextView);
+	String text = "";
 	
+	BikeDataController dataController = new BikeDataController();
+	for(RepairOrder order : dataController.getRepairOrders("1")){
+		text = text +  "\n" + order.getRepairDescription();
+	}
 	
-//	USED FOR CONNECTING THE SAP SYSTEM
-//	String queryResult = "";
-	String[] urls = {this.ODATA_SERVICE_URL};
-	
-	DataConnectionTask connectionTask = new DataConnectionTask();
-	connectionTask.setTextView(dataInfoView);
-	connectionTask.execute(urls);
-	
-//	
-//	System.out.println(queryResult);
+	dataInfoView.setText(text);
     }
 
     @Override
