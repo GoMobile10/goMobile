@@ -1,6 +1,7 @@
 package com.gomobile.test;
 
 import com.gomobile.data.controller.BikeDataController;
+import com.gomobile.data.controller.EmployeesDataController;
 import com.gomobile.model.Bike;
 import com.gomobile.model.Component;
 import com.gomobile.model.RepairOrder;
@@ -79,5 +80,14 @@ public class MySQLConnectionTest extends TestCase {
 		}
 	}
 	
-
+	/**
+	* Test method for {@link com.gomobile.data.controller.EmployesDataController}.
+	*/
+	public void testEmployeesDataController() {
+		EmployeesDataController employeesDataController = new EmployeesDataController();
+		assertNotNull(employeesDataController.getEmployeeById(2L));
+		assertFalse(employeesDataController.getEmployeeByName("Hans Meier").isEmpty());
+		
+	}
+	
 	}
