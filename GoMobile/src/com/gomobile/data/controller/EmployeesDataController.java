@@ -99,6 +99,42 @@ public class EmployeesDataController {
 	}
 	
 	/**
+	 * Returns all employees.
+	 * @return a list of all employees stored in the database.
+	 */
+	public List<Employee> getAllEmployees(){
+		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		nameValuePairs.add(new BasicNameValuePair("where_condition", "1"));
+
+		System.out.println("QUERY ALL EMPLOYEES:");
+		sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_employee_data.php", nameValuePairs) );
+
+		List<Employee> resultList = new ArrayList<Employee>();
+		
+		try{
+			String[][] jsonArray = sqlConnector.queryResultToArray(new String[]{"id", "firstname", "lastname"});
+			int rowCount = jsonArray.length;
+
+			for(int i = 0; i < rowCount; i++){
+				Employee employee = new Employee(Long.valueOf(jsonArray[i][0]), jsonArray[i][1], jsonArray[i][2]);
+				resultList.add(employee);
+			}
+		
+		}
+		catch(ClassNotFoundException cnfe){
+			Log.e("EMPLOYEE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+		}
+		catch(SQLException se){
+			Log.e("EMPLOYEE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+		}
+		catch(Exception e){
+			Log.e("EMPLOYEE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		}
+		
+		return resultList;
+	}
+	
+	/**
 	 * Returns all repair orders the given employee is assigned to.
 	 * @param employee the employee
 	 * @return the list of repair orders

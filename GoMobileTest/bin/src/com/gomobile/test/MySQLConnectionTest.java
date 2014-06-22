@@ -87,6 +87,7 @@ public class MySQLConnectionTest extends TestCase {
 		EmployeesDataController employeesDataController = new EmployeesDataController();
 		assertNotNull(employeesDataController.getEmployeeById(2L));
 		assertFalse(employeesDataController.getEmployeeByName("Hans Meier").isEmpty());
+		assertFalse(employeesDataController.getAllEmployees().isEmpty());
 		
 	}
 	
