@@ -25,8 +25,12 @@ public class Navigation {
 	public static final int NAVIGATE_LEFT = 2;
 	public static final int NAVIGATE_UP = 3;
 	public static final int NAVIGATE_DOWN = 4;
+
 		
 		boolean navigateLeft,navigateRight,navigateUp,navigateDown;
+
+	public static final int NAVIGATE_INFO = 5;
+	public boolean navigatedActive = false;
 
 		//Different mapping of the axis from the accel and magnetic sensor
 		
@@ -329,9 +333,7 @@ public class Navigation {
 
 	        return (float) Math.toRadians(y);
 	    }
-	
-
-
+	    
 	// singleton
 	private static Navigation instance = null;
 

@@ -14,6 +14,7 @@
     <string name="title_activity_Overviewer">Overviewer</string>
     <string name="title_activity_order_pickup_list">OrderPickupList</string>
     <string name="title_activity_pickuplist">Pickuplist</string>
+    <string name="title_activity_repairToDoList">RepairToDoList</string>
 
     <string name="title_activity_shopping_cart_view">ShoppingCartView</string>
 

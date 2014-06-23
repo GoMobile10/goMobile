@@ -1,79 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:padding="5dip" >
 
     <!-- ListRow Left side Thumbnail image -->
 
-    <LinearLayout
-        android:id="@+id/thumbnail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_marginRight="5dip"
-        android:padding="3dip" >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
 
-        <ImageView
-            android:id="@+id/list_image"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:scaleX="-1"
-            android:src="@drawable/road_bike_classic" />
-    </LinearLayout>
-    <!-- Title Of Item -->
+        <LinearLayout
+            android:id="@+id/thumbnail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="5dip"
+            android:padding="3dip" >
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/thumbnail"
-        android:text="Bike Bike bike bike"
-        android:textSize="15dip"
-        android:textStyle="bold"
-        android:typeface="sans" />
+            <ImageView
+                android:id="@+id/list_image"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:scaleX="-1"
+                android:src="@drawable/road_bike_classic" />
+        </LinearLayout>
+        <!-- Title Of Item -->
 
-    <!-- Price of Item -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/thumbnail"
+            android:text="Bike Bike bike bike"
+            android:textSize="15dip"
+            android:textStyle="bold"
+            android:typeface="sans" />
 
-    <TextView
-        android:id="@+id/price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="30dp"
-        android:layout_toLeftOf="@+id/price"
-        android:layout_toRightOf="@+id/title"
-        android:text="200,00€"
-        android:textSize="15dip"
-        android:textStyle="bold"
-        android:typeface="sans" 
-        android:textColor="#e50000"/>
+        <!-- Price of Item -->
 
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_toLeftOf="@+id/price"
+            android:layout_toRightOf="@+id/title"
+            android:text="200,00€"
+            android:textColor="#e50000"
+            android:textSize="15dip"
+            android:textStyle="bold"
+            android:typeface="sans" />
 
-    <!-- Quantity of the Product -->
+        <!-- Quantity of the Product -->
 
-    <TextView
-        android:id="@+id/amount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dip"
-        android:layout_toRightOf="@+id/price"
-        android:gravity="right"
-        android:text="1"
-        android:textSize="15dip"
-        />
+        <TextView
+            android:id="@+id/amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dip"
+            android:layout_toRightOf="@+id/price"
+            android:gravity="right"
+            android:text="1"
+            android:textSize="15dip" />
 
-    <!-- Rightend Arrow -->
+        <!-- Rightend Arrow -->
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:text=">" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:text=">" />
+    </RelativeLayout>
 
-</RelativeLayout>
+</FrameLayout>

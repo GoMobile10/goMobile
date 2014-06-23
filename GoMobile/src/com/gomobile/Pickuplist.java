@@ -5,17 +5,28 @@ import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Layout;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gomobile.model.Bike;
 import com.gomobile.model.Component;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.repair.PickupSparePartsListAdapter;
+import com.gomobile.repair.RepairListAdapter;
 import com.gomobile.technicalservices.BarcodeScanner;
+
+/**
+ * 
+ * @author danielschopp,Patrick, Arndt
+ * 
+ *
+ */
+
 
 public class Pickuplist extends ViewWithNavigation {
 
@@ -23,7 +34,10 @@ public class Pickuplist extends ViewWithNavigation {
 	TextView repairDescription;
 	ListView meineListView;
 	List<Component> needed_sparparts;
-
+	Boolean repairedCheck;
+	RelativeLayout navigationView;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -68,6 +82,8 @@ public class Pickuplist extends ViewWithNavigation {
 		ListAdapter listenAdapter = new PickupSparePartsListAdapter(Pickuplist.this, R.layout.rowlayout_sparepartspickuplist_item ,needed_sparparts);		
 		meineListView = (ListView) findViewById(R.id.listView1);
 		meineListView.setAdapter(listenAdapter);
+		
+		setContentView(createNavigationInfo(R.id.pickuplistId,this,"back","detail","help","save"));
 
 		
 	}
@@ -87,14 +103,32 @@ public class Pickuplist extends ViewWithNavigation {
 
 	@Override
 	public void navigateUp() {
+		ImageView left = (ImageView)findViewById(R.id.pickuplistLEFT);
+		left.setImageResource(com.gomobile.R.drawable.back);
+		ImageView right = (ImageView)findViewById(R.id.pickuplistRIGHT);
+		right.setImageResource(com.gomobile.R.drawable.detail);
+		ImageView down = (ImageView)findViewById(R.id.pickuplistDOWN);
+		down.setImageResource(com.gomobile.R.drawable.save);
+		ImageView up = (ImageView)findViewById(R.id.pickuplistUP);
+		up.setImageResource(com.gomobile.R.drawable.help);
+		
+		navigationView =(RelativeLayout) findViewById(R.id.naviInfo);
+		navigationView.setVisibility(RelativeLayout.VISIBLE);
 		// startActivity(new Intent(this, Overviewer.class));
 
 	}
 
 	@Override
 	public void navigateDown() {
-		// TODO Auto-generated method stub
 
+		
+		startActivity(new Intent(this, Overviewer.class));
+
+	}
+	
+
+	public Boolean getRepairedCheck() {
+		return repairedCheck;
 	}
 
 }

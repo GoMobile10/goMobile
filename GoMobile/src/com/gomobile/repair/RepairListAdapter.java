@@ -11,10 +11,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gomobile.Overviewer;
+
 import com.gomobile.R;
 import com.gomobile.model.Bike;
-import com.gomobile.shoppingcart.ShoppingCartItem;
+
 
 /**
  * Own ListAdapter to integrate the view "pickuplist_items"
@@ -26,7 +26,7 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 	private int layoutResourceId;
 	private List<Bike> bikesToRepair;
 	private Bike currentBike;
-	
+
 	public RepairListAdapter(Context context,int layoutResourceId, List<Bike> bikesToRepair) {
 		
 		super(context, layoutResourceId, bikesToRepair);
@@ -39,7 +39,6 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 	// Override method to fill the view with a individulized rowlayout
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
 		if (convertView == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			convertView = inflater.inflate(layoutResourceId, parent, false);
@@ -52,6 +51,8 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 		TextView textDate = (TextView) convertView.findViewById(R.id.date);
 		TextView date = (TextView) convertView.findViewById(R.id.repairDescriptionTeaser);
 		TextView description = (TextView) convertView.findViewById(R.id.repairNameTeaser);
+
+		
 		switch (position) {
 		case 0:
 			imageView
@@ -64,8 +65,11 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 			break;
 		}
 		description.setText(currentBike.getDescription());
-		date.setText(currentBike.getCategory());
+		date.setText(currentBike.getCategory());		
 		
 		return convertView;
+		
+		
 	}
+	
 }

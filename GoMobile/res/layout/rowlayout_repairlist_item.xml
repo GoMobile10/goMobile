@@ -25,6 +25,7 @@
         android:minWidth="200dp"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="14sp"
         android:textStyle="italic|bold" />
 
     <TextView
@@ -38,21 +39,31 @@
         android:minWidth="200dp"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="14sp" />
+        android:textSize="12sp" />
+
+    <ImageView
+        android:id="@+id/repairedCheckTeaser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/repairDescriptionTeaser"
+        android:layout_alignParentRight="true"
+        android:layout_margin="1dp"
+        android:layout_marginRight="63dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="40dp"
+        android:maxWidth="40dp"
+        android:padding="1dp"
+        android:src="@drawable/missing" />
 
     <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/repairDateTeaser"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="1dp"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginTop="1dp"
+        android:layout_above="@+id/repairDescriptionTeaser"
+        android:layout_toLeftOf="@+id/repairedCheckTeaser"
         android:text="Medium Text"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="15sp"
+        android:textSize="12sp"
         android:textStyle="italic" />
 
 </RelativeLayout>
