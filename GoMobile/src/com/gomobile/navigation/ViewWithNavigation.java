@@ -46,13 +46,13 @@ public abstract class ViewWithNavigation extends Activity implements
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 
 		if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-			Navigation.getInstance().setNavigationBase();
-			Navigation.getInstance().navigatedActive = true;
+			Navigation.getInstance().defineRanges();
+			Navigation.getInstance().navigation = true;
 			return true;
 		}
 
 		if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-			Navigation.getInstance().navigatedActive = false;
+			Navigation.getInstance().navigation = false;
 			
 			return true;
 		}
