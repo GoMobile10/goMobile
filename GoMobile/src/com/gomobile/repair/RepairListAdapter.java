@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 	private int layoutResourceId;
 	private List<Bike> bikesToRepair;
 	private Bike currentBike;
+	private View itemView; //needed for navigate down / up
+	private int currentposition; // for highlighting
 	
 	public RepairListAdapter(Context context,int layoutResourceId, List<Bike> bikesToRepair) {
 		
@@ -34,6 +37,8 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
 		this.bikesToRepair = bikesToRepair;
+		currentposition=0;
+		
 	}
 	
 	// Override method to fill the view with a individulized rowlayout
@@ -44,6 +49,10 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			convertView = inflater.inflate(layoutResourceId, parent, false);
 		}
+		System.out.println("getView|pos: "+position +" convertView: "+convertView.toString() +" viewgroup: "+parent.toString());
+
+		//Initialize for navigation
+		itemView = convertView;
 		// Find the bike to work with
 		currentBike = bikesToRepair.get(position);
 
@@ -65,7 +74,21 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 		}
 		description.setText(currentBike.getDescription());
 		date.setText(currentBike.getCategory());
-		
+		if(position == currentposition){
+			convertView.setBackgroundColor(Color.LTGRAY);
+		}else{
+			convertView.setBackgroundColor(Color.TRANSPARENT);
+		}
+			
+
 		return convertView;
+	}
+	public View getItemView(){
+		return itemView;
+	}
+	// Through this method the activity can control the highlighted item
+	public void setCurrentPosition(int currentposition){
+		System.out.println("Set New Highlighted position: "+currentposition);
+		this.currentposition = currentposition;
 	}
 }
