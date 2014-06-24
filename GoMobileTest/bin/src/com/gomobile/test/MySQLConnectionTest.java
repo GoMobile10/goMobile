@@ -67,6 +67,17 @@ public class MySQLConnectionTest extends TestCase {
 	}
 	
 	/**
+	* Test method for {@link com.gomobile.data.controller.BikeDataController#getCompatibleComponents(long)}.
+	*/
+	public void testGetCompatibleComponents(){
+		BikeDataController dataController = new BikeDataController();
+		
+		for(Component component : dataController.getCompatibleComponents(0L)){
+			System.out.println("Compatible component retrieved: " + component.getDescription());
+		}
+	}
+	
+	/**
 	* Test method for {@link com.gomobile.data.controller.BikeDataController#getRepairOrders(String)}.
 	*/
 	public void testGetRepairOrderList(){

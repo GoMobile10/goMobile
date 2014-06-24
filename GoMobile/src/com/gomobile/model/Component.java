@@ -13,6 +13,10 @@ public class Component extends Material implements BikeComponentInterface{
 		this.picukuped =false;
 	}
 
+	public Component(long eanNumber, String description, int price){
+		this(eanNumber, description, price, null);
+	}
+
 	public String getDescription(){
 		return description;
 	}

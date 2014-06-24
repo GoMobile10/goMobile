@@ -312,7 +312,7 @@ public class BikeDataController {
 				Component replacementComponent = getComponentByEAN(Long.valueOf(jsonArray[i][2]));
 				repairOrder.setDefectReplacementComponentMap(new HashMap<Component, Component>());
 				repairOrder.getDefectReplacementComponentMap().put(defectComponent, replacementComponent);
-				
+				Log.i("TEST setComponentMap", "Defect component: " + defectComponent.getDescription() + " Replacement coponent: " + replacementComponent.getDescription());
 			}
 		}
 		catch(Exception e){
@@ -373,6 +373,75 @@ public class BikeDataController {
 		}
 
 		return null;
+	}
+	
+	/**
+	 * Returns a list of components compatible with the specified bike.
+	 * @param bikeEAN the EAN that specifies the bike.
+	 * @return a list of compatible components
+	 */
+	public List<Component> getCompatibleComponents(long bikeEAN){
+		AsyncTask<Long, Integer, List<Component>> taskToExecute = new AsyncTask<Long, Integer, List<Component>>(){
+
+
+			@Override
+			protected List<Component> doInBackground(Long[] params) {
+
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				nameValuePairs.add(new BasicNameValuePair("where_condition", "compability.BikeID = " + params[0]));
+				
+				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_component_list.php", nameValuePairs) );
+				
+				
+				List<Component> resultList = new ArrayList<Component>();
+				
+				try{
+					String[] resultFieldNames = {"ComponentEAN", "Description", "AverageAssemblingTime"};
+					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
+					
+					Component nextComponent = null;
+
+					int rowCount = queryResult.length;
+					
+					for(int i = 0; i < rowCount; i++){
+						long ean = Long.valueOf(queryResult[i][0]);
+						String description = queryResult[i][1];
+						int averageAssemblingTime = Integer.valueOf(queryResult[i][2]);
+						
+						nextComponent = new Component(ean, description, 0);
+						resultList.add(nextComponent);
+					}
+					
+
+				}
+				catch(ClassNotFoundException cnfe){
+					Log.e("COMPONENT DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+				}
+				catch(SQLException se){
+					Log.e("COMPONENT DATA RETRIEVING ERROR", se.getLocalizedMessage());
+				}
+				catch(Exception e){
+					e.printStackTrace();
+//					Log.e("COMPONENT DATA RETRIEVING ERROR", e.printStackTrace(););
+				}
+
+				return resultList;
+			}
+
+		};
+
+		taskToExecute.execute(bikeEAN);
+
+		try {
+			return taskToExecute.get();
+		} catch (InterruptedException e) {
+			Log.e("COMPONENT DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		} catch (ExecutionException e) {
+			Log.e("COMPONENT DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		}
+
+		return null;
+
 	}
 
 	/**

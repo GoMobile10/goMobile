@@ -68,7 +68,8 @@ public class MySqlConnector {
 			}
 		
 		}catch(JSONException e){
-			Log.e("JSON PARSING ERROR", "Error parsing data " + e.getLocalizedMessage());
+			Log.e("JSON PARSING ERROR", "Error parsing JSON data: " + e.getLocalizedMessage());
+			resultArray = new String[][]{};			
 		}
 		
 		return resultArray;
@@ -116,7 +117,7 @@ public class MySqlConnector {
 			Log.e("STREAM READING ERROR", "Error converting result " + e.getLocalizedMessage());
 		}
 		
-		Log.i("QUERY RESULT STRING:", result);
+//		Log.i("QUERY RESULT STRING:", result);
 		
 		return result.replaceAll("<br />", "");
 	}
