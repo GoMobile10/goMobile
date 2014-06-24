@@ -34,6 +34,7 @@ public class Overviewer extends ViewWithNavigation {
 	ArrayList<Component> pickuplist;
 	BikeDataController databaseController; 
 	View itemView; //
+	ArrayAdapter<Bike> BLVadapter;
 	
 
 	@Override
@@ -53,18 +54,19 @@ public class Overviewer extends ViewWithNavigation {
 	 * using a modified ListAdapter
 	 */
 	private void populateBikeList() {
-		ArrayAdapter<Bike> adapter = new RepairListAdapter(Overviewer.this, R.layout.rowlayout_repairlist_item, bikesToRepair );
+		BLVadapter = new RepairListAdapter(Overviewer.this, R.layout.rowlayout_repairlist_item, bikesToRepair );
 		bikeListView = (ListView) findViewById(R.id.listView1);
-		bikeListView.setAdapter(adapter);
+		bikeListView.setAdapter(BLVadapter);
 		bikeListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		bikeListView.setItemChecked(0, true);
 		
 	}
 	
-	public void startMode() {
-		itemView.setBackgroundColor(Color.LTGRAY);
-	}
+	@Override
+	public void navigateLeft() {
+		startActivity(new Intent(this, Main.class));
 
+	}
 	@Override
 	public void navigateRight() {
 		// paste the data between the two classes Overviewer and Pickuplist
@@ -74,41 +76,38 @@ public class Overviewer extends ViewWithNavigation {
 		PickuplistOfOrder.putExtra("EanNumber",
 				(bikesToRepair.get(itemcounter)).getEanNumber());
 		startActivity(PickuplistOfOrder);
-
-	}
-
-	@Override
-	public void navigateLeft() {
-		startActivity(new Intent(this, Main.class));
-
 	}
 
 	@Override
 	public void navigateUp() {
+		System.out.println("navigateUp - itemcounter: "+itemcounter);
 		if (itemcounter <= 0) {
 			itemcounter = 0;
-//			itemView.setBackgroundColor(Color.TRANSPARENT);
-
+			((RepairListAdapter) BLVadapter).setCurrentPosition(itemcounter);
 		} else {
-			bikeListView.setItemChecked(itemcounter - 1, true);
-//			itemView.setBackgroundColor(Color.LTGRAY);
+			//bikeListView.setItemChecked(itemcounter - 1, true);
 			itemcounter = itemcounter - 1;
-
+			((RepairListAdapter) BLVadapter).setCurrentPosition(itemcounter);
 		}
 
 	}
 
 	@Override
 	public void navigateDown() {
+		System.out.println("navigateDown - itemcounter: "+itemcounter);
 		if (itemcounter >= bikesToRepair.size() - 1) {
-//			itemView.setBackgroundColor(Color.LTGRAY);
 			itemcounter = bikesToRepair.size() - 1;
+			((RepairListAdapter) BLVadapter).setCurrentPosition(itemcounter);
 		} else {
-			bikeListView.setItemChecked(itemcounter + 1, true);
-//			itemView.setBackgroundColor(Color.TRANSPARENT);
+			//bikeListView.setItemChecked(itemcounter + 1, true);
 			itemcounter = itemcounter + 1;
+			((RepairListAdapter) BLVadapter).setCurrentPosition(itemcounter);
+			
 		}
 
 	}
 
+
 }
+
+

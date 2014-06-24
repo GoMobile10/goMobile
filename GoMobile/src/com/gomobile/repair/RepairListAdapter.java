@@ -4,12 +4,14 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 
 
 import com.gomobile.R;
@@ -26,6 +28,7 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 	private int layoutResourceId;
 	private List<Bike> bikesToRepair;
 	private Bike currentBike;
+	private int currentposition; // for highlighting
 
 	public RepairListAdapter(Context context,int layoutResourceId, List<Bike> bikesToRepair) {
 		
@@ -65,11 +68,23 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 			break;
 		}
 		description.setText(currentBike.getDescription());
-		date.setText(currentBike.getCategory());		
+		date.setText(currentBike.getCategory());
+		if(position == currentposition){
+			convertView.setBackgroundColor(Color.LTGRAY);
+		}else{
+			convertView.setBackgroundColor(Color.TRANSPARENT);
+		}
+
 		
 		return convertView;
 		
 		
 	}
+	// Through this method the activity can control the highlighted item
+	public void setCurrentPosition(int currentposition){
+		System.out.println("Set New Highlighted position: "+currentposition);
+		this.currentposition = currentposition;
+	}
+
 	
 }
