@@ -148,6 +148,7 @@ public abstract class ViewWithNavigation extends Activity implements
 		images.put("scan", Integer.valueOf(com.gomobile.R.drawable.scan));
 		images.put("compare", Integer.valueOf(com.gomobile.R.drawable.compare));
 		images.put("add", Integer.valueOf(com.gomobile.R.drawable.add));
+		images.put("shop", Integer.valueOf(com.gomobile.R.drawable.shop));
 
 		// init the 4 navigation images
 		ImageView leftIcon = (ImageView) findViewById(R.id.pickuplistLEFT);

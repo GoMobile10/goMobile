@@ -22,13 +22,13 @@ public class Main extends ViewWithNavigation {
 //		
 //		layoutMain.addView(layoutNavigation);
 				
-		setContentView(createNavigationInfo(R.id.mainId,this,"back","detail","help","save"));
+		setContentView(createNavigationInfo(R.id.mainId,this,"scan","person","shop",null));
 
 	}
 
 	public void navigateRight() {
-		//startActivity(new Intent(this, RepairToDoList.class));
-		startActivity(new Intent(this, Overviewer.class));
+		
+		startActivity(new Intent(this, Repairer.class));
 	}
 
 	@Override

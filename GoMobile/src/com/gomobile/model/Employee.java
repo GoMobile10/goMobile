@@ -14,6 +14,10 @@ public class Employee {
 	private String firstName, lastName;
 	private List<RepairOrder> assignedRepairOrders;
 	
+	public Employee() {
+		// TODO Auto-generated constructor stub
+	} 
+	
 	public Employee(long id, String firstName, String lastName){
 		setId(id);
 		setFirstName(firstName);

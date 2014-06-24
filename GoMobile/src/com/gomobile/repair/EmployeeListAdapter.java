@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.gomobile.Overviewer;
 import com.gomobile.R;
 import com.gomobile.model.Bike;
-import com.gomobile.model.Component;
+import com.gomobile.model.Employee;
 import com.gomobile.shoppingcart.ShoppingCartItem;
 
 /**
@@ -22,19 +22,19 @@ import com.gomobile.shoppingcart.ShoppingCartItem;
  * An adapter manages the data model and adapts it to the individual rows in the list view.
  *
  */
-public class PickupSparePartsListAdapter extends ArrayAdapter<Component> {
+public class EmployeeListAdapter extends ArrayAdapter<Employee> {
 	private Context context;
 	private int layoutResourceId;
-	private List<Component> spareparts;
-	private Component currentSparepart;
+	private List<Employee> allEmployees;
+	private Employee currentEmployee;
 	
-	public PickupSparePartsListAdapter(Context context,int layoutResourceId, List<Component> spareparts) {
+	public EmployeeListAdapter(Context context,int layoutResourceId, List<Employee> allEmployees) {
 		
-		super(context, layoutResourceId, spareparts);
+		super(context, layoutResourceId, allEmployees);
 		
 		this.layoutResourceId = layoutResourceId;
 		this.context = context;
-		this.spareparts = spareparts;
+		this.allEmployees = allEmployees;
 	}
 	
 	// Override method to fill the view with a individulized rowlayout
@@ -44,23 +44,39 @@ public class PickupSparePartsListAdapter extends ArrayAdapter<Component> {
 		if (convertView == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			convertView = inflater.inflate(layoutResourceId, parent, false);
-			//System.out.println("convert view isnt null! ID: " + convertView.getId()+" String: "+convertView.toString());
 		}
 		// Find the bike to work with
-		currentSparepart = (Component) spareparts.get(position);
+		currentEmployee = allEmployees.get(position);
 
 		// Fill the view items with values
+		ImageView imageView = (ImageView) convertView.findViewById(R.id.employeePicTeaser);
+		TextView lastName = (TextView) convertView.findViewById(R.id.employeeLastNameTeaser);
+		TextView firstName = (TextView) convertView.findViewById(R.id.employeeFirstNameTeaser);
 		
-		ImageView imageView = (ImageView) convertView.findViewById(R.id.scannedPic);
-		TextView description = (TextView) convertView.findViewById(R.id.sparepartDescription);
 		
-		if (currentSparepart.isPicukuped()==true){
-			imageView.setImageResource(com.gomobile.R.drawable.scanned);
-		}else{
-			imageView.setImageResource(com.gomobile.R.drawable.missing);
+		switch (position) {
+		case 0:
+			imageView.setImageResource(com.gomobile.R.drawable.bored_face);
+			break;
+			
+		case 1:
+			imageView.setImageResource(com.gomobile.R.drawable.face_man_long);
+			break;
+		
+			
+		case 2:
+			imageView.setImageResource(com.gomobile.R.drawable.man_face_clean_cut_t);
+			break;
+			
+		default:
+			break;
+			
 		}
 		
-		description.setText(currentSparepart.getDescription() +" " +currentSparepart.getEanNumber());
+		
+		firstName.setText(currentEmployee.getFirstName());
+		lastName.setText(currentEmployee.getLastName());
+				
 		return convertView;
 	}
 }

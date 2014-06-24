@@ -3,19 +3,25 @@ package com.gomobile;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
-
-
+import android.widget.TextView;
 
 import com.gomobile.data.controller.BikeDataController;
+import com.gomobile.data.controller.EmployeesDataController;
 import com.gomobile.model.Bike;
 import com.gomobile.model.Component;
+import com.gomobile.model.Employee;
+import com.gomobile.model.Order;
+import com.gomobile.model.RepairOrder;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.repair.RepairListAdapter;
 
@@ -30,32 +36,62 @@ public class Overviewer extends ViewWithNavigation {
 	int itemcounter = 0;
 	ListView bikeListView;
 	List<Bike> bikesToRepair;
+	List<RepairOrder> repairOrders;
 	Bike currentBike; // for working in the view
 	ArrayList<Component> pickuplist;
 	BikeDataController databaseController; 
-	View itemView; //
-	
+	EmployeesDataController employeeController;
+	View itemView; 
+	ArrayAdapter<Bike> BLVadapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		//Create a database controller object to load the repair orders
-		databaseController = new BikeDataController();
-		bikesToRepair = databaseController.repairOrders();
+		
+		
+		
+		TextView textView = (TextView) findViewById(R.id.FirstName);
+		textView.setText(getIntent().getExtras().getString("FirstName"));		
+		
+		TextView textView2 = (TextView) findViewById(R.id.LastName);
+		textView2.setText(getIntent().getExtras().getString("LastName"));
+		
+		
+		employeeController = new EmployeesDataController();
+		List<Employee> empListe = employeeController.getAllEmployees();
+		
+		Employee emp = new Employee();
+		emp = empListe.get(getIntent().getExtras().getInt("EmployeeCounter"));		
+		
+		repairOrders = employeeController.getAssignedOrders(emp);
+		
+		bikesToRepair = new ArrayList<Bike>();
+		for (int i = 0; i < repairOrders.size(); i++) {
+			bikesToRepair.add(repairOrders.get(i).getDefectBike());
+		}	
+
+		
+		
+		
+//		//Create a database controller object to load the repair orders
+//		databaseController = new BikeDataController();
+//		bikesToRepair = databaseController.repairOrders();
+//		
 		populateBikeList();
 		
-		setContentView(createNavigationInfo(R.id.container,this,"back","detail","help","save"));
+		setContentView(createNavigationInfo(R.id.container,this,"back","detail",null,null));
 	}
 	/**
 	 * populate a list with bikes 
 	 * using a modified ListAdapter
 	 */
 	private void populateBikeList() {
-		ArrayAdapter<Bike> adapter = new RepairListAdapter(Overviewer.this, R.layout.rowlayout_repairlist_item, bikesToRepair );
+		
+		BLVadapter = new RepairListAdapter(Overviewer.this, R.layout.rowlayout_repairlist_item, bikesToRepair );
 		bikeListView = (ListView) findViewById(R.id.listView1);
-		bikeListView.setAdapter(adapter);
+		bikeListView.setAdapter(BLVadapter);
 		bikeListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		bikeListView.setItemChecked(0, true);
 		
@@ -69,44 +105,47 @@ public class Overviewer extends ViewWithNavigation {
 	public void navigateRight() {
 		// paste the data between the two classes Overviewer and Pickuplist
 		final Intent PickuplistOfOrder = new Intent(this, Pickuplist.class);
-		PickuplistOfOrder.putExtra("Description",
-				(bikesToRepair.get(itemcounter)).getDescription());
-		PickuplistOfOrder.putExtra("EanNumber",
-				(bikesToRepair.get(itemcounter)).getEanNumber());
+		Bike temp = bikesToRepair.get(itemcounter);
+		System.out.println("Ean: "+temp.getEanNumber());
+		PickuplistOfOrder.putExtra("Description",temp.getDescription());
+		
+		PickuplistOfOrder.putExtra("EanNumber",""+temp.getEanNumber());
+		PickuplistOfOrder.putExtra("BikeName",temp.getDescription());
 		startActivity(PickuplistOfOrder);
 
 	}
 
 	@Override
 	public void navigateLeft() {
-		startActivity(new Intent(this, Main.class));
+		startActivity(new Intent(this, Repairer.class));
 
 	}
 
 	@Override
 	public void navigateUp() {
+		System.out.println("navigateUp - itemcounter: "+itemcounter);
 		if (itemcounter <= 0) {
 			itemcounter = 0;
-//			itemView.setBackgroundColor(Color.TRANSPARENT);
-
+			((RepairListAdapter) BLVadapter).setCurrentPosition(itemcounter);
 		} else {
 			bikeListView.setItemChecked(itemcounter - 1, true);
-//			itemView.setBackgroundColor(Color.LTGRAY);
 			itemcounter = itemcounter - 1;
-
+			((RepairListAdapter) BLVadapter).setCurrentPosition(itemcounter);
 		}
 
 	}
 
 	@Override
 	public void navigateDown() {
+		System.out.println("navigateDown - itemcounter: "+itemcounter);
 		if (itemcounter >= bikesToRepair.size() - 1) {
-//			itemView.setBackgroundColor(Color.LTGRAY);
 			itemcounter = bikesToRepair.size() - 1;
+			((RepairListAdapter) BLVadapter).setCurrentPosition(itemcounter);
 		} else {
 			bikeListView.setItemChecked(itemcounter + 1, true);
-//			itemView.setBackgroundColor(Color.TRANSPARENT);
 			itemcounter = itemcounter + 1;
+			((RepairListAdapter) BLVadapter).setCurrentPosition(itemcounter);
+			
 		}
 
 	}

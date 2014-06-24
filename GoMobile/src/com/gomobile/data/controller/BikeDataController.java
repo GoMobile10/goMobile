@@ -199,7 +199,7 @@ public class BikeDataController {
 				List<RepairOrder> resultList = new ArrayList<RepairOrder>();
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 				nameValuePairs.add(new BasicNameValuePair("where_condition", condition));
-				String requestResult = sqlConnector.getPHPRequestOutput("get_repairorder_list.php", nameValuePairs);
+				String requestResult = sqlConnector.getPHPRequestOutput("get_repairorder_list.php", nameValuePairs).replace("<br />", "");
 				sqlConnector.setQueryResultString(requestResult);
 				
 				try{

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/employeePicTeaser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="1dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="45dp"
+        android:maxWidth="45dp"
+        android:src="@drawable/scanned" />
+
+    <TextView
+        android:id="@+id/employeeLastNameTeaser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/employeeFirstNameTeaser"
+        android:layout_alignTop="@+id/employeeFirstNameTeaser"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="15sp"
+        android:textStyle="italic|bold" />
+
+    <TextView
+        android:id="@+id/employeeFirstNameTeaser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/employeePicTeaser"
+        android:layout_alignTop="@+id/employeePicTeaser"
+        android:layout_margin="1dp"
+        android:layout_marginLeft="24dp"
+        android:layout_toRightOf="@+id/employeePicTeaser"
+        android:minWidth="200dp"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="italic|bold" />
+
+</RelativeLayout>
