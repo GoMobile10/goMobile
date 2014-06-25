@@ -6,10 +6,12 @@ package com.gomobile.data.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.gomobile.model.Employee;
@@ -36,30 +38,52 @@ public class EmployeesDataController {
 	 * @return
 	 */
 	public Employee getEmployeeById(long id){
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("where_condition", "id = " + id));
-		sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_employee_data.php", nameValuePairs) );
+		AsyncTask<Long, Integer, Employee> taskToExecute = new AsyncTask<Long, Integer, Employee>(){
 
-		Employee employee = null;
-		
-		try{
-			String[][] jsonArray = sqlConnector.queryResultToArray(new String[]{"id", "firstname", "lastname"});
+			@Override
+			protected Employee doInBackground(Long... params) {
+				long id = params[0];
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				nameValuePairs.add(new BasicNameValuePair("where_condition", "id = " + id));
+				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_employee_data.php", nameValuePairs) );
 
-			String firstName = jsonArray[0][1], lastName = jsonArray[0][2];
-			employee = new Employee(id, firstName, lastName);
+				Employee employee = null;
+				
+				try{
+					String[][] jsonArray = sqlConnector.queryResultToArray(new String[]{"id", "firstname", "lastname"});
+
+					String firstName = jsonArray[0][1], lastName = jsonArray[0][2];
+					employee = new Employee(id, firstName, lastName);
+				
+				}
+				catch(ClassNotFoundException cnfe){
+					Log.e("EMPLOYEE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+				}
+				catch(SQLException se){
+					Log.e("EMPLOYEE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+				}
+				catch(Exception e){
+					Log.e("EMPLOYEE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+				}
+				
+					
+				return employee;
+			}
+			
+		};
 		
-		}
-		catch(ClassNotFoundException cnfe){
-			Log.e("EMPLOYEE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
-		}
-		catch(SQLException se){
-			Log.e("EMPLOYEE DATA RETRIEVING ERROR", se.getLocalizedMessage());
-		}
-		catch(Exception e){
-			Log.e("EMPLOYEE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		try {
+			taskToExecute.execute(new Long[]{id});
+			return taskToExecute.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		return employee;
+		return null;
 	}
 	
 	/**
@@ -68,34 +92,55 @@ public class EmployeesDataController {
 	 * @return a list of all employees having the given name.
 	 */
 	public List<Employee> getEmployeeByName(String fullName){
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		String[] splittedName = fullName.split(" ");
-		nameValuePairs.add(new BasicNameValuePair("where_condition", "firstname = '" + splittedName[0] + "' AND lastname = '" + splittedName[1] + "'"));
-		sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_employee_data.php", nameValuePairs) );
+		AsyncTask<String, Integer, List<Employee>> tastToExecute = new AsyncTask<String, Integer, List<Employee>>(){
 
-		List<Employee> resultList = new ArrayList<Employee>();
-		
-		try{
-			String[][] jsonArray = sqlConnector.queryResultToArray(new String[]{"id", "firstname", "lastname"});
-			int rowCount = jsonArray.length;
+			@Override
+			protected List<Employee> doInBackground(String... params) {
+				String fullName = params[0];
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				String[] splittedName = fullName.split(" ");
+				nameValuePairs.add(new BasicNameValuePair("where_condition", "firstname = '" + splittedName[0] + "' AND lastname = '" + splittedName[1] + "'"));
+				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_employee_data.php", nameValuePairs) );
 
-			for(int i = 0; i < rowCount; i++){
-				Employee employee = new Employee(Long.valueOf(jsonArray[i][0]), jsonArray[i][1], jsonArray[i][2]);
-				resultList.add(employee);
+				List<Employee> resultList = new ArrayList<Employee>();
+				
+				try{
+					String[][] jsonArray = sqlConnector.queryResultToArray(new String[]{"id", "firstname", "lastname"});
+					int rowCount = jsonArray.length;
+
+					for(int i = 0; i < rowCount; i++){
+						Employee employee = new Employee(Long.valueOf(jsonArray[i][0]), jsonArray[i][1], jsonArray[i][2]);
+						resultList.add(employee);
+					}
+				
+				}
+				catch(ClassNotFoundException cnfe){
+					Log.e("EMPLOYEE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+				}
+				catch(SQLException se){
+					Log.e("EMPLOYEE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+				}
+				catch(Exception e){
+					Log.e("EMPLOYEE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+				}
+				
+				return resultList;
 			}
+			
+		};
 		
-		}
-		catch(ClassNotFoundException cnfe){
-			Log.e("EMPLOYEE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
-		}
-		catch(SQLException se){
-			Log.e("EMPLOYEE DATA RETRIEVING ERROR", se.getLocalizedMessage());
-		}
-		catch(Exception e){
-			Log.e("EMPLOYEE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		tastToExecute.execute(new String[]{fullName});
+		try {
+			return tastToExecute.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		return resultList;
+		return null;
 	}
 	
 	/**
@@ -103,35 +148,53 @@ public class EmployeesDataController {
 	 * @return a list of all employees stored in the database.
 	 */
 	public List<Employee> getAllEmployees(){
-		List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		nameValuePairs.add(new BasicNameValuePair("where_condition", "1"));
+		AsyncTask<String, Integer, List<Employee>> tastToExecute = new AsyncTask<String, Integer, List<Employee>>(){
 
-		System.out.println("QUERY ALL EMPLOYEES:");
-		sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_employee_data.php", nameValuePairs) );
+			@Override
+			protected List<Employee> doInBackground(String... params) {
+				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+				nameValuePairs.add(new BasicNameValuePair("where_condition", "1"));
+				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_employee_data.php", nameValuePairs) );
 
-		List<Employee> resultList = new ArrayList<Employee>();
-		
-		try{
-			String[][] jsonArray = sqlConnector.queryResultToArray(new String[]{"id", "firstname", "lastname"});
-			int rowCount = jsonArray.length;
+				List<Employee> resultList = new ArrayList<Employee>();
+				
+				try{
+					String[][] jsonArray = sqlConnector.queryResultToArray(new String[]{"id", "firstname", "lastname"});
+					int rowCount = jsonArray.length;
 
-			for(int i = 0; i < rowCount; i++){
-				Employee employee = new Employee(Long.valueOf(jsonArray[i][0]), jsonArray[i][1], jsonArray[i][2]);
-				resultList.add(employee);
+					for(int i = 0; i < rowCount; i++){
+						Employee employee = new Employee(Long.valueOf(jsonArray[i][0]), jsonArray[i][1], jsonArray[i][2]);
+						resultList.add(employee);
+					}
+				
+				}
+				catch(ClassNotFoundException cnfe){
+					Log.e("EMPLOYEE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
+				}
+				catch(SQLException se){
+					Log.e("EMPLOYEE DATA RETRIEVING ERROR", se.getLocalizedMessage());
+				}
+				catch(Exception e){
+					Log.e("EMPLOYEE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+				}
+				
+				return resultList;
 			}
+			
+		};
 		
-		}
-		catch(ClassNotFoundException cnfe){
-			Log.e("EMPLOYEE DATA RETRIEVING ERROR", cnfe.getLocalizedMessage());
-		}
-		catch(SQLException se){
-			Log.e("EMPLOYEE DATA RETRIEVING ERROR", se.getLocalizedMessage());
-		}
-		catch(Exception e){
-			Log.e("EMPLOYEE DATA RETRIEVING ERROR", e.getLocalizedMessage());
+		tastToExecute.execute(new String[]{});
+		try {
+			return tastToExecute.get();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
-		return resultList;
+		return null;
 	}
 	
 	/**

@@ -96,6 +96,7 @@ public class MySqlConnector {
 			HttpEntity entity = response.getEntity();
 			is = entity.getContent();
 		}catch(Exception e){
+			e.printStackTrace();
 			Log.e("SERVER REQUEST ERROR", "Error in http connection " + e.getLocalizedMessage());
 		}
 		
