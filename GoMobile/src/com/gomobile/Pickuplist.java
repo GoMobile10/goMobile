@@ -89,7 +89,7 @@ public class Pickuplist extends ViewWithNavigation {
 		System.out.println("scanned EAN: " + intent.getStringExtra("scannedEAN"));
 		if (intent.getStringExtra("scannedEAN")!= null) {
 			for (int i = 0; i < needed_sparparts.size(); i++) {
-				//System.out.println("i: "+ i +" "+needed_sparparts.get(i).getEanNumber() +"| "+ Long.parseLong(intent.getStringExtra("scannedEAN"), 10) );
+				System.out.println("i: "+ i +" "+needed_sparparts.get(i).getEanNumber() +"| "+ Long.parseLong(intent.getStringExtra("scannedEAN"), 10) );
 				if(needed_sparparts.get(i).getEanNumber()== Long.parseLong(intent.getStringExtra("scannedEAN"), 10)){
 					needed_sparparts.get(i).setPicukuped(true);
 					Toast.makeText(getApplicationContext(), "You picked up: "+needed_sparparts.get(i).getDescription()+ "("+needed_sparparts.get(i).getEanNumber()+")", Toast.LENGTH_LONG).show();
@@ -200,7 +200,7 @@ public class Pickuplist extends ViewWithNavigation {
 
 	@Override
 	public void navigateDown() {
-
+		System.out.println("++++++++++++++++++++++++++++++++");
 		Intent overviewer = new Intent(this, Overviewer.class);
 		//todo: check if all spare parts picked up 
 		allsparepartspickedup =true;
@@ -208,9 +208,13 @@ public class Pickuplist extends ViewWithNavigation {
 		if(allsparepartspickedup ==true){
 			overviewer.putExtra("allsparepartspickedup", true);
 			overviewer.putExtra("BikeEanNumber",bikeEAN);
+			overviewer.putExtra("FirstName", prename);
+			overviewer.putExtra("LastName", lastname);
 		}else{
 			overviewer.putExtra("allsparepartspickedup", false);
 			overviewer.putExtra("BikeEanNumber",bikeEAN);
+			overviewer.putExtra("FirstName", prename);
+			overviewer.putExtra("LastName", lastname);
 		}
 			
 		startActivity(overviewer);
