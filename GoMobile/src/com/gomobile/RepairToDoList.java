@@ -59,6 +59,8 @@ public class RepairToDoList extends ViewWithNavigation{
 		final Intent pickuplist = new Intent(this, Pickuplist.class);
 		pickuplist.putExtra("FirstName", prename);
 		pickuplist.putExtra("LastName", lastname);
+		pickuplist.putExtra("BikeName", getIntent().getExtras().getString("BikeName"));
+		pickuplist.putExtra("BikeEanNumber", getIntent().getExtras().getString("BikeEanNumber"));
 		startActivity(pickuplist);
 		
 	}

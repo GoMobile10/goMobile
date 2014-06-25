@@ -123,7 +123,7 @@ public class Pickuplist extends ViewWithNavigation {
         
         //Loading data from database
         BikeDataController bikeDataController = new BikeDataController();
-        repairorderlist = bikeDataController.getRepairOrders("BikeEAN="+bikeEAN);     
+        repairorderlist = bikeDataController.getRepairOrders("BikeEAN="+bikeEAN); 
         System.out.println("repairorderlist: "+ repairorderlist.size()+" | name: "+repairorderlist.get(0).getDefectBike().getDescription());
     	tempRepairOrder = repairorderlist.get(0);
         
@@ -185,7 +185,8 @@ public class Pickuplist extends ViewWithNavigation {
 	public void navigateLeft() {
 		Intent intent = new Intent(this, Overviewer.class);
 		
-		
+		intent.putExtra("BikeName", getIntent().getExtras().getString("BikeName"));
+		intent.putExtra("BikeEanNumber", bikeEAN);
 		intent.putExtra("FirstName", prename);
 		intent.putExtra("LastName", lastname);
 		
@@ -198,6 +199,8 @@ public class Pickuplist extends ViewWithNavigation {
 	public void navigateUp() {
 
 		final Intent repairTodoList = new Intent(this, RepairToDoList.class);
+		repairTodoList.putExtra("BikeName", getIntent().getExtras().getString("BikeName"));
+		repairTodoList.putExtra("BikeEanNumber", bikeEAN);
 		repairTodoList.putExtra("FirstName", prename);
 		repairTodoList.putExtra("LastName", lastname);
 		startActivity(repairTodoList);
