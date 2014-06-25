@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/scannedPic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="1dp"
+        android:adjustViewBounds="true"
+        android:maxHeight="25dp"
+        android:maxWidth="25dp"
+        android:src="@drawable/missing" 
+        android:contentDescription="TODO"/>
+
+    <TextView
+        android:id="@+id/sparepartDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/scannedPic"
+        android:layout_alignTop="@+id/scannedPic"
+        android:layout_margin="1dp"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/scannedPic"
+        android:maxWidth="200dp"
+        android:minWidth="200dp"
+        android:text="Small Text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="14sp" />
+
+</RelativeLayout>

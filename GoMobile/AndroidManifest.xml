@@ -75,6 +75,14 @@
                 android:value="com.gomobile.technicalservices.Main" />
         </activity>
         <activity
+            android:name="com.gomobile.RepairToDoList"
+            android:label="@string/title_activity_repairToDoList"
+            android:parentActivityName="com.gomobile.technicalservices.Main" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.gomobile.technicalservices.Main" />
+        </activity>
+        <activity
             android:name="com.gomobile.Pickuplist"
             android:label="@string/title_activity_pickuplist" >
         </activity>
