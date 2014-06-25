@@ -92,7 +92,7 @@ public class Pickuplist extends ViewWithNavigation {
 				System.out.println("i: "+ i +" "+needed_sparparts.get(i).getEanNumber() +"| "+ Long.parseLong(intent.getStringExtra("scannedEAN"), 10) );
 				if(needed_sparparts.get(i).getEanNumber()== Long.parseLong(intent.getStringExtra("scannedEAN"), 10)){
 					needed_sparparts.get(i).setPicukuped(true);
-					Toast.makeText(getApplicationContext(), "You picked up: "+needed_sparparts.get(i).getDescription()+ "("+needed_sparparts.get(i).getEanNumber()+")", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "You picked up: "+needed_sparparts.get(i).getDescription()+ " ("+needed_sparparts.get(i).getEanNumber()+")", Toast.LENGTH_LONG).show();
 					if(scannedBefore == false){
 						//System.out.println("scannedBefore false");
 						
@@ -124,21 +124,11 @@ public class Pickuplist extends ViewWithNavigation {
         //Loading data from database
         BikeDataController bikeDataController = new BikeDataController();
         repairorderlist = bikeDataController.getRepairOrders("BikeEAN="+bikeEAN);     
-        	System.out.println("repairorderlist: "+ repairorderlist.size()+" | name: "+repairorderlist.get(0).getDefectBike().getDescription());
+        System.out.println("repairorderlist: "+ repairorderlist.size()+" | name: "+repairorderlist.get(0).getDefectBike().getDescription());
     	tempRepairOrder = repairorderlist.get(0);
         
-    	//Get defect spare parts
-    	HashMap<Component, Component> defectcomponents = (HashMap<Component, Component>) tempRepairOrder.getDefectReplacementComponentMap(); 
-        Iterator it = defectcomponents.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry)it.next();
-            //System.out.println("key: "+((Component)pairs.getKey()).getEanNumber() + " |value: " + ((Component)pairs.getValue()).getEanNumber());
-            needed_sparparts.add(((Component)pairs.getValue()));
-            it.remove(); // avoids a ConcurrentModificationException   
-        }
-	}
-	private void populateView(){
-		TextView textView = (TextView) findViewById(R.id.headline);
+    	//
+    	TextView textView = (TextView) findViewById(R.id.headline);
 		textView.setText("Bike: "+ getIntent().getExtras().getString("BikeName"));
 		scannedBefore = true;
 		try {
@@ -152,14 +142,27 @@ public class Pickuplist extends ViewWithNavigation {
 		repairPicture = (ImageView) findViewById(R.id.repairPic);
 		repairDescription = (TextView) findViewById(R.id.repairDescription);
 
-		if(7613257813441L == getIntent().getExtras().getLong("EanNumber")) {	
+		if(7613257813441L == tempRepairOrder.getDefectBike().getEanNumber()) {	
 			repairPicture.setImageResource(com.gomobile.R.drawable.bike_wheelfront);
-			repairDescription.setText("The bike wheel is flat.\nThe bike rim is bent.");
+			repairDescription.setText(tempRepairOrder.getRepairDescription());
 		}else{
 			repairPicture.setImageResource(com.gomobile.R.drawable.bike_frame);
-			repairDescription.setText("The frame is broken.\nThe broken part is marked.");		
+			repairDescription.setText(tempRepairOrder.getRepairDescription());		
 		}
 		repairPicture = (ImageView) findViewById(R.id.repairPic);
+    	
+    	//Get defect spare parts
+    	HashMap<Component, Component> defectcomponents = (HashMap<Component, Component>) tempRepairOrder.getDefectReplacementComponentMap(); 
+        Iterator it = defectcomponents.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry)it.next();
+            //System.out.println("key: "+((Component)pairs.getKey()).getEanNumber() + " |value: " + ((Component)pairs.getValue()).getEanNumber());
+            needed_sparparts.add(((Component)pairs.getValue()));
+            it.remove(); // avoids a ConcurrentModificationException   
+        }
+	}
+	private void populateView(){
+		
 	}
 	
 	public void navigateRight() {

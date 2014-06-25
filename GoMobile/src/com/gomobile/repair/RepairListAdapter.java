@@ -62,11 +62,11 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 		case 0:
 			imageView
 					.setImageResource(com.gomobile.R.drawable.bike_wheelfront);
-			textDate.setText("30.04.2014");
+			textDate.setText("30.06.2014");
 			break;
 		case 1:
 			imageView.setImageResource(com.gomobile.R.drawable.bike_frame);
-			textDate.setText("01.05.2014");
+			textDate.setText("01.07.2014");
 			break;
 		}
 		description.setText(currentBike.getDescription());
