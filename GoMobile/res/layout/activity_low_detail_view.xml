@@ -11,19 +11,24 @@
     tools:context=".LowDetailView" >
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent" >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
-
+            
+        
+            
+            
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name: "
+                android:layout_marginBottom="15dp"
+            	android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
@@ -31,28 +36,56 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Price: "
+                android:layout_marginBottom="15dp"
+         		android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="206dp"
+            android:gravity="right"
             android:orientation="vertical" >
 
             <TextView
                 android:id="@+id/textViewName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:text="fasdldsal"
+                android:textColor="@color/red"
+                android:layout_marginBottom="15dp"
+           		android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
             <TextView
                 android:id="@+id/textViewPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:text="fasdldsal"
+                android:textColor="@color/red"
+                android:layout_marginBottom="15dp"
+            	android:textSize="20sp"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
+
         </LinearLayout>
+
     </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="483dp"
+        android:layout_height="222dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="To delete a tpye of a bike out of the shoppingcard navigate down"
+            android:textColor="@color/red"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
 
 </FrameLayout>

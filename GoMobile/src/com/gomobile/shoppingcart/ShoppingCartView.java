@@ -23,7 +23,6 @@ import com.gomobile.technicalservices.BarcodeScanner;
  */
 
 public class ShoppingCartView extends ViewWithNavigation {
-
 	private ListView mainListView;
 	private ShoppingCarListAdapter listAdapter;
 	private ShoppingCartItem[] shoppingCartItems;
@@ -78,8 +77,8 @@ public class ShoppingCartView extends ViewWithNavigation {
 
 	@Override
 	public void navigateLeft() {
-		Intent intent = new Intent(this, BarcodeScanner.class);
-		startActivity(intent);
+//		Intent intent = new Intent(this, BarcodeScanner.class);
+//		startActivity(intent);
 	}
 
 	@Override
@@ -97,12 +96,12 @@ public class ShoppingCartView extends ViewWithNavigation {
 
 	@Override
 	public void navigateDown() {
-		if (listPosition >= shoppingCartItems.length - 1) {
-			listPosition = shoppingCartItems.length - 1;
-		} else {
-			mainListView.setItemChecked(listPosition + 1, true);
-			listPosition = listPosition + 1;
-		}
+//		if (listPosition >= shoppingCartItems.length - 1) {
+//			listPosition = shoppingCartItems.length - 1;
+//		} else {
+//			mainListView.setItemChecked(listPosition + 1, true);
+//			listPosition = listPosition + 1;
+//		}
 
 	}
 

@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.gomobile.data.controller.BikeDataController;
 import com.gomobile.model.BikeComponentInterface;
+import com.gomobile.navigation.ViewWithNavigation;
 
 /**
  * model of the shopping cart
@@ -40,8 +41,15 @@ public class ShoppingCart {
 
 	}
 
-	public boolean delete(String key) {
+	public boolean delete(Long EAN) {
 		// TODO
+		for(ShoppingCartItem item:cart){
+			if(item.getEAN()==EAN){
+				cart.remove(item);				
+				break;
+			}
+			
+		}
 		// if(cart.containsKey(key)){
 		// cart.remove(key);
 		// return true;
@@ -79,7 +87,7 @@ public class ShoppingCart {
 	// singleton
 	private static ShoppingCart instance = null;
 
-	private ShoppingCart() {
+	public ShoppingCart() {
 		BikeDataController bdc = new BikeDataController();
 //		add(bdc.getBikeByEAN(7613257813441L));
 //		add(bdc.getBikeByEAN(7613257813441L));
