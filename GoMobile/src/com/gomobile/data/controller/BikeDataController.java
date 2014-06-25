@@ -445,6 +445,16 @@ public class BikeDataController {
 	}
 
 	/**
+	 * Returns the android resource id corresponding to the specific bike.
+	 * @param bikeEAN the EAN specifying the bike.
+	 * @return the resource id as integer or -1 if no corresponding entry exists in the database.
+	 */
+	public int getVideoSourcePath(long bikeEAN){
+		//TODO: Not yet implemented!
+		return -1;
+	}
+	
+	/**
 	 * @return the sqlConnector
 	 */
 	public MySqlConnector getSqlConnector() {
