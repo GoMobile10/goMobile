@@ -307,13 +307,16 @@ public class BikeDataController {
 			String[][] jsonArray = taskToExecute.get();
 			int rowCount = jsonArray.length;
 			
-			for(int i = 0; i < rowCount; i++){
+			//changed by pk
+			HashMap<Component, Component> defectcompHM = new HashMap<Component, Component>();
+			for(int i = 0; i < rowCount; i++){				
 				Component defectComponent = getComponentByEAN(Long.valueOf(jsonArray[i][1]));
 				Component replacementComponent = getComponentByEAN(Long.valueOf(jsonArray[i][2]));
-				repairOrder.setDefectReplacementComponentMap(new HashMap<Component, Component>());
-				repairOrder.getDefectReplacementComponentMap().put(defectComponent, replacementComponent);
-				
+				System.out.println("BDataCon i:"+i+"roID:"+ repairOrder.getOrderID() +"- defCo: "+ defectComponent.getEanNumber()+" reCo: "+replacementComponent.getEanNumber());
+				defectcompHM.put(defectComponent, replacementComponent);		
 			}
+			System.out.println("defectcompHM: "+defectcompHM.size());
+			repairOrder.setDefectReplacementComponentMap(defectcompHM);
 		}
 		catch(Exception e){
 			Log.e("BIKE DATA RETRIEVING ERROR", e.getLocalizedMessage());

@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class EmployeeListAdapter extends ArrayAdapter<Employee> {
 	private int layoutResourceId;
 	private List<Employee> allEmployees;
 	private Employee currentEmployee;
+	private int currentposition;
 	
 	public EmployeeListAdapter(Context context,int layoutResourceId, List<Employee> allEmployees) {
 		
@@ -76,7 +78,18 @@ public class EmployeeListAdapter extends ArrayAdapter<Employee> {
 		
 		firstName.setText(currentEmployee.getFirstName());
 		lastName.setText(currentEmployee.getLastName());
+		
+		if(position == currentposition){
+			convertView.setBackgroundColor(Color.LTGRAY);
+		}else{
+			convertView.setBackgroundColor(Color.TRANSPARENT);
+		}
 				
 		return convertView;
+	}
+	// Through this method the activity can control the highlighted item
+	public void setCurrentPosition(int currentposition){
+		System.out.println("Set New Highlighted position: "+currentposition);
+		this.currentposition = currentposition;
 	}
 }

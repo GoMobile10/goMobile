@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gomobile.data.controller.BikeDataController;
 import com.gomobile.data.controller.EmployeesDataController;
@@ -43,6 +44,9 @@ public class Overviewer extends ViewWithNavigation {
 	EmployeesDataController employeeController;
 	View itemView; 
 	ArrayAdapter<Bike> BLVadapter;
+	String prename;
+	String lastname;
+	boolean allsparepartspickedup;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +59,14 @@ public class Overviewer extends ViewWithNavigation {
 		TextView textView = (TextView) findViewById(R.id.FirstName);
 		textView.setText(getIntent().getExtras().getString("FirstName"));		
 		
+		
+		prename = new String(getIntent().getExtras().getString("FirstName"));
+		
+		
 		TextView textView2 = (TextView) findViewById(R.id.LastName);
 		textView2.setText(getIntent().getExtras().getString("LastName"));
+		
+		lastname = new String(getIntent().getExtras().getString("LastName"));
 		
 		
 		employeeController = new EmployeesDataController();
@@ -68,9 +78,16 @@ public class Overviewer extends ViewWithNavigation {
 		repairOrders = employeeController.getAssignedOrders(emp);
 		
 		bikesToRepair = new ArrayList<Bike>();
-		for (int i = 0; i < repairOrders.size(); i++) {
-			bikesToRepair.add(repairOrders.get(i).getDefectBike());
-		}	
+		
+		if(repairOrders.get(0) != null){
+			
+			bikesToRepair.add(repairOrders.get(0).getDefectBike());
+		}
+		
+		
+//		for (int i = 0; i < repairOrders.size(); i++) {
+//			bikesToRepair.add(repairOrders.get(i).getDefectBike());
+//		}	
 
 		
 		
@@ -95,6 +112,12 @@ public class Overviewer extends ViewWithNavigation {
 		bikeListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		bikeListView.setItemChecked(0, true);
 		
+		if( getIntent().getBooleanExtra("allsparepartspickedup", false) == true){
+			allsparepartspickedup=true;
+			((RepairListAdapter) BLVadapter).setworkDoneBikeEan(Long.parseLong(getIntent().getStringExtra("BikeEanNumber")));
+			Toast.makeText(getApplicationContext(), "Repair Order completed!", Toast.LENGTH_LONG).show();
+		}
+		
 	}
 	
 	public void startMode() {
@@ -105,11 +128,15 @@ public class Overviewer extends ViewWithNavigation {
 	public void navigateRight() {
 		// paste the data between the two classes Overviewer and Pickuplist
 		final Intent PickuplistOfOrder = new Intent(this, Pickuplist.class);
+		
+		PickuplistOfOrder.putExtra("FirstName", prename);
+		PickuplistOfOrder.putExtra("LastName", lastname);
+		
 		Bike temp = bikesToRepair.get(itemcounter);
-		System.out.println("Ean: "+temp.getEanNumber());
+//		System.out.println("Ean: "+temp.getEanNumber());
 		PickuplistOfOrder.putExtra("Description",temp.getDescription());
 		
-		PickuplistOfOrder.putExtra("EanNumber",""+temp.getEanNumber());
+		PickuplistOfOrder.putExtra("BikeEanNumber",""+temp.getEanNumber());
 		PickuplistOfOrder.putExtra("BikeName",temp.getDescription());
 		startActivity(PickuplistOfOrder);
 

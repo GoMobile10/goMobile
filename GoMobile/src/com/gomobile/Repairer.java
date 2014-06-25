@@ -1,5 +1,6 @@
 package com.gomobile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
@@ -12,7 +13,14 @@ import com.gomobile.data.controller.EmployeesDataController;
 import com.gomobile.model.Employee;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.repair.EmployeeListAdapter;
+import com.gomobile.repair.RepairListAdapter;
 
+/**
+ * 
+ * @author danielschopp,Patrick, Arndt
+ * 
+ *
+ */
 
 public class Repairer extends ViewWithNavigation {
 	
@@ -21,6 +29,7 @@ public class Repairer extends ViewWithNavigation {
 	List<Employee> employees;
 	EmployeesDataController employeeData;
 	View itemView; 
+	EmployeeListAdapter adapter;
 	
 
 	@Override
@@ -44,7 +53,7 @@ public class Repairer extends ViewWithNavigation {
 	private void displayEmployeeList() {
 		
 		
-		EmployeeListAdapter adapter = new EmployeeListAdapter(Repairer.this, 
+		adapter = new EmployeeListAdapter(Repairer.this, 
 				R.layout.rowlayout_employeelist_item, employees);
 		employeeListView = (ListView) findViewById(R.id.listView2);
 		employeeListView.setAdapter(adapter);
@@ -80,30 +89,31 @@ public class Repairer extends ViewWithNavigation {
 
 	@Override
 	public void navigateUp() {
+		
+		System.out.println("navigateUp - itemcounter: "+itemcounter);
 		if (itemcounter <= 0) {
 			itemcounter = 0;
-			//itemView.setBackgroundColor(Color.TRANSPARENT);
-
+			((EmployeeListAdapter) adapter).setCurrentPosition(itemcounter);
 		} else {
 			employeeListView.setItemChecked(itemcounter - 1, true);
-			//itemView.setBackgroundColor(Color.LTGRAY);
 			itemcounter = itemcounter - 1;
-
+			((EmployeeListAdapter) adapter).setCurrentPosition(itemcounter);
 		}
 
 	}
 
 	@Override
 	public void navigateDown() {
+		System.out.println("navigateDown - itemcounter: "+itemcounter);
 		if (itemcounter >= employees.size() - 1) {
-			//itemView.setBackgroundColor(Color.LTGRAY);
 			itemcounter = employees.size() - 1;
+			((EmployeeListAdapter) adapter).setCurrentPosition(itemcounter);
 		} else {
 			employeeListView.setItemChecked(itemcounter + 1, true);
-			//itemView.setBackgroundColor(Color.TRANSPARENT);
 			itemcounter = itemcounter + 1;
+			((EmployeeListAdapter) adapter).setCurrentPosition(itemcounter);
+			
 		}
-
 	}
 
 }

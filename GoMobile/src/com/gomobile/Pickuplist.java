@@ -16,6 +16,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gomobile.data.controller.BikeDataController;
 import com.gomobile.model.Bike;
@@ -46,81 +47,94 @@ public class Pickuplist extends ViewWithNavigation {
 	List<Bike> bikesToRepair;
 	ArrayList<String> scannedComponents;
 	boolean scannedBefore;
+	RepairOrder tempRepairOrder;
+	boolean allsparepartspickedup;
+	List<RepairOrder> repairorderlist;
+	String prename;
+	String lastname;
+	String bikeEAN;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_pickuplist);	
-		//Fill the static view parts		
-		populateView();	
-		//Repair Parts View
-		//create a list with components for repairing
-		populateSpareParts();
-		scannedBefore = false;
-		checkScannedSpareParts();
 		
-		ListAdapter listenAdapter = new PickupSparePartsListAdapter(Pickuplist.this, R.layout.rowlayout_sparepartspickuplist_item ,needed_sparparts);		
-		meineListView = (ListView) findViewById(R.id.listView1);
-		meineListView.setAdapter(listenAdapter);
 		
-		setContentView(createNavigationInfo(R.id.pickuplistId,this,"back","scan","detail",null));
+		prename = new String(getIntent().getExtras().getString("FirstName"));		
+		lastname = new String(getIntent().getExtras().getString("LastName"));
+		
+		
+		//Fill the view with static stuff		
+				populateView();	
+				//create a list with components for repairing
+				populateSpareParts();
+				//define some paramters
+				scannedBefore = false;
+				allsparepartspickedup = false;	
+				//check if a spare part was scanned 
+				checkScannedSpareParts();
+				
+				ListAdapter listenAdapter = new PickupSparePartsListAdapter(Pickuplist.this, R.layout.rowlayout_sparepartspickuplist_item ,needed_sparparts);		
+				meineListView = (ListView) findViewById(R.id.listView1);
+				meineListView.setAdapter(listenAdapter);
+				
+				setContentView(createNavigationInfo(R.id.pickuplistId,this,"back","detail","help","save"));
 
 		
 	}
 	
 	private void checkScannedSpareParts(){
 		Intent intent = getIntent();
-		System.out.println("scannedEAN: " + intent.getStringExtra("scannedEAN"));
+		System.out.println("scanned EAN: " + intent.getStringExtra("scannedEAN"));
 		if (intent.getStringExtra("scannedEAN")!= null) {
 			for (int i = 0; i < needed_sparparts.size(); i++) {
-				System.out.println("i: "+ i +" "+needed_sparparts.get(i).getEanNumber() +"| "+ Long.parseLong(intent.getStringExtra("scannedEAN"), 10) );
+				//System.out.println("i: "+ i +" "+needed_sparparts.get(i).getEanNumber() +"| "+ Long.parseLong(intent.getStringExtra("scannedEAN"), 10) );
 				if(needed_sparparts.get(i).getEanNumber()== Long.parseLong(intent.getStringExtra("scannedEAN"), 10)){
 					needed_sparparts.get(i).setPicukuped(true);
+					Toast.makeText(getApplicationContext(), "You picked up: "+needed_sparparts.get(i).getDescription()+ "("+needed_sparparts.get(i).getEanNumber()+")", Toast.LENGTH_LONG).show();
 					if(scannedBefore == false){
-						System.out.println("scannedBefore false");
+						//System.out.println("scannedBefore false");
 						
 					}
-					System.out.println("add " +intent.getStringExtra("scannedEAN")+"to scanned Components");
+					//System.out.println("add " +intent.getStringExtra("scannedEAN")+"to scanned Components");
 					scannedComponents.add(intent.getStringExtra("scannedEAN"));
 					scannedBefore = true;
 				}
 			}
 		}
-		System.out.println("before scanned Components check ");
+		//System.out.println("before scanned Components check ");
 		if (intent.getStringExtra("scannedEAN") != null) {
 			for (int h= 0; h < scannedComponents.size(); h++) {
 				for (int i = 0; i < needed_sparparts.size(); i++) {
-					System.out.println("i and h: "+ i +" "+needed_sparparts.get(i).getEanNumber() +"| "+ Long.parseLong(scannedComponents.get(h), 10) );
+					//System.out.println("i and h: "+ i +" "+needed_sparparts.get(i).getEanNumber() +"| "+ Long.parseLong(scannedComponents.get(h), 10) );
 					if(needed_sparparts.get(i).getEanNumber()== Long.parseLong(scannedComponents.get(h), 10)){
-						System.out.println("treffer! " +needed_sparparts.get(i).getEanNumber());
+						//System.out.println("treffer! " +needed_sparparts.get(i).getEanNumber());
 						needed_sparparts.get(i).setPicukuped(true);					}
 				}
 			}
 		}
 	}
+	
+	
 	private void populateSpareParts(){
-		
-		//Loading data from database
-        BikeDataController bikeDataController = new BikeDataController();
-        List<RepairOrder> repairorderlist;
-        System.out.println("EAN:"+getIntent().getExtras().getString("EanNumber"));
-        repairorderlist = bikeDataController.getRepairOrders("BikeEAN="+getIntent().getExtras().getString("EanNumber"));
-        System.out.println("repairorderlist: "+ repairorderlist.size()+" | name: "+repairorderlist.get(0).getDefectBike().getDescription());
-        RepairOrder tempRepairOrder = repairorderlist.get(0);
-        
-        Bike defectBike = tempRepairOrder.getDefectBike();
-        
         needed_sparparts = new ArrayList<Component>();
+        bikeEAN = ""+getIntent().getExtras().getString("BikeEanNumber");
         
-        HashMap<Component, Component> defectcomponents = (HashMap<Component, Component>) tempRepairOrder.getDefectReplacementComponentMap();
+        //Loading data from database
+        BikeDataController bikeDataController = new BikeDataController();
+        repairorderlist = bikeDataController.getRepairOrders("BikeEAN="+bikeEAN);     
+        	System.out.println("repairorderlist: "+ repairorderlist.size()+" | name: "+repairorderlist.get(0).getDefectBike().getDescription());
+    	tempRepairOrder = repairorderlist.get(0);
         
+    	//Get defect spare parts
+    	HashMap<Component, Component> defectcomponents = (HashMap<Component, Component>) tempRepairOrder.getDefectReplacementComponentMap(); 
         Iterator it = defectcomponents.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry)it.next();
-            System.out.println(((Component)pairs.getKey()).getDescription() + " = " + ((Component)pairs.getValue()).getDescription());
+            //System.out.println("key: "+((Component)pairs.getKey()).getEanNumber() + " |value: " + ((Component)pairs.getValue()).getEanNumber());
             needed_sparparts.add(((Component)pairs.getValue()));
-            it.remove(); // avoids a ConcurrentModificationException
+            it.remove(); // avoids a ConcurrentModificationException   
         }
 	}
 	private void populateView(){
@@ -152,16 +166,28 @@ public class Pickuplist extends ViewWithNavigation {
 		//Pickup a spare part with scanning the barcode		
 		Intent intent = new Intent(this, BarcodeScanner.class);
 		intent.putExtra("pickupspareparts", true);
-		intent.putExtra("BikeEanNumber", getIntent().getExtras().getLong("EanNumber"));
+		
+		
+		intent.putExtra("BikeEanNumber", bikeEAN);
+		intent.putExtra("FirstName", prename);
+		intent.putExtra("LastName", lastname);
 		intent.putExtra("RepairOrder", "id");
 		intent.putExtra("BikeName", getIntent().getExtras().getString("BikeName"));
 		intent.putStringArrayListExtra("scannedComponents", scannedComponents);
+		
 		startActivity(intent);
 	}
 
 	@Override
 	public void navigateLeft() {
-		startActivity(new Intent(this, Overviewer.class));
+		Intent intent = new Intent(this, Overviewer.class);
+		
+		
+		intent.putExtra("FirstName", prename);
+		intent.putExtra("LastName", lastname);
+		
+		
+		startActivity(intent);
 
 	}
 
@@ -175,7 +201,19 @@ public class Pickuplist extends ViewWithNavigation {
 	@Override
 	public void navigateDown() {
 
-		startActivity(new Intent(this, Overviewer.class));
+		Intent overviewer = new Intent(this, Overviewer.class);
+		//todo: check if all spare parts picked up 
+		allsparepartspickedup =true;
+		//decide bike which should marked as work done
+		if(allsparepartspickedup ==true){
+			overviewer.putExtra("allsparepartspickedup", true);
+			overviewer.putExtra("BikeEanNumber",bikeEAN);
+		}else{
+			overviewer.putExtra("allsparepartspickedup", false);
+			overviewer.putExtra("BikeEanNumber",bikeEAN);
+		}
+			
+		startActivity(overviewer);
 
 	}
 	

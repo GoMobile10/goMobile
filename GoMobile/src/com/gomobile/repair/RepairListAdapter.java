@@ -29,6 +29,7 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 	private List<Bike> bikesToRepair;
 	private Bike currentBike;
 	public int currentposition; // for highlighting
+	private Long workDoneBikeEan;
 
 	public RepairListAdapter(Context context,int layoutResourceId, List<Bike> bikesToRepair) {
 		
@@ -54,6 +55,7 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 		TextView textDate = (TextView) convertView.findViewById(R.id.date);
 		TextView date = (TextView) convertView.findViewById(R.id.repairDescriptionTeaser);
 		TextView description = (TextView) convertView.findViewById(R.id.repairNameTeaser);
+		ImageView orderStatusImage = (ImageView) convertView.findViewById(R.id.repairedCheckTeaser);
 
 		
 		switch (position) {
@@ -75,6 +77,15 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 			convertView.setBackgroundColor(Color.TRANSPARENT);
 		}
 		
+		try {
+			if(currentBike.getEanNumber() ==workDoneBikeEan){
+				System.out.println("Adapter: workDoneBikeEan: " +workDoneBikeEan);
+				orderStatusImage.setImageResource(com.gomobile.R.drawable.scanned);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		return convertView;
 	}
 	// Through this method the activity can control the highlighted item
@@ -82,5 +93,11 @@ public class RepairListAdapter extends ArrayAdapter<Bike> {
 		System.out.println("Set New Highlighted position: "+currentposition);
 		this.currentposition = currentposition;
 	}
+	
+	// Through this method the activity can control the which bikes repaired
+		public void setworkDoneBikeEan(Long workDoneBikeEan){
+			System.out.println("WorkdoneEAN: "+workDoneBikeEan);
+			this.workDoneBikeEan = workDoneBikeEan;
+		}
 	
 }
