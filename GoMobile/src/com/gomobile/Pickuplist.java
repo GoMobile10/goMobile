@@ -197,7 +197,10 @@ public class Pickuplist extends ViewWithNavigation {
 	@Override
 	public void navigateUp() {
 
-		startActivity(new Intent(this, RepairToDoList.class));
+		final Intent repairTodoList = new Intent(this, RepairToDoList.class);
+		repairTodoList.putExtra("FirstName", prename);
+		repairTodoList.putExtra("LastName", lastname);
+		startActivity(repairTodoList);
 
 	}
 

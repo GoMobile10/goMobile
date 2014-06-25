@@ -15,12 +15,17 @@ import com.gomobile.repair.ToDoListAdapter;
 public class RepairToDoList extends ViewWithNavigation{
 	ListView repairToDoListItem;
 	List<String> repairToDoListData;
+	String prename;
+	String lastname;
 	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.repair_to_do_list);
+		
+		prename = new String(getIntent().getExtras().getString("FirstName"));		
+		lastname = new String(getIntent().getExtras().getString("LastName"));
 		
 		repairToDoListData = new ArrayList<String>();
 		repairToDoListData.add("#1 Open the screws at the front wheel");
@@ -51,7 +56,10 @@ public class RepairToDoList extends ViewWithNavigation{
 	@Override
 	public void navigateLeft() {
 		
-		startActivity(new Intent(this, Pickuplist.class));
+		final Intent pickuplist = new Intent(this, Pickuplist.class);
+		pickuplist.putExtra("FirstName", prename);
+		pickuplist.putExtra("LastName", lastname);
+		startActivity(pickuplist);
 		
 	}
 
