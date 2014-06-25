@@ -180,7 +180,12 @@ public class Navigation {
 			boolean flag = false; // if +- 180 is crossed
 
 			int[][] alphaBetaValues = {{1,-1},{1,1},{-1,-1}};
-			int[][] angles = {{15,15},{60,35},{35,60}};
+//			int[][] angles = {{5,5},{60,40},{40,60}};
+			
+			int[][]	angles = {{10,10},{60,50},{50,60}};
+			
+				
+			
 
 			//Log.d("Range","Init = " + init + " in Rad = "+ accMagOrientation[0]);
 			int alphaBetaLength = alphaBetaValues.length; 

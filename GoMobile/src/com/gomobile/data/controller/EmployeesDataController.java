@@ -142,7 +142,7 @@ public class EmployeesDataController {
 	public List<RepairOrder> getAssignedOrders(Employee employee){
 		BikeDataController bikeDataController = new BikeDataController();
 		
-		return bikeDataController.getRepairOrders("emplohyeeid = " + employee.getId());
+		return bikeDataController.getRepairOrders("employeeid = " + employee.getId());
 	}
 
 	public MySqlConnector getSqlConnector() {

@@ -44,7 +44,7 @@ public class PickupSparePartsListAdapter extends ArrayAdapter<Component> {
 		if (convertView == null) {
 			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
 			convertView = inflater.inflate(layoutResourceId, parent, false);
-			System.out.println("convert view isnt null! ID: " + convertView.getId()+" String: "+convertView.toString());
+			//System.out.println("convert view isnt null! ID: " + convertView.getId()+" String: "+convertView.toString());
 		}
 		// Find the bike to work with
 		currentSparepart = (Component) spareparts.get(position);
@@ -58,7 +58,8 @@ public class PickupSparePartsListAdapter extends ArrayAdapter<Component> {
 			imageView.setImageResource(com.gomobile.R.drawable.scanned);
 		}else{
 			imageView.setImageResource(com.gomobile.R.drawable.missing);
-		}	
+		}
+		
 		description.setText(currentSparepart.getDescription() +" " +currentSparepart.getEanNumber());
 		return convertView;
 	}

@@ -94,7 +94,7 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 	    pause = true;
 	}
     
-    public void didScanBarcode(String barcode, String symbology) {
+	public void didScanBarcode(String barcode, String symbology) {
         // Remove non-relevant characters that might be displayed as rectangles
         // on some devices. Be aware that you normally do not need to do this.
         // Only special GS1 code formats contain such characters.
@@ -105,25 +105,36 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
             }
         }
         onPause();
-    
-        BikeDataController bikeDataController = new BikeDataController();
-        Long ean = Long.valueOf(cleanedBarcode);
-        Bike bike = bikeDataController.getBikeByEAN(ean);
-        System.out.println("didScanBarcode: "+ cleanedBarcode);
-//        Bike bike = new Bike(1234, "Test", 499, "Bla");
-		if(ScannerController.getInstance().setMaterialInUse(bike)){   	
-			dialog = displayComparisionView();
-			showDialog = true;
-			dialog.show();
+        
+        Intent intent = getIntent();
+		System.out.println("Boolean pickupspareparts: "+intent.getBooleanExtra("pickupspareparts", false));
+		if( (intent.getBooleanExtra("pickupspareparts", false)) == true){
+			//If sparepart pickup ...
+			intent = new Intent(this, Pickuplist.class);
+			intent.putExtra("scannedEAN", cleanedBarcode);
+			intent.putExtra("BikeEanNumber", getIntent().getExtras().getString("BikeEanNumber"));
+			intent.putExtra("BikeName", getIntent().getExtras().getString("BikeName"));
+			intent.putExtra("FirstName", getIntent().getExtras().getString("FirstName"));	
+			intent.putExtra("LastName", getIntent().getExtras().getString("LastName"));	
+			
+			try {
+				System.out.println("scannedComponents sized in BarcodeScanner: "+ getIntent().getStringArrayListExtra("scannedComponents").size());
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			intent.putStringArrayListExtra("scannedComponents", getIntent().getStringArrayListExtra("scannedComponents"));
+			startActivity(intent);
 		}else{
-			Intent intent = getIntent();
-			System.out.println("Boolean pickupspareparts: "+intent.getBooleanExtra("pickupspareparts", false));
-			if( (intent.getBooleanExtra("pickupspareparts", false)) == true){
-				//If sparepart pickup ...
-				System.out.println("didScanBarcode in pickup spareparts mode");
-				intent = new Intent(this, Pickuplist.class);
-				intent.putExtra("scannedEAN", cleanedBarcode);
-				startActivity(intent);
+    
+	        BikeDataController bikeDataController = new BikeDataController();
+	        Long ean = Long.valueOf(cleanedBarcode);
+	        Bike bike = bikeDataController.getBikeByEAN(ean);
+	        System.out.println("didScanBarcode: "+ cleanedBarcode);
+	//        Bike bike = new Bike(1234, "Test", 499, "Bla");
+			if(ScannerController.getInstance().setMaterialInUse(bike)){   	
+				dialog = displayComparisionView();
+				showDialog = true;
+				dialog.show();
 			}else{
 				System.out.println("didScanBarcode: go to low detail view!");
 				intent = new Intent(this, LowDetailView.class);
