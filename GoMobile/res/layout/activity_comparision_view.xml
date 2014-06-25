@@ -2,97 +2,246 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:layout_marginTop="0dp"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:weightSum="3"
     tools:context=".ComparisionView" >
-	
-    <LinearLayout 
-        android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:orientation="vertical" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Name: "
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Price: "
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Type: "
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Weight: "
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Availability: "
-            android:textAppearance="?android:attr/textAppearanceMedium" />
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="415dp"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/textNameCompare1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="blablalbal"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginBottom="15dp"
+            android:cursorVisible="false"
+            android:text="Name: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/teal"
+            android:textSize="15sp" />
 
         <TextView
-            android:id="@+id/textPriceCompare1"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="blablalbal"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_marginBottom="15dp"
+            android:text="Price: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/teal"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Type: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/teal"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Weight(kg): "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/teal"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="Availability: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/teal"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:id="@+id/LinearLayout1"
+        android:layout_width="418dp"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:cursorVisible="false"
+            android:text="Name: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/OrangeRed"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Price: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/OrangeRed"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Type: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/OrangeRed"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Weight(kg): "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/OrangeRed"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:text="Availability: "
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/OrangeRed"
+            android:textSize="15sp" />
+    </LinearLayout>
+    
+     <LinearLayout
+         android:id="@+id/LinearLayout1"
+         android:layout_width="174dp"
+         android:layout_height="wrap_content"
+         android:gravity="right"
+         android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textNameCompare1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
+            android:text="N"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/teal"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textPriceCompare1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
+            android:text="P"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/teal"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewCategory1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
+            android:text="V-Brakes"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/teal"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textWeight1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
+            android:scrollHorizontally="false"
+            android:text="kg"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/teal"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewAvailability1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
+            android:text="In Stock"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/teal"
+            android:textSize="15sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:gravity="right"
         android:orientation="vertical" >
 
         <TextView
             android:id="@+id/textNameCompare2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="blablalbal"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
+            android:text="N"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/OrangeRed"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/textPriceCompare2"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:text="blablalbal"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
+            android:text="P"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/OrangeRed"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewCategory2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
+            android:text="V-Brakes"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/OrangeRed"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textWeight2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
+            android:scrollHorizontally="false"
+            android:text="kg"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/OrangeRed"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/textViewAvailability2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginBottom="15dp"
+            android:text="In Stock"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/OrangeRed"
+            android:textSize="15sp" />
     </LinearLayout>
-</LinearLayout>
+
 </FrameLayout>

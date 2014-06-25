@@ -26,6 +26,7 @@ public class Bike extends Material implements BikeComponentInterface{
 		this.isDefect = isDefect;
 	}
 	
+	
 	public Bike(long eanNumber, String name) {
 		super(eanNumber);
 		this.description = name;

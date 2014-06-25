@@ -34,6 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
         <activity
             android:name="com.gomobile.technicalservices.BarcodeScanner"
             android:label="@string/title_activity_barcode_scanner"
@@ -94,10 +95,19 @@
             android:name="com.gomobile.Pickuplist"
             android:label="@string/title_activity_pickuplist" >
         </activity>
-        <activity
+        
+         <activity
+            android:name="com.gomobile.VideoPlayerController">
+        </activity>
+       
+    <activity
+            
+            
             android:name="com.gomobile.shoppingcart.ShoppingCartView"
             android:label="@string/title_activity_shopping_cart_view" >
         </activity>
+        
+         
         <activity
             android:name="com.gomobile.technicalservices.DataConnectionActivity"
             android:label="@string/app_name" >
