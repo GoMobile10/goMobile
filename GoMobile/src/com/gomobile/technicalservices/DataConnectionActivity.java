@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.gomobile.R;
 import com.gomobile.data.controller.BikeDataController;
+import com.gomobile.data.controller.EmployeesDataController;
+import com.gomobile.model.Employee;
 import com.gomobile.model.RepairOrder;
 
 /**
@@ -43,8 +45,10 @@ public class DataConnectionActivity extends Activity {
 	String text = "";
 	
 	BikeDataController dataController = new BikeDataController();
-	for(RepairOrder order : dataController.getRepairOrders("1")){
-		text = text +  "\n" + order.getRepairDescription();
+	
+	EmployeesDataController edc = new EmployeesDataController();
+	for(Employee employer : edc.getAllEmployees()){
+		text = text +  "\n" + employer.getFirstName() + " " + employer.getLastName();
 	}
 	
 	dataInfoView.setText(text);
