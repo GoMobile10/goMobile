@@ -1,36 +1,29 @@
 package com.gomobile.navigation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorManager;
-
-
-	import android.app.Activity;
-	import android.hardware.Sensor;
-	import android.hardware.SensorEvent;
-	import android.hardware.SensorEventListener;
-	import android.hardware.SensorManager;
-	import android.os.Bundle;
-	import android.os.SystemClock;
-	import android.util.Log;
-	import android.view.KeyEvent;
-	import android.widget.EditText;
-	import android.widget.ImageView;
-	import android.widget.TextView;
+import android.os.SystemClock;
+import android.util.Log;
 
 public class Navigation {
 	
+//	Thread t;
+//	
+//	boolean rt = true;
 	
 	public static final int NAVIGATE_RIGHT = 1;
 	public static final int NAVIGATE_LEFT = 2;
 	public static final int NAVIGATE_UP = 3;
 	public static final int NAVIGATE_DOWN = 4;
-
 		
+	
+	
+	
 		boolean navigateLeft,navigateRight,navigateUp,navigateDown;
-
-	public static final int NAVIGATE_INFO = 5;
-	public boolean navigatedActive = false;
 
 		//Different mapping of the axis from the accel and magnetic sensor
 		
@@ -44,15 +37,17 @@ public class Navigation {
 
 		//Ranges of the navigation
 		Range turnRight,turnLeft,turnUp,turnDown, middleHorizontal, middleVertical;
+		
+		BoundingBox bturnRight,bturnLeft,bturnUp,bturnDown, middle;
 
 	    // magnetic field vector
-	    private float[] magnet = new float[3];
+	     float[] magnet = new float[3];
 	 
 	    // accelerometer vector
-	    private float[] accel = new float[3];
+	    float[] accel = new float[3];
 	 
 	    // orientation angles from accel and magnet
-	    private float[] accMagOrientation = new float[3];
+	    float[] accMagOrientation = new float[3];
 	 
 	    // accelerometer and magnetometer based rotation matrix
 	    private float[] rotationMatrix = new float[9];
@@ -60,34 +55,9 @@ public class Navigation {
 	    // remapped rotation matrix 
 	    private float[] correctedRotationMatrix = new float[9];
 	    
-//	    public void onCreate(Bundle savedInstanceState) {
-//	        super.onCreate(savedInstanceState);
-//	        setContentView(R.layout.activity_sensor);
-//	        
-//	        //TODO Debugging
-//	        factor =  (EditText)findViewById(R.id.editText1);
-//	 
-//	        // get sensorManager and initialise sensor listeners
-//	        mSensorManager = (SensorManager) this.getSystemService(SENSOR_SERVICE);
-//	        initListeners();
-//	    }
-//	    
-//	    public void initListeners(){
-//	        mSensorManager.registerListener(this,
-//	            mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-//	            SensorManager.SENSOR_DELAY_UI);
-//	     
-//	        mSensorManager.registerListener(this,
-//	            mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-//	            SensorManager.SENSOR_DELAY_UI);
-//	    } 
+//	    static List<Range> epic = new ArrayList<Range>(10);
 	    
-//		@Override
-//		public void onAccuracyChanged(Sensor arg0, int arg1) {
-//			// TODO Auto-generated method stub
-////			if(arg1 < 3)
-////			Log.i("AccChanged", "Sensor Type: " + arg0.getType() + " Accuracy " + arg1);
-//		}
+	   
 
 		public int onSensorChanged(SensorEvent event) {
 			if(navigation){
@@ -122,27 +92,100 @@ public class Navigation {
 	
 			    if(magnet != null && accel != null){
 			    	  calculateAccMagOrientation();
-	
+
 			    	  return navigate();
 			    }
 		    }
 		    return 0;
 			
 		}
+	
+		private void defineBoudingBoxes(){
+			bturnLeft = new BoundingBox(turnLeft, middleVertical);
+			bturnRight = new BoundingBox(turnRight, middleVertical);
+			bturnUp = new BoundingBox(middleHorizontal,turnUp);
+			bturnDown = new BoundingBox(middleHorizontal, turnDown);
+			middle = new BoundingBox(middleHorizontal, middleVertical);			
+		}
+		/*
+		private synchronized void epiCenter(){
+			Log.d("EpiCenter","Start");
+			boolean listIsFull = epic.size() == 10;
+			if(listIsFull){
+				Range r = epic.get(0);
+				boolean inAll = true;
+				for(int n = 1; n < epic.size(); n++){
+					if(!r.isIn(epic.get(n).center)){
+						inAll = false;
+						break;
+					}
+				}
+				if(inAll){
+					defineRanges((float) Math.toDegrees(r.center),(float) Math.toDegrees(accMagOrientation[1]));
+					epic.clear();
+					navigateLeft = navigateRight = navigateUp = navigateDown = false;
+
+					Log.d("EpiCenter","New Range");
+				}
+				
+			}
+			float init = (float) Math.toDegrees(accMagOrientation[0]);
+			float up,down;
+			boolean flag=false;
+			up = init + 10;
+			down = init - 10;
+			if(up > 180){
+				up = up - 360;
+				flag = true;
+			}
+			if((-1 * down) > 180){
+				down = down + 360;
+				if(flag) flag = false;
+				else flag = true;
+			}
+			Range range;
+			try {
+				if (flag) {
+					range = new Range((float) Math.toRadians(up),
+							(float) Math.toRadians(down),
+							(float) Math.toRadians(180));
+				} else {
+					range = new Range((float) Math.toRadians(up),
+							(float) Math.toRadians(down));
+				}
+				range.center = (float) Math.toRadians((float)init);
+				if(listIsFull){
+					epic.remove(0);
+				}
+				epic.add(range);
+			} catch (Exception e) {
+
+			}
+		 }
+		*/
 		
 		public void defineRanges(){
+			clearNavigation();
+			defineRanges((float) Math.toDegrees(accMagOrientation[0]),(float) Math.toDegrees(accMagOrientation[1]));
+		}
+		
+		private void clearNavigation(){
+			navigateDown = navigateLeft = navigateRight = navigateUp = false;
+		}
+		
+		private void defineRanges(float azimuth, float roll){
 			int alpha,beta;
 			float up, down;
-			float[] init = {(float) Math.toDegrees(accMagOrientation[0]),(float) Math.toDegrees(accMagOrientation[1])};
+			float[] init = {azimuth,roll};
 			boolean flag = false; // if +- 180 is crossed
 
 			int[][] alphaBetaValues = {{1,-1},{1,1},{-1,-1}};
-			int[][] angles = {{10,10},{60,50},{50,60}};
+			int[][] angles = {{15,15},{60,35},{35,60}};
 
 			//Log.d("Range","Init = " + init + " in Rad = "+ accMagOrientation[0]);
-			
+			int alphaBetaLength = alphaBetaValues.length; 
 			for(int k = 0; k < 2; k++){
-				for(int n = 0; n < alphaBetaValues.length; n++){
+				for(int n = 0; n < alphaBetaLength; n++){
 					flag = false;
 					alpha = alphaBetaValues[n][0];
 					beta = alphaBetaValues[n][1];
@@ -201,27 +244,8 @@ public class Navigation {
 					}
 				}
 			}
+			defineBoudingBoxes();
 		}
-		
-//		public boolean onKeyDown(int keyCode, KeyEvent event) {
-//
-//			if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-//				defineRanges();
-//				return true;
-//			}
-//			
-//			if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
-//		        //TODO Debugging shit
-////		        if(b){
-////		        	b = false;
-////		        	Log.i("AccMag",String.valueOf(getResources().getConfiguration().orientation) );
-////		        	Log.i("AccMag",String.valueOf( ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay().getRotation() ) );
-//////		        	System.out.println(Arrays.toString(accMagOrientation));
-////		        }
-//				return true;
-//			}
-//			return super.onKeyDown(keyCode, event);
-//		}
 		
 		public void calculateAccMagOrientation() {
 		    //get the rotation matrix from
@@ -244,66 +268,79 @@ public class Navigation {
 		
 		private int navigate(){
 			int direction = 0;
-			if(turnRight != null && turnLeft != null && middleHorizontal != null && middleVertical != null && turnUp != null && turnDown != null){ // check if ranges are defined
-		        if(turnRight.isIn(accMagOrientation[0])){
-		        	if(!navigateRight)
+			boolean navigated = navigateDown || navigateLeft || navigateRight || navigateUp;
+			if(bturnRight != null && bturnLeft != null && middle != null && bturnUp != null && bturnDown != null){ // check if ranges are defined
+		        if(bturnRight.isIn(accMagOrientation[0],accMagOrientation[1])){
+		        	if(!navigated){
 		        		start = SystemClock.elapsedRealtime();
 		        		navigateRight = true;
+		        	}
 		        	
-		        }
-		        
-		        if(turnLeft.isIn(accMagOrientation[0])){
-		        	if(!navigateLeft)
+		        }else        
+		        if(bturnLeft.isIn(accMagOrientation[0],accMagOrientation[1])){
+		        	if(!navigated){
 		        		start = SystemClock.elapsedRealtime();
 		        		navigateLeft = true;
-		        	
-		        }
+		        	}
+		        }else
 		        
-		        if(turnUp.isIn(accMagOrientation[1])){
-		        	if(!navigateUp)
+		        if(bturnUp.isIn(accMagOrientation[0],accMagOrientation[1])){
+		        	if(!navigated){
 		        		start = SystemClock.elapsedRealtime();
 	        			navigateUp = true;
-		        }
+		        	}
+		        }else
 		        
-		        if(turnDown.isIn(accMagOrientation[1])){
-		        	if(!navigateDown)
+		        if(bturnDown.isIn(accMagOrientation[0],accMagOrientation[1])){
+		        	if(!navigated){
 		        		start = SystemClock.elapsedRealtime();
 	        			navigateDown = true;
+		        	}
 		        }
 		        
-		        if(middleHorizontal.isIn(accMagOrientation[0]) && (navigateLeft || navigateRight)){
+		        if(middle.isIn(accMagOrientation[0],accMagOrientation[1]) && (navigated)){
 	        		end = SystemClock.elapsedRealtime();
 	        		if( ((end - start )/ 1000d) < 1 ){
 //	        			TODO debugging
 //	        			Log.d("Time", String.valueOf((end-start)/1000d));
 	        			if (navigateRight) {	        				
 	        				direction = NAVIGATE_RIGHT;			
-						}
+						}else
 	        			if (navigateLeft) {
 	        				direction = NAVIGATE_LEFT;				
+						}else
+	        			if (navigateUp) {	        				
+	        				direction = NAVIGATE_UP;				
+						}else
+	        			if (navigateDown) {
+	        				direction = NAVIGATE_DOWN;				
 						}
 	        		}
 	        		navigateRight = false;
 	        		navigateLeft = false;
-	        	}
-		        
-		        
-		        	if(middleVertical.isIn(accMagOrientation[1])&&(navigateUp || navigateDown)){
-		        		end = SystemClock.elapsedRealtime();
-		        		if( ((end - start )/ 1000d) < 1 ){
-//		        			TODO debugging
-//		        			Log.d("Time", String.valueOf((end-start)/1000d));
-		        			if (navigateUp) {	        				
-		        				direction = NAVIGATE_UP;				
-							}
-		        			if (navigateDown) {
-		        				direction = NAVIGATE_DOWN;				
-							}
-		        		}
-		        		navigateUp = false;
-		        		navigateDown = false;
-		        	}
-		        
+	        		navigateUp = false;
+	        		navigateDown = false;
+	        	} 
+//		        else
+//		        
+//		        
+//		        	if(middleVertical.isIn(accMagOrientation[1])&&(navigateUp || navigateDown)){
+//		        		end = SystemClock.elapsedRealtime();
+//		        		if( ((end - start )/ 1000d) < 1 ){
+////		        			TODO debugging
+////		        			Log.d("Time", String.valueOf((end-start)/1000d));
+//		        			if (navigateUp) {	        				
+//		        				direction = NAVIGATE_UP;				
+//							}
+//		        			if (navigateDown) {
+//		        				direction = NAVIGATE_DOWN;				
+//							}
+//		        		}
+//		        		navigateUp = false;
+//		        	}
+//		        		navigateDown = false;
+//		        
+//			}
 			}
 			return direction;
 		}
@@ -333,11 +370,36 @@ public class Navigation {
 
 	        return (float) Math.toRadians(y);
 	    }
-	    
+	
+//	   public void off(){
+//		   t = null;
+//	   }
+//	   
+//	   public void on(){
+//		   t = new Thread(new Runnable() {
+//		        public void run() {
+//		        	while(rt){
+//		        	if((SystemClock.elapsedRealtime() % 500 )== 0)
+//		        		epiCenter();
+//		        	}
+//		        }
+//		    });
+//		 t.start();
+//	   }
+
 	// singleton
 	private static Navigation instance = null;
 
 	private Navigation() {
+//		 t = new Thread(new Runnable() {
+//		        public void run() {
+//		        	while(rt){
+//		        	if((SystemClock.elapsedRealtime() % 500 )== 0)
+//		        		epiCenter();
+//		        	}
+//		        }
+//		    });
+//		 t.start();
 	}
 
 	public static synchronized Navigation getInstance() {

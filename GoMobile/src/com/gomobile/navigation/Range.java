@@ -15,6 +15,7 @@ class Range{
 	private float up,down;
 	private float zeroPoint;
 	private boolean zeroPointIsSet;
+	protected float center;
 	
 	/**
 	 * Creates a new interval excluding the endpoints up and down
