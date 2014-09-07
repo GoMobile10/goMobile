@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,6 +15,7 @@ import com.gomobile.R;
 import com.gomobile.ScannerController;
 import com.gomobile.model.Material;
 import com.gomobile.navigation.ViewWithNavigation;
+import com.gomobile.repair.EmployeeListAdapter;
 import com.gomobile.technicalservices.BarcodeScanner;
 
 /**
@@ -46,8 +48,8 @@ public class ShoppingCartView extends ViewWithNavigation {
 
 		// Set the ArrayAdapter as the ListView's adapter.
 		mainListView.setAdapter(listAdapter);
-
-		mainListView.setSelector(R.drawable.bg);
+		mainListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+//		mainListView.setSelector(R.drawable.bg);
 		mainListView.setItemChecked(0, true);
 		this.setShoppingCartFooter();
 		
@@ -86,12 +88,15 @@ public class ShoppingCartView extends ViewWithNavigation {
 	public void navigateUp() {
 		if (listPosition <= 0) {
 			listPosition = 0;
+			((ShoppingCarListAdapter)listAdapter).setCurrentPosition(listPosition);
 		} else {
 			mainListView.setItemChecked(listPosition - 1, true);
-			View itemView = (View)mainListView.getItemAtPosition(listPosition);
-			itemView.setBackgroundColor(Color.LTGRAY);
+//			View itemView = (View)mainListView.getItemAtPosition(listPosition);
+//			itemView.setBackgroundColor(Color.LTGRAY);
 			listPosition = listPosition - 1;
+			((ShoppingCarListAdapter)listAdapter).setCurrentPosition(listPosition);
 		}
+		
 
 	}
 
@@ -99,9 +104,11 @@ public class ShoppingCartView extends ViewWithNavigation {
 	public void navigateDown() {
 		if (listPosition >= shoppingCartItems.length - 1) {
 			listPosition = shoppingCartItems.length - 1;
+			((ShoppingCarListAdapter)listAdapter).setCurrentPosition(listPosition);
 		} else {
 			mainListView.setItemChecked(listPosition + 1, true);
 			listPosition = listPosition + 1;
+			((ShoppingCarListAdapter)listAdapter).setCurrentPosition(listPosition);
 		}
 
 	}

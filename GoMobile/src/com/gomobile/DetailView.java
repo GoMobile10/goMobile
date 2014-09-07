@@ -63,8 +63,7 @@ public class DetailView extends ViewWithNavigation  {
 
 	@Override
 	public void navigateDown() {
-		// TODO Auto-generated method stub
-		
+		startActivity(new Intent(this,VideoPlayerController.class));		
 	}
 
 }

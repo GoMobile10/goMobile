@@ -4,6 +4,7 @@ import java.text.NumberFormat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class ShoppingCarListAdapter extends ArrayAdapter<ShoppingCartItem> {
 	private Context mContext;
 	private int layoutResourceId;
 	private ShoppingCartItem shoppingCartItems[];
+	public int currentposition;
 
 	public ShoppingCarListAdapter(Context mContext, int layoutResourceId, ShoppingCartItem[] data) {
 
@@ -56,9 +58,19 @@ public class ShoppingCarListAdapter extends ArrayAdapter<ShoppingCartItem> {
 		
 		textViewItem = (TextView) convertView.findViewById(R.id.amount);
 		textViewItem.setText(String.valueOf(shoppingCartItem.getQuantity()));
+		
+		if(position == currentposition){
+			convertView.setBackgroundColor(Color.LTGRAY);
+		}else{
+			convertView.setBackgroundColor(Color.TRANSPARENT);
+		}
 
 		return convertView;
 
+	}
+	
+	public void setCurrentPosition(int currentposition){
+		this.currentposition = currentposition;
 	}
 
 }
