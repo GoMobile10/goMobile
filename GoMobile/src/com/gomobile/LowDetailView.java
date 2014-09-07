@@ -7,16 +7,11 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.gomobile.model.Bike;
-import com.gomobile.model.Material;
 import com.gomobile.navigation.ViewWithNavigation;
-import com.gomobile.shoppingcart.ShoppingCart;
 import com.gomobile.shoppingcart.ShoppingCartView;
 import com.gomobile.technicalservices.BarcodeScanner;
 
 public class LowDetailView extends ViewWithNavigation {
-	
-	
-
 
 	private static boolean compare = false;
 	private static boolean shoppingCart = false;
@@ -77,10 +72,6 @@ public class LowDetailView extends ViewWithNavigation {
 
 	@Override
 	public void navigateDown() {
-		ShoppingCart cart = new ShoppingCart();
-		if(cart.getTotalQuantity()!=0){
-			ShoppingCart.getInstance().delete(ScannerController.getInstance().getMaterialInUse().getEanNumber());
-			startActivity(new Intent(this,ShoppingCartView.class));	
-		}
+		// TODO Auto-generated method stub
 	}
 }

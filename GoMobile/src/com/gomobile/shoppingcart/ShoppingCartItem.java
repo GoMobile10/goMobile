@@ -47,10 +47,6 @@ public class ShoppingCartItem {
 	public int getQuantity() {
 		return this.quantity;
 	}
-	public void setQuantity(int quantity){
-		this.quantity= quantity;
-		
-	}
 
 	@Override
 	public boolean equals(Object o) {

@@ -28,46 +28,15 @@ public class ComparisionView extends ViewWithNavigation {
 
 		TextView textView = (TextView) findViewById(R.id.textNameCompare1);
 		textView.setText(comp1.getDescription());
-		
-		TextView textView2 = (TextView) findViewById(R.id.textNameCompare2);
-		textView2.setText(comp2.getDescription());
-		
 		textView = (TextView) findViewById(R.id.textPriceCompare1);
 		textView.setText(currencyFormatter.format(comp1.getPrice()));
 		
+		textView = (TextView) findViewById(R.id.textNameCompare2);
+		textView.setText(comp2.getDescription());
 		textView = (TextView) findViewById(R.id.textPriceCompare2);
 		textView.setText(currencyFormatter.format(comp2.getPrice()));
 		
-		textView = (TextView) findViewById(R.id.textViewCategory1);
-		textView.setText(comp1.getDescription());
 		
-		textView = (TextView) findViewById(R.id.textViewCategory2);
-		textView.setText(comp2.getDescription());
-		
-		textView = (TextView) findViewById(R.id.textWeight1);
-		textView.setText(comp1.getWeight());
-		
-		textView = (TextView) findViewById(R.id.textWeight2);
-		textView.setText(comp2.getWeight());
-		
-		textView.setText(currencyFormatter.format(comp1.getPrice()));
-		textView.setText(currencyFormatter.format(comp2.getPrice()));
-		
-		TextView textView3 = (TextView) findViewById(R.id.textViewAvailability1);
-		if(comp1.isAvailable()){
-			textView3.setText("is available");
-		}
-		else{
-			textView3.setText("is not available");
-		}
-		
-		TextView textView4 = (TextView) findViewById(R.id.textViewAvailability1);
-		if(comp1.isAvailable()){
-			textView4.setText("is available");
-		}
-		else{
-			textView4.setText("is not available");
-		}
 	}
 
 	@Override
