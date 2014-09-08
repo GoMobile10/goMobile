@@ -35,7 +35,7 @@ public class ShoppingCartView extends ViewWithNavigation {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shopping_cart_view);
-
+		setContentView(createNavigationInfo(R.id.shoppingcartviewId,this,"scan","detail",null,null));
 		
 		// Find the ListView resource.
 		mainListView = (ListView) findViewById(R.id.listViewShoppingCart);

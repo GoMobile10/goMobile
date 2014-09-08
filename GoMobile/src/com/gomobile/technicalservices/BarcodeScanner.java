@@ -16,6 +16,7 @@ import com.gomobile.Pickuplist;
 import com.gomobile.ScannerController;
 import com.gomobile.data.controller.BikeDataController;
 import com.gomobile.model.Bike;
+import com.gomobile.navigation.Navigation;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.interfaces.ScanditSDK;
@@ -95,6 +96,7 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 	}
     
 	public void didScanBarcode(String barcode, String symbology) {
+		Navigation.getInstance().navigation = false;
         // Remove non-relevant characters that might be displayed as rectangles
         // on some devices. Be aware that you normally do not need to do this.
         // Only special GS1 code formats contain such characters.

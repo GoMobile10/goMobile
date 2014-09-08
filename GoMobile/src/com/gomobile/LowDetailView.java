@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.gomobile.model.Bike;
+import com.gomobile.navigation.Navigation;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.shoppingcart.ShoppingCartView;
 import com.gomobile.technicalservices.BarcodeScanner;
@@ -20,7 +21,7 @@ public class LowDetailView extends ViewWithNavigation {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_low_detail_view);
-		
+		setContentView(createNavigationInfo(R.id.lowdetailviewId,this,"scan","detail","shop",null));
 		Bundle intentExtras = getIntent().getExtras();
 
 //		String bikeDescription = intentExtras.getString("bike_description");
@@ -29,11 +30,15 @@ public class LowDetailView extends ViewWithNavigation {
 		if(intentExtras != null ){
 			if(intentExtras.containsKey("compare"))
 				compare = getIntent().getExtras().getBoolean("compare");
+				setContentView(createNavigationInfo(R.id.lowdetailviewId,this,"compare","detail","shop",null));
+
 			if(intentExtras.containsKey("shoppingCart")){
 				shoppingCart = getIntent().getExtras().getBoolean("shoppingCart");
+				setContentView(createNavigationInfo(R.id.lowdetailviewId,this,"shop","detail","shop",null));
 				//display the item
 			}
 		}
+		
 //		
 	}
 

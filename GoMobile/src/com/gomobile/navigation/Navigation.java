@@ -27,7 +27,7 @@ public class Navigation {
 
 		//Different mapping of the axis from the accel and magnetic sensor
 		
-		boolean navigation = true;
+		public boolean navigation = true;
 		
 		//set true if using glasses
 		boolean glasses = false;
@@ -182,7 +182,7 @@ public class Navigation {
 			int[][] alphaBetaValues = {{1,-1},{1,1},{-1,-1}};
 //			int[][] angles = {{5,5},{60,40},{40,60}};
 			
-			int[][]	angles = {{10,10},{60,50},{50,60}};
+			int[][]	angles = {{10,10},{70,50},{50,70}};
 			
 				
 			

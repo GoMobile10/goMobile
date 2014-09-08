@@ -2,10 +2,12 @@ package com.gomobile.navigation;
 
 import java.util.HashMap;
 
+import com.gomobile.Main;
 import com.gomobile.R;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -55,6 +57,10 @@ public abstract class ViewWithNavigation extends Activity implements
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		
+		if (keyCode == KeyEvent.KEYCODE_MENU){
+			startActivity(new Intent(this, Main.class));
+		}
 
 		if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN) {
 			Navigation.getInstance().defineRanges();

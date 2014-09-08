@@ -16,7 +16,9 @@ public class ComparisionView extends ViewWithNavigation {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comparision_view);
-    	
+		setContentView(createNavigationInfo(R.id.comparisionviewId,this,"scan","detail","shop",null));
+
+		
 		Bike comp1 = (Bike) ScannerController.getInstance().getMaterialInUse();
     	Bike comp2 = (Bike) ScannerController.getInstance().getMaterialBefore();
     	display(comp1, comp2);
