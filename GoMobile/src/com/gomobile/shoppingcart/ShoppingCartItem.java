@@ -43,6 +43,14 @@ public class ShoppingCartItem {
 	public void add() {
 		this.quantity += 1;
 	}
+	
+	public boolean remove(){
+		this.quantity -= 1;
+		if(this.quantity <= 0){
+			return true;
+		}
+		return false;
+	}
 
 	public int getQuantity() {
 		return this.quantity;

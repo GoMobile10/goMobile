@@ -25,8 +25,24 @@ public class ShoppingCart {
 		Toast toast = Toast.makeText(context, text, duration);
 		toast.show();
 	}
+	
 
-	public void add(BikeComponentInterface item) {
+	public void delete(BikeComponentInterface item, Context context) {
+		int quantity = this.delete(item);
+		CharSequence text = "";
+		if(quantity != -1){
+			 text = "Item has been delete!";
+			if(quantity > 0)
+				text = text + " There are " + quantity + " left in the Cart";
+			int duration = Toast.LENGTH_SHORT;
+			Toast toast = Toast.makeText(context, text, duration);
+			toast.show();
+		}else{
+			
+		}
+	}
+
+	private void add(BikeComponentInterface item) {
 		ShoppingCartItem cartItem = new ShoppingCartItem(item);
 
 		if (cart.contains(cartItem)) {
@@ -40,13 +56,17 @@ public class ShoppingCart {
 
 	}
 
-	public boolean delete(String key) {
-		// TODO
-		// if(cart.containsKey(key)){
-		// cart.remove(key);
-		// return true;
-		// }
-		return false;
+	private int delete(BikeComponentInterface item) {
+		 
+		 if(cart.contains(item)){
+			 int index = cart.indexOf(item);
+			 
+			 if(cart.get(index).remove())
+				 cart.remove(index);
+			 ShoppingCartItem cartItem = cart.get(index);
+			 return cartItem.getQuantity();
+		 }
+		return -1;
 	}
 
 	public ShoppingCartItem[] view() {
@@ -80,10 +100,10 @@ public class ShoppingCart {
 	private static ShoppingCart instance = null;
 
 	private ShoppingCart() {
-		BikeDataController bdc = new BikeDataController();
-//		add(bdc.getBikeByEAN(7613257813441L));
-//		add(bdc.getBikeByEAN(7613257813441L));
-		add(bdc.getBikeByEAN(8717185926842L));
+//		BikeDataController bdc = new BikeDataController();
+////		add(bdc.getBikeByEAN(7613257813441L));
+////		add(bdc.getBikeByEAN(7613257813441L));
+//		add(bdc.getBikeByEAN(8717185926842L));
 
 	}
 

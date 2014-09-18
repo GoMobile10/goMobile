@@ -162,7 +162,7 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
   		       });
 
   		// 2. Chain together various setter methods to set the dialog characteristics
-  		builder.setMessage("Do you wanna compare it").setTitle("Compare?");
+  		builder.setMessage("Do you want to compare this part with the previously scanned part?").setTitle("Compare?");
   		
   		// 3. Get the AlertDialog from create()
   		AlertDialog dialog = builder.create();

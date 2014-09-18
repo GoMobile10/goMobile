@@ -71,8 +71,7 @@
             android:label="@string/title_activity_comparision_view" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                 android:value="com.gomobile.technicalservices.BarcodeScanner" />
-                
+                android:value="com.gomobile.technicalservices.BarcodeScanner" />
         </activity>
         <activity
             android:name="com.gomobile.Overviewer"
@@ -106,6 +105,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.gomobile.VideoPlayerController"
+            android:label="@string/title_activity_video_player_controller" >
         </activity>
     </application>
 

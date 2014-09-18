@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.gomobile.model.Bike;
+import com.gomobile.model.BikeComponentInterface;
 import com.gomobile.navigation.Navigation;
 import com.gomobile.navigation.ViewWithNavigation;
+import com.gomobile.shoppingcart.ShoppingCart;
 import com.gomobile.shoppingcart.ShoppingCartView;
 import com.gomobile.technicalservices.BarcodeScanner;
 
@@ -77,6 +79,9 @@ public class LowDetailView extends ViewWithNavigation {
 
 	@Override
 	public void navigateDown() {
-		// TODO Auto-generated method stub
+		if(shoppingCart){
+			BikeComponentInterface item = (BikeComponentInterface)ScannerController.getInstance().getMaterialInUse();
+			ShoppingCart.getInstance().delete(item, this);				
+		}
 	}
 }
