@@ -27,15 +27,14 @@ public class Main extends ViewWithNavigation {
 	}
 
 	public void navigateRight() {
+
 		startActivity(new Intent(this, Repairer.class));
+
 	}
 
 	@Override
 	public void navigateLeft() {
-		//startActivity(new Intent(this, VideoPlayerController.class));
-		
 		startActivity(new Intent(this, BarcodeScanner.class));
-		
 
 	}
 

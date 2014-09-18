@@ -16,10 +16,9 @@
     <string name="title_activity_pickuplist">Pickuplist</string>
     <string name="title_activity_repairToDoList">RepairToDoList</string>
     <string name="title_activity_Repairer">Repairer</string>
-
     <string name="title_activity_shopping_cart_view">ShoppingCartView</string>
-
     <string name="title_activity_pickuplist_1">Repair Overview: </string>
     <string name="title_activity_pickuplist_2">Repair Description: </string>
+    <string name="title_activity_video_player_controller">VideoPlayerController</string>
 
 </resources>
