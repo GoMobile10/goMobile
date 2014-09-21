@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.http.client.ClientProtocolException;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -95,13 +94,6 @@ public class SAPConnector {
 		    
 		}
 		
-		
-			//TODO: REFACTORING
-//			BikeDataController bikeDataController = new BikeDataController();
-//			Long ean = Long.valueOf(url[0]);
-//			Bike bike = bikeDataController.getBikeByEAN(ean);
-//			String bikeDescription = bike.getDescription() + "\n" + bike.getPrice() + " EUR\n" + bike.getCategory();
-			
 			return queryResult;
 	}
 	

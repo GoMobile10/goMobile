@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.http.NameValuePair;
@@ -38,14 +37,23 @@ public class BikeDataController {
 		
 	}
 
-	
+	/**
+	 * Returns all bikes that satisfy the specified conditions.
+	 * @param conditions the array of conditions for the SQL WHERE clause.
+	 * @return a list of the bikes that satisfy all specified conditions.
+	 */
 	public ArrayList<Bike> getBikeList(String[] conditions){
+		/*
+		 * For Android the user experience is one of the most important aspects of an application.
+		 * It throws an exception any time when an operation needs more than a second to be executed to avoid long waiting.
+		 * Asynchron tasks allows to perform time consuming operations in background without causing a system crash.
+		 */
 		AsyncTask<String, Integer, ArrayList<Bike>> taskToExecute = new AsyncTask<String, Integer, ArrayList<Bike>>(){
 
 
 
 			@Override
-			protected ArrayList<Bike> doInBackground(String[] params) {
+			protected ArrayList<Bike> doInBackground(String... params) {
 
 				String where_condition = "BikeEAN=EAN"; //default join condition
 				
@@ -117,7 +125,10 @@ public class BikeDataController {
 		return null;
 	}
 	
-	// returns all the bikes which have a defect, stored in a List
+	/**
+	 * Returns all the bikes which have a defect.
+	 * @return the list of defect bikes.
+	 */
 	public ArrayList<Bike> repairOrders(){
 			String[] conditions = {"isDefect=1"};
 			return this.getBikeList(conditions);
@@ -132,7 +143,7 @@ public class BikeDataController {
 		AsyncTask<Long, Integer, Bike> taskToExecute = new AsyncTask<Long, Integer, Bike>(){
 
 			@Override
-			protected Bike doInBackground(Long[] params) {
+			protected Bike doInBackground(Long... params) {
 
 				long ean = params[0];
 //				SAPConnector.setODATA_SERVICE_URL("http://vm20.hcc.uni-magdeburg.de:8000/sap/opu/odata/sap/Z_MAT_SEARCH_EAN/SearchMaterial(EAN='" + ean +"')/?$format=json");
@@ -142,22 +153,22 @@ public class BikeDataController {
 				sqlConnector.setQueryResultString( sqlConnector.getPHPRequestOutput("get_bike_data.php", nameValuePairs) );
 
 				Bike bike = null;
+				
+				/*
+				 * This example code illustrates how to use the SAP connector.
+				 */
 //				String name = SAPConnector.getJSONDATA().get("Material");
 //				long eanfromquery = Long.valueOf(SAPConnector.getJSONDATA().get("EAN"));
 //				bike = new Bike(eanfromquery, name);
 
 				try{
-					String[] resultFieldNames = {"description", "price", "category"};/*, "weight", "IsAvailable"};*/
+					String[] resultFieldNames = {"description", "price", "category"};
 					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
 
 					String name = queryResult[0][0];
 					int price = Double.valueOf( queryResult[0][1] ).intValue();
 					String category = queryResult[0][2];
 					bike = new Bike(ean, name, price, category);
-					/*int weight = Integer.valueOf( queryResult[0][3]);
-					boolean isAvailable = Integer.valueOf(queryResult[0][4]) == 1;
-
-					bike = new Bike(ean, name, price, category, weight, isAvailable);*/
 
 
 				}
@@ -189,11 +200,16 @@ public class BikeDataController {
 		return null;
 	}
 
+	/**
+	 * Returns all repair orders that satisfy the specified conditions.
+	 * @param conditions the array of conditions for the SQL WHERE clause.
+	 * @return a list of the repair orders that satisfy all specified conditions.
+	 */
 	public List<RepairOrder> getRepairOrders (String condition){
 		AsyncTask<String, Integer, List<RepairOrder>> taskToExecute = new AsyncTask<String, Integer, List<RepairOrder>>(){
 
 			@Override
-			protected List<RepairOrder> doInBackground(String[] params) {
+			protected List<RepairOrder> doInBackground(String... params) {
 
 				String condition = params[0];
 				List<RepairOrder> resultList = new ArrayList<RepairOrder>();
@@ -272,13 +288,11 @@ public class BikeDataController {
 		AsyncTask<RepairOrder, Integer, String[][]> taskToExecute = new AsyncTask<RepairOrder, Integer, String[][]>(){
 
 			@Override
-			protected String[][] doInBackground(RepairOrder[] params) {
+			protected String[][] doInBackground(RepairOrder... params) {
 
 				RepairOrder repairOrder = params[0];
 				
-				//TODO: implement logic
 				try{
-					List<RepairOrder> resultList = new ArrayList<RepairOrder>();
 					List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 					nameValuePairs.add(new BasicNameValuePair("where_condition", "defectbikeEAN = " + repairOrder.getDefectBike().getEanNumber()));
 					String requestResult = sqlConnector.getPHPRequestOutput("get_repairorder_list.php", nameValuePairs);
@@ -324,11 +338,16 @@ public class BikeDataController {
 
 	}
 	
+	/**
+	 * Returns the component with the specified EAN code.
+	 * @param ean the EAN of the component
+	 * @return the bike specified by the given EAN or null if the database don't contain an entry for a component with the given EAN.
+	 */
 	public Component getComponentByEAN(long ean){
 		AsyncTask<Long, Integer, Component> taskToExecute = new AsyncTask<Long, Integer, Component>(){
 
 			@Override
-			protected Component doInBackground(Long[] params) {
+			protected Component doInBackground(Long... params) {
 
 				long ean = params[0];
 
@@ -381,14 +400,14 @@ public class BikeDataController {
 	/**
 	 * Returns a list of components compatible with the specified bike.
 	 * @param bikeEAN the EAN that specifies the bike.
-	 * @return a list of compatible components
+	 * @return a list of compatible components.
 	 */
 	public List<Component> getCompatibleComponents(long bikeEAN){
 		AsyncTask<Long, Integer, List<Component>> taskToExecute = new AsyncTask<Long, Integer, List<Component>>(){
 
 
 			@Override
-			protected List<Component> doInBackground(Long[] params) {
+			protected List<Component> doInBackground(Long... params) {
 
 				List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 				nameValuePairs.add(new BasicNameValuePair("where_condition", "compability.BikeID = " + params[0]));
@@ -399,7 +418,7 @@ public class BikeDataController {
 				List<Component> resultList = new ArrayList<Component>();
 				
 				try{
-					String[] resultFieldNames = {"ComponentEAN", "Description", "AverageAssemblingTime"};
+					String[] resultFieldNames = {"ComponentEAN", "Description", "AverageAssemblingTime", "Price"};
 					String[][] queryResult = sqlConnector.queryResultToArray(resultFieldNames);
 					
 					Component nextComponent = null;
@@ -409,12 +428,14 @@ public class BikeDataController {
 					for(int i = 0; i < rowCount; i++){
 						long ean = Long.valueOf(queryResult[i][0]);
 						String description = queryResult[i][1];
+						int price = Integer.valueOf(queryResult[i][3]);
 						int averageAssemblingTime = Integer.valueOf(queryResult[i][2]);
 						
-						nextComponent = new Component(ean, description, 0);
+						nextComponent = new Component(ean, description, price);
+						nextComponent.setAverageAssemblingTime(averageAssemblingTime);
+						
 						resultList.add(nextComponent);
 					}
-					
 
 				}
 				catch(ClassNotFoundException cnfe){
@@ -424,8 +445,7 @@ public class BikeDataController {
 					Log.e("COMPONENT DATA RETRIEVING ERROR", se.getLocalizedMessage());
 				}
 				catch(Exception e){
-					e.printStackTrace();
-//					Log.e("COMPONENT DATA RETRIEVING ERROR", e.printStackTrace(););
+					Log.e("COMPONENT DATA RETRIEVING ERROR", e.getLocalizedMessage());
 				}
 
 				return resultList;
@@ -448,19 +468,16 @@ public class BikeDataController {
 	}
 
 	/**
-	 * Returns the android resource id corresponding to the specific bike.
-	 * @param bikeEAN the EAN specifying the bike.
-	 * @return the resource id as integer or -1 if no corresponding entry exists in the database.
-	 */
-	public int getVideoSourcePath(long bikeEAN){
-		//TODO: Not yet implemented!
-		return -1;
-	}
-	
-	/**
 	 * @return the sqlConnector
 	 */
 	public MySqlConnector getSqlConnector() {
 		return sqlConnector;
+	}
+
+	/**
+	 * @return the sAPConnector
+	 */
+	public SAPConnector getSAPConnector() {
+		return SAPConnector;
 	}
 }

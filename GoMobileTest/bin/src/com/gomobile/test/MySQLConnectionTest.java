@@ -58,7 +58,6 @@ public class MySQLConnectionTest extends TestCase {
 	*/
 	public void testRepairOrders() {
 		BikeDataController dataController = new BikeDataController();
-		String[] noConditions = {};
 		
 		for(Bike bike : dataController.repairOrders()){
 			System.out.println("Bike to repair: " + bike.getDescription() + " EAN: " + bike.getEanNumber());
@@ -72,7 +71,7 @@ public class MySQLConnectionTest extends TestCase {
 	public void testGetCompatibleComponents(){
 		BikeDataController dataController = new BikeDataController();
 		
-		for(Component component : dataController.getCompatibleComponents(0L)){
+		for(Component component : dataController.getCompatibleComponents(7613257813441L)){
 			System.out.println("Compatible component retrieved: " + component.getDescription());
 		}
 	}

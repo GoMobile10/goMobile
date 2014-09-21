@@ -3,15 +3,8 @@ package com.gomobile.technicalservices;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-
 import java.sql.SQLException;
 import java.util.List;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -40,7 +33,7 @@ public class MySqlConnector {
 	}
 	
 	/**
-	* Returns a table represented by a two dimensional table.
+	* Returns a table represented by a two-dimensional array.
 	* The first dimension identifies the rows and the second one identifies the columns.
 	* @param fieldNames the labels of the columns which correspond to the names of the fields of the query result.
 	* @return a two dimensional array representation of the query result.
@@ -52,7 +45,7 @@ public class MySqlConnector {
 		int rowCount = -1;
 		String[][] resultArray = null;
 		
-		//parse json data
+		//parses the JSON data
 		try{
 			JSONArray jArray = new JSONArray(this.getQueryResultString());
 			rowCount = jArray.length();
@@ -78,7 +71,7 @@ public class MySqlConnector {
 	
 	/**
 	* Returns the result of the HTTP post request for the specified PHP file.
-	* @param phpFile the name of the PHP including the ending .php
+	* @param phpFile the name of the PHP file including the ending .php
 	* @param nameValuePairs the list of post parameters
 	* @return the requested page as string
 	*/
@@ -101,7 +94,7 @@ public class MySqlConnector {
 			Log.e("SERVER REQUEST ERROR", "Error in http connection " + e.getLocalizedMessage());
 		}
 		
-		//convert response to string
+		//converts the HTTP response to a string
 		try{
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
 			StringBuilder sb = new StringBuilder();
@@ -114,13 +107,14 @@ public class MySqlConnector {
 			is.close();
 			
 			result = sb.toString();
+			
 		}catch(Exception e){
 			Log.e("STREAM READING ERROR", "Error converting result " + e.getLocalizedMessage());
 		}
 		
-//		Log.i("QUERY RESULT STRING:", result);
+		Log.i("QUERY RESULT STRING:", result);
 		
-		return result.replaceAll("<br />", "");
+		return result.replaceAll("<br />", ""); //the result might contain br-tags which must be removed.
 	}
 	
 	

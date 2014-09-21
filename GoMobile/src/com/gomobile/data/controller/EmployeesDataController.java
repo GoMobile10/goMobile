@@ -34,8 +34,8 @@ public class EmployeesDataController {
 	
 	/**
 	 * Returns the employee with the specified id or null if the id does not correspond to any employee.
-	 * @param id
-	 * @return
+	 * @param id - the employee's ID
+	 * @return the specified employee.
 	 */
 	public Employee getEmployeeById(long id){
 		AsyncTask<Long, Integer, Employee> taskToExecute = new AsyncTask<Long, Integer, Employee>(){

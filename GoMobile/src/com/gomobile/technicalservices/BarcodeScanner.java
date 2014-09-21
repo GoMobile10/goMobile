@@ -21,7 +21,6 @@ import com.gomobile.navigation.ViewWithNavigation;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.interfaces.ScanditSDK;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKListener;
-import com.mysql.jdbc.StringUtils;
 
 
 public class BarcodeScanner extends Activity implements ScanditSDKListener {
