@@ -9,7 +9,10 @@ import android.widget.TextView;
 import com.gomobile.model.Bike;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.technicalservices.BarcodeScanner;
-
+/**
+ *This class provides the comparisionView which allows to compare two Bikes.  
+ *@author Tim Endlich
+ */
 public class ComparisionView extends ViewWithNavigation {
 
 	@Override
@@ -24,7 +27,11 @@ public class ComparisionView extends ViewWithNavigation {
     	display(comp1, comp2);
 		
 	}
-
+	/**
+	 * Shows the two compared Bikes.
+	 * @param comp1 of type Bike
+	 * @param comp2 of type Bike
+	 */
 	public void display(Bike comp1, Bike comp2) {
 		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
 

@@ -12,10 +12,12 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.gomobile.R;
+
 /**
- * Own list adapter to use the ourer custom list layout
- * @author tendlich
- *
+ * Own list adapter to use the a custom list layout
+ * 
+ * @author Tim
+ * 
  */
 public class ShoppingCarListAdapter extends ArrayAdapter<ShoppingCartItem> {
 
@@ -24,7 +26,8 @@ public class ShoppingCarListAdapter extends ArrayAdapter<ShoppingCartItem> {
 	private ShoppingCartItem shoppingCartItems[];
 	public int currentposition;
 
-	public ShoppingCarListAdapter(Context mContext, int layoutResourceId, ShoppingCartItem[] data) {
+	public ShoppingCarListAdapter(Context mContext, int layoutResourceId,
+			ShoppingCartItem[] data) {
 
 		super(mContext, layoutResourceId, data);
 
@@ -33,43 +36,46 @@ public class ShoppingCarListAdapter extends ArrayAdapter<ShoppingCartItem> {
 		this.shoppingCartItems = data;
 	}
 
+	/**
+	 * @return the new convertView
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
-		//
 		if (convertView == null) {
 			// inflate the layout
 			LayoutInflater inflater = ((Activity) mContext).getLayoutInflater();
 			convertView = inflater.inflate(layoutResourceId, parent, false);
 		}
-
 		// object item based on the position
 		ShoppingCartItem shoppingCartItem = shoppingCartItems[position];
 
-		
 		TextView textViewItem = (TextView) convertView.findViewById(R.id.title);
 		textViewItem.setText(shoppingCartItem.getName());
 		textViewItem.setTag(shoppingCartItem.getEAN());
-		
+
 		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
 		double price = shoppingCartItem.getPrice();
 		textViewItem = (TextView) convertView.findViewById(R.id.price);
 		textViewItem.setText(currencyFormatter.format(price));
-		
+
 		textViewItem = (TextView) convertView.findViewById(R.id.amount);
 		textViewItem.setText(String.valueOf(shoppingCartItem.getQuantity()));
-		
-		if(position == currentposition){
+
+		if (position == currentposition) {
 			convertView.setBackgroundColor(Color.LTGRAY);
-		}else{
+		} else {
 			convertView.setBackgroundColor(Color.TRANSPARENT);
 		}
 
 		return convertView;
 
 	}
-	
-	public void setCurrentPosition(int currentposition){
+
+	/**
+	 * @param currentposition
+	 */
+	public void setCurrentPosition(int currentposition) {
 		this.currentposition = currentposition;
 	}
 

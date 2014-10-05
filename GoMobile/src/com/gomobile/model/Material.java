@@ -1,7 +1,12 @@
 package com.gomobile.model;
 
+/**
+ * This class provides constructors for the class Material and the getter and setters.
+ * @author Daniel and Arndt
+ *
+ */
+
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 public class Material {

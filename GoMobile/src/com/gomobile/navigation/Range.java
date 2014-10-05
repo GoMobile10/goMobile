@@ -8,7 +8,7 @@ package com.gomobile.navigation;
  * ]up,down[ and z = zeropoint => ]z,up[ and ]down,(-1)*z[
  * 
  * Throws an exception if up = down
- * @author tendlich
+ * @author Tim
  *
  */
 class Range{

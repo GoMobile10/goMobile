@@ -5,7 +5,7 @@ import com.gomobile.model.BikeComponentInterface;
 /**
  * Wrapper for the items in the shopping cart
  * 
- * @author tendlich
+ * @author Tim and Arndt
  * 
  */
 public class ShoppingCartItem {
@@ -18,24 +18,37 @@ public class ShoppingCartItem {
 		this.quantity = 1;
 	}
 
-	// TODO change to sth better! waitin for anton
+	/**
+	 * @return Price of the Component
+	 */
 	public double getPrice() {
 		return item.getPrice();
 	}
 
-	// TODO change to sth better! waitin for anton
+	/**
+	 * @return total price of the components
+	 */
 	public double getTotalPrice() {
 		return this.getPrice() * this.quantity;
 	}
 
+	/**
+	 * @return the EAN number
+	 */
 	public long getEAN() {
 		return item.getEanNumber();
 	}
 
+	/**
+	 * @return the description of the component 
+	 */
 	public String getName() {
 		return item.getDescription();
 	}
 
+	/**
+	 * @return the item of type BikeComponentInterface
+	 */
 	public BikeComponentInterface getItem() {
 		return item;
 	}
@@ -43,15 +56,18 @@ public class ShoppingCartItem {
 	public void add() {
 		this.quantity += 1;
 	}
-	
-	public boolean remove(){
+
+	public boolean remove() {
 		this.quantity -= 1;
-		if(this.quantity <= 0){
+		if (this.quantity <= 0) {
 			return true;
 		}
 		return false;
 	}
 
+	/**
+	 * @return the quantity 
+	 */
 	public int getQuantity() {
 		return this.quantity;
 	}

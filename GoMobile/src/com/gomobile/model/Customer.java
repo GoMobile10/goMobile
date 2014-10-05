@@ -1,5 +1,11 @@
 package com.gomobile.model;
 
+/**
+ * This class provides constructors for the class Customer with getter and setters
+ * @author Tim
+ *
+ */
+
 public class Customer {
 
 	private final int customerId;

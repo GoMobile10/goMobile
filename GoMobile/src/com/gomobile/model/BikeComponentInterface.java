@@ -1,7 +1,7 @@
 package com.gomobile.model;
 /**
  * interface to allow using component and bike: without differentiating 
- * @author tendlich
+ * @author Tim
  *
  */
 public interface BikeComponentInterface{

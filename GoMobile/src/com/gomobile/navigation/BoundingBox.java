@@ -1,5 +1,11 @@
 package com.gomobile.navigation;
 
+/**
+ * This class defines an area (a kind of box) for the navigation. It shows if the user moves in this area or if the user left the area
+ * @author Tim
+ *
+ */
+
 class BoundingBox {
 
 	private Range x,y;

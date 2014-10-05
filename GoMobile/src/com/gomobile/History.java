@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import com.gomobile.model.Bike;
 import com.gomobile.model.Material;
 
+/**
+ * Modifies the history list
+ * @author Tim Endlich
+ *
+ */
+
 @SuppressWarnings("serial")
 public class History extends ArrayList<Material>{
 

@@ -1,24 +1,20 @@
 package com.gomobile;
 
-import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.ListView;
-
 import com.gomobile.data.controller.EmployeesDataController;
 import com.gomobile.model.Employee;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.repair.EmployeeListAdapter;
-import com.gomobile.repair.RepairListAdapter;
 
 /**
- * 
- * @author danielschopp,Patrick, Arndt
- * 
+ * This class provides an overview about the repair guy list. This list is connected to the database.
+ * For each repair guy you can see a picture, name and last name. 
+ * @author Arndt
  *
  */
 
@@ -62,23 +58,17 @@ public class Repairer extends ViewWithNavigation {
 		
 	}
 	
-	
 	@Override
 	public void navigateRight() {
-		
 		final Intent OverviewofEmployee = new Intent(this, Overviewer.class);
 		OverviewofEmployee.putExtra("FirstName",
 				(employees.get(itemcounter)).getFirstName());
 		OverviewofEmployee.putExtra("LastName",
 				(employees.get(itemcounter)).getLastName());
-		
-		OverviewofEmployee.putExtra("EmployeeCounter", itemcounter);
-		
-		
-		startActivity(OverviewofEmployee);
-		
-		
 
+		OverviewofEmployee.putExtra("EmployeeCounter", itemcounter);
+
+		startActivity(OverviewofEmployee);
 	}
 
 	@Override
@@ -89,8 +79,6 @@ public class Repairer extends ViewWithNavigation {
 
 	@Override
 	public void navigateUp() {
-		
-		System.out.println("navigateUp - itemcounter: "+itemcounter);
 		if (itemcounter <= 0) {
 			itemcounter = 0;
 			((EmployeeListAdapter) adapter).setCurrentPosition(itemcounter);
@@ -104,7 +92,6 @@ public class Repairer extends ViewWithNavigation {
 
 	@Override
 	public void navigateDown() {
-		System.out.println("navigateDown - itemcounter: "+itemcounter);
 		if (itemcounter >= employees.size() - 1) {
 			itemcounter = employees.size() - 1;
 			((EmployeeListAdapter) adapter).setCurrentPosition(itemcounter);

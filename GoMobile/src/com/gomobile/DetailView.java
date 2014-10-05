@@ -6,13 +6,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.gomobile.model.Bike;
 import com.gomobile.model.BikeComponentInterface;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.shoppingcart.ShoppingCart;
 import com.gomobile.shoppingcart.ShoppingCartView;
+
+/**
+ * The detailView describes the detail of the Bike. The details are description, price and category.
+ * @author Tim Endlich
+ *
+ */
 
 public class DetailView extends ViewWithNavigation  {
 
@@ -25,7 +29,10 @@ public class DetailView extends ViewWithNavigation  {
 		
 		this.display((Bike) ScannerController.getInstance().getMaterialInUse());
 	}
-
+	/**
+	 * Shows the detail of the bike
+	 * @param comp of type bike
+	 */
 	public void display(Bike comp){
 		TextView textView = (TextView) findViewById(R.id.textViewName);
 		textView.setText(comp.getDescription());

@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.gomobile.model.Bike;
 import com.gomobile.model.BikeComponentInterface;
-import com.gomobile.navigation.Navigation;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.shoppingcart.ShoppingCart;
 import com.gomobile.shoppingcart.ShoppingCartView;

@@ -2,6 +2,12 @@ package com.gomobile;
 
 import com.gomobile.model.Material;
 
+/**
+ * This is a controller class to...
+ * @author Tim Endlich
+ *
+ */
+
 public class ScannerController {
 	
 	private History history = new History();
@@ -11,10 +17,8 @@ public class ScannerController {
 	}
 	
 	public boolean setMaterialInUse(Material comp){
-		//TODO already exists
 		history.add(comp);
 		if(history.isSameType(comp)){
-			//TODO
 			return true;
 		}else{
 	        return false;
@@ -24,7 +28,6 @@ public class ScannerController {
 	public Material getMaterialBefore() {
 		return history.getMaterialBefore();
 	}
-	
 	
 	//singleton
 	private static ScannerController instance = null;

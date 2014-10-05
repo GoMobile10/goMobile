@@ -2,34 +2,31 @@ package com.gomobile;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.gomobile.data.controller.BikeDataController;
 import com.gomobile.data.controller.EmployeesDataController;
 import com.gomobile.model.Bike;
 import com.gomobile.model.Component;
 import com.gomobile.model.Employee;
-import com.gomobile.model.Order;
 import com.gomobile.model.RepairOrder;
 import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.repair.RepairListAdapter;
 
 /**
+ * This class shows the list with bikes which have to be repaired. This list is
+ * connected to the database. The list is displayed with description, name,
+ * picture with the defect and date.
  * 
- * @author danielschopp, Patrick, Daniel
- *
+ * @author Patrick Klein, Daniel Schopp
+ * 
  */
 
 public class Overviewer extends ViewWithNavigation {
@@ -85,18 +82,6 @@ public class Overviewer extends ViewWithNavigation {
 			bikesToRepair.add(repairOrders.get(0).getDefectBike());
 		}
 		
-		
-//		for (int i = 0; i < repairOrders.size(); i++) {
-//			bikesToRepair.add(repairOrders.get(i).getDefectBike());
-//		}	
-
-		
-		
-		
-//		//Create a database controller object to load the repair orders
-//		databaseController = new BikeDataController();
-//		bikesToRepair = databaseController.repairOrders();
-//		
 		populateBikeList();
 		
 		setContentView(createNavigationInfo(R.id.container,this,"back","detail",null,null));
@@ -134,7 +119,6 @@ public class Overviewer extends ViewWithNavigation {
 		PickuplistOfOrder.putExtra("LastName", lastname);
 		
 		Bike temp = bikesToRepair.get(itemcounter);
-//		System.out.println("Ean: "+temp.getEanNumber());
 		PickuplistOfOrder.putExtra("Description",temp.getDescription());
 		
 		PickuplistOfOrder.putExtra("BikeEanNumber",""+temp.getEanNumber());

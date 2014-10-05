@@ -19,6 +19,16 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+/**
+ * This class builds the interface between the navigation and the app. Therefore the class defines the methods 
+ * -navigateRight
+ * -navigateLeft
+ * -navigateDown
+ * -navigateUp
+ * Furthermore, this class defines the help view for the user which is explained in the method createNavigationInfo
+ * @author Tim and Daniel
+ *
+ */
 
 public abstract class ViewWithNavigation extends Activity implements
 		SensorEventListener {

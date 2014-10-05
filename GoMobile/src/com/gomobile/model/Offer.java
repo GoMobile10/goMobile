@@ -1,5 +1,11 @@
 package com.gomobile.model;
 
+/**
+ * This class provides constructors for the class Offer
+ * @author Patrick
+ *
+ */
+
 import java.sql.Date;
 
 public class Offer {

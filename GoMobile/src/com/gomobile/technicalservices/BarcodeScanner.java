@@ -21,7 +21,11 @@ import com.gomobile.navigation.ViewWithNavigation;
 import com.mirasense.scanditsdk.ScanditSDKAutoAdjustingBarcodePicker;
 import com.mirasense.scanditsdk.interfaces.ScanditSDK;
 import com.mirasense.scanditsdk.interfaces.ScanditSDKListener;
-
+/**
+ * This class is responsible for the barcode scanner
+ * @author Tim
+ *
+ */
 
 public class BarcodeScanner extends Activity implements ScanditSDKListener {
 	
@@ -110,7 +114,6 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
         Intent intent = getIntent();
 		System.out.println("Boolean pickupspareparts: "+intent.getBooleanExtra("pickupspareparts", false));
 		if( (intent.getBooleanExtra("pickupspareparts", false)) == true){
-			//If sparepart pickup ...
 			intent = new Intent(this, Pickuplist.class);
 			intent.putExtra("scannedEAN", cleanedBarcode);
 			intent.putExtra("BikeEanNumber", getIntent().getExtras().getString("BikeEanNumber"));
@@ -121,7 +124,7 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 			try {
 				System.out.println("scannedComponents sized in BarcodeScanner: "+ getIntent().getStringArrayListExtra("scannedComponents").size());
 			} catch (Exception e) {
-				// TODO: handle exception
+				
 			}
 			intent.putStringArrayListExtra("scannedComponents", getIntent().getStringArrayListExtra("scannedComponents"));
 			startActivity(intent);
@@ -131,7 +134,6 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
 	        Long ean = Long.valueOf(cleanedBarcode);
 	        Bike bike = bikeDataController.getBikeByEAN(ean);
 	        System.out.println("didScanBarcode: "+ cleanedBarcode);
-	//        Bike bike = new Bike(1234, "Test", 499, "Bla");
 			if(ScannerController.getInstance().setMaterialInUse(bike)){   	
 				dialog = displayComparisionView();
 				showDialog = true;
@@ -146,7 +148,7 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
     
     private AlertDialog displayComparisionView(){
     	 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-  		// Add the buttons
+  		// 1. Add the buttons
   		builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
   		           public void onClick(DialogInterface dialog, int id) {
   		        	   startActivity(new Intent(BarcodeScanner.this,ComparisionView.class)); 
@@ -155,7 +157,6 @@ public class BarcodeScanner extends Activity implements ScanditSDKListener {
   		builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
   		           public void onClick(DialogInterface dialog, int id) {
   		        	   		Intent intent = new Intent(BarcodeScanner.this, LowDetailView.class);
-//  		        	   		intent.putExtra("compare", false);
   		        	   		startActivity(intent);
   		           }
   		       });
