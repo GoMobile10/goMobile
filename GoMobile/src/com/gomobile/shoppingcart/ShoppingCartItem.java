@@ -40,7 +40,7 @@ public class ShoppingCartItem {
 	}
 
 	/**
-	 * @return the description of the component 
+	 * @return the description of the component
 	 */
 	public String getName() {
 		return item.getDescription();
@@ -66,7 +66,7 @@ public class ShoppingCartItem {
 	}
 
 	/**
-	 * @return the quantity 
+	 * @return the quantity
 	 */
 	public int getQuantity() {
 		return this.quantity;

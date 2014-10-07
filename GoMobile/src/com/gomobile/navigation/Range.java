@@ -7,7 +7,7 @@ package com.gomobile.navigation;
  * It is also possible to set a zeropoint (essential for the navigation/azimuth)
  * ]up,down[ and z = zeropoint => ]z,up[ and ]down,(-1)*z[
  * 
- * Throws an exception if up = down
+ * Throws an exception if up == down
  * @author Tim
  *
  */

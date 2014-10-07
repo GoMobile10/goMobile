@@ -14,7 +14,8 @@ import android.widget.TextView;
 import com.gomobile.R;
 
 /**
- * Own list adapter to use the a custom list layout
+ * Own list adapter to use a custom list layout 
+ * 
  * 
  * @author Tim
  * 

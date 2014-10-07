@@ -19,19 +19,18 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
 /**
- * This class builds the interface between the navigation and the app. Therefore the class defines the methods 
- * -navigateRight
- * -navigateLeft
- * -navigateDown
- * -navigateUp
- * Furthermore, this class defines the help view for the user which is explained in the method createNavigationInfo
+ * This class builds the interface between the navigation and the app. Therefore
+ * the class defines the methods -navigateRight -navigateLeft -navigateDown
+ * -navigateUp Furthermore, this class defines the help view for the user which
+ * is explained in the method createNavigationInfo
+ * 
  * @author Tim and Daniel
- *
+ * 
  */
 
-public abstract class ViewWithNavigation extends Activity implements
-		SensorEventListener {
+public abstract class ViewWithNavigation extends Activity implements SensorEventListener {
 
 	SensorManager sm;
 	int counter = 0;
@@ -45,12 +44,8 @@ public abstract class ViewWithNavigation extends Activity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
-		sm.registerListener(this,
-				sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
-				SensorManager.SENSOR_DELAY_GAME);
-		sm.registerListener(this,
-				sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD),
-				SensorManager.SENSOR_DELAY_GAME);
+		sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+		sm.registerListener(this, sm.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD), SensorManager.SENSOR_DELAY_GAME);
 	}
 
 	@Override
@@ -67,8 +62,8 @@ public abstract class ViewWithNavigation extends Activity implements
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		
-		if (keyCode == KeyEvent.KEYCODE_MENU){
+
+		if (keyCode == KeyEvent.KEYCODE_MENU) {
 			startActivity(new Intent(this, Main.class));
 		}
 
@@ -79,24 +74,23 @@ public abstract class ViewWithNavigation extends Activity implements
 		}
 
 		if (keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-			try{
-			if (counter == 0 || counter ==1){
-				RelativeLayout navigationView =(RelativeLayout) findViewById(R.id.naviInfo);
-				navigationView.setVisibility(RelativeLayout.INVISIBLE);
-				counter = counter +1;
+			try {
+				if (counter == 0 || counter == 1) {
+					RelativeLayout navigationView = (RelativeLayout) findViewById(R.id.naviInfo);
+					navigationView.setVisibility(RelativeLayout.INVISIBLE);
+					counter = counter + 1;
+				}
+				if (counter == 2) {
+					RelativeLayout navigationView = (RelativeLayout) findViewById(R.id.naviInfo);
+					navigationView.setVisibility(RelativeLayout.VISIBLE);
+					counter = 0;
+				}
+			} catch (Exception e) {
+
 			}
-			if (counter == 2){
-				RelativeLayout navigationView =(RelativeLayout) findViewById(R.id.naviInfo);
-				navigationView.setVisibility(RelativeLayout.VISIBLE);
-				counter = 0;
-			}
-			}catch(Exception e){
-				
-			}
-			
-			
+
 			Navigation.getInstance().navigation = false;
-			
+
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);
@@ -139,16 +133,14 @@ public abstract class ViewWithNavigation extends Activity implements
 	 * @return The new FrameLayout included with navigationInfo
 	 */
 
-	public FrameLayout createNavigationInfo(int id, Activity a, String left,
-			String right, String up, String down) {
+	public FrameLayout createNavigationInfo(int id, Activity a, String left, String right, String up, String down) {
 
 		// Adds two Layouts together to create a view over another view
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.navigation_info, null);
 
 		FrameLayout layoutMain = (FrameLayout) a.findViewById(id);
-		RelativeLayout layoutNavigation = (RelativeLayout) view
-				.findViewById(R.id.naviInfo);
+		RelativeLayout layoutNavigation = (RelativeLayout) view.findViewById(R.id.naviInfo);
 
 		layoutMain.addView(layoutNavigation);
 
