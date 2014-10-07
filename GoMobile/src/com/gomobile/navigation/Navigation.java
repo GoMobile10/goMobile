@@ -12,6 +12,11 @@ import android.util.Log;
  * sensors it is possible the measure of the glass turns to the right or left
  * side or if the glass goes up or down.
  * 
+ * Five bounding boxes are created in order to be able to navigate. As soon as
+ * the values are within a bounding box a counter is triggered and if the
+ * bounding box in the middle is reached in due time (or before) then the
+ * navigation direction is returned.
+ * 
  * @author Tim and Daniel
  * 
  */
@@ -23,39 +28,23 @@ public class Navigation {
 	public static final int NAVIGATE_UP = 3;
 	public static final int NAVIGATE_DOWN = 4;
 
-	boolean navigateLeft, navigateRight, navigateUp, navigateDown;
-
-	// Different mapping of the axis from the accel and magnetic sensor
-	public boolean navigation = true;
-
 	// set true if using glasses
+	public boolean navigation = true;
 	boolean glasses = false;
-
-	// measure the time of the navigation movement
-	long start, end;
-
-	// Ranges of the navigation
-	Range turnRight, turnLeft, turnUp, turnDown, middleHorizontal,
+	private boolean navigateLeft, navigateRight, navigateUp, navigateDown;
+	private long start, end;
+	private Range turnRight, turnLeft, turnUp, turnDown, middleHorizontal,
 			middleVertical;
-
-	BoundingBox bturnRight, bturnLeft, bturnUp, bturnDown, middle;
+	private BoundingBox bturnRight, bturnLeft, bturnUp, bturnDown, middle;
 
 	// magnetic field vector
-	float[] magnet = new float[3];
-
+	private float[] magnet = new float[3];
 	// accelerometer vector
-	float[] accel = new float[3];
+	private float[] accel = new float[3];
 
-	// orientation angles from accel and magnet
-	float[] accMagOrientation = new float[3];
-
-	// accelerometer and magnetometer based rotation matrix
+	private float[] accMagOrientation = new float[3];
 	private float[] rotationMatrix = new float[9];
-
-	// remapped rotation matrix
 	private float[] correctedRotationMatrix = new float[9];
-
-	// static List<Range> epic = new ArrayList<Range>(10);
 
 	public int onSensorChanged(SensorEvent event) {
 		if (navigation) {
@@ -78,7 +67,7 @@ public class Navigation {
 				if (glasses) {
 					magnet[0] = (-1f) * event.values[2];
 					magnet[1] = (-1f) * event.values[1];
-					magnet[2] = /* (-1f)* */event.values[0];
+					magnet[2] = event.values[0];
 				} else {
 					magnet = event.values.clone();
 				}
@@ -106,14 +95,18 @@ public class Navigation {
 
 	public void defineRanges() {
 		clearNavigation();
-		defineRanges((float) Math.toDegrees(accMagOrientation[0]),
-				(float) Math.toDegrees(accMagOrientation[1]));
+		defineRanges((float) Math.toDegrees(accMagOrientation[0]), (float) Math.toDegrees(accMagOrientation[1]));
 	}
 
 	private void clearNavigation() {
 		navigateDown = navigateLeft = navigateRight = navigateUp = false;
 	}
-
+	
+	/**
+	 * Calculates the ranges for the bounding boxes
+	 * @param azimuth
+	 * @param roll
+	 */
 	private void defineRanges(float azimuth, float roll) {
 		int alpha, beta;
 		float up, down;
@@ -121,11 +114,13 @@ public class Navigation {
 		boolean flag = false; // if +- 180 is crossed
 
 		int[][] alphaBetaValues = { { 1, -1 }, { 1, 1 }, { -1, -1 } };
+
 		// int[][] angles = {{5,5},{60,40},{40,60}};
+		int[][] angles = { { 10, 10 }, { 70, 50 }, { 50, 70 } }; // angles for
+																	// the
+																	// bounding
+																	// boxes
 
-		int[][] angles = { { 10, 10 }, { 70, 50 }, { 50, 70 } };
-
-		// Log.d("Range","Init = " + init + " in Rad = "+ accMagOrientation[0]);
 		int alphaBetaLength = alphaBetaValues.length;
 		for (int k = 0; k < 2; k++) {
 			for (int n = 0; n < alphaBetaLength; n++) {
@@ -147,19 +142,14 @@ public class Navigation {
 						flag = true;
 				}
 
-				Log.d("Range", "Up = " + (float) Math.toRadians(up)
-						+ " Down = " + (float) Math.toRadians(down) + "FLAG "
-						+ flag);
+				Log.d("Range", "Up = " + (float) Math.toRadians(up) + " Down = " + (float) Math.toRadians(down) + "FLAG " + flag);
 
 				try {
 					Range range;
 					if (flag) {
-						range = new Range((float) Math.toRadians(up),
-								(float) Math.toRadians(down),
-								(float) Math.toRadians(180));
+						range = new Range((float) Math.toRadians(up), (float) Math.toRadians(down), (float) Math.toRadians(180));
 					} else {
-						range = new Range((float) Math.toRadians(up),
-								(float) Math.toRadians(down));
+						range = new Range((float) Math.toRadians(up), (float) Math.toRadians(down));
 					}
 
 					switch (alpha + beta + k) {
@@ -176,7 +166,7 @@ public class Navigation {
 						middleHorizontal = range;
 						break;
 
-					case 1: // 1 + -1 (+1)
+					case 1: // 1 + -1 (+ 1)
 						middleVertical = range;
 						break;
 
@@ -184,12 +174,11 @@ public class Navigation {
 						turnRight = range;
 						break;
 
-					case 3: // 1 + 1 (+1)
+					case 3: // 1 + 1 (+ 1)
 						turnDown = range;
 						break;
 					}
 				} catch (Exception e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -198,24 +187,17 @@ public class Navigation {
 	}
 
 	public void calculateAccMagOrientation() {
-		// get the rotation matrix from
-		if (SensorManager
-				.getRotationMatrix(rotationMatrix, null, accel, magnet)) {
+
+		if (SensorManager.getRotationMatrix(rotationMatrix, null, accel, magnet)) {
 			// remapping of the coordinate system
-			if (SensorManager.remapCoordinateSystem(rotationMatrix,
-					SensorManager.AXIS_X, SensorManager.AXIS_Z,
-					correctedRotationMatrix)) {
-				// temporary array to save the getOrentation results
+			if (SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_X, SensorManager.AXIS_Z, correctedRotationMatrix)) {
+
 				float calculatedAccMagOrientation[] = new float[3];
-				// get azimuth etc.
-				SensorManager.getOrientation(correctedRotationMatrix,
-						calculatedAccMagOrientation);
+				SensorManager.getOrientation(correctedRotationMatrix, calculatedAccMagOrientation);
 
 				// filter azimuth etc.
 				for (int i = 0; i < 3; i++) {
-					accMagOrientation[i] = calculateFilteredAngle(
-							calculatedAccMagOrientation[i],
-							accMagOrientation[i]);
+					accMagOrientation[i] = calculateFilteredAngle(calculatedAccMagOrientation[i], accMagOrientation[i]);
 				}
 			}
 		}
@@ -224,50 +206,44 @@ public class Navigation {
 
 	/**
 	 * This method returns true when somewhere happends a navigation
+	 * 
 	 * @return true if the glass goes up, down, left or right
 	 */
-	
+
 	private int navigate() {
 		int direction = 0;
-		boolean navigated = navigateDown || navigateLeft || navigateRight
-				|| navigateUp;
-		if (bturnRight != null && bturnLeft != null && middle != null
-				&& bturnUp != null && bturnDown != null) { // check if ranges
-															// are defined
+		boolean navigated = navigateDown || navigateLeft || navigateRight || navigateUp;
+		 // check if ranges are defined
+		if (bturnRight != null && bturnLeft != null && middle != null && bturnUp != null && bturnDown != null) {
+			
 			if (bturnRight.isIn(accMagOrientation[0], accMagOrientation[1])) {
 				if (!navigated) {
 					start = SystemClock.elapsedRealtime();
 					navigateRight = true;
 				}
 
-			} else if (bturnLeft.isIn(accMagOrientation[0],
-					accMagOrientation[1])) {
+			} else if (bturnLeft.isIn(accMagOrientation[0], accMagOrientation[1])) {
 				if (!navigated) {
 					start = SystemClock.elapsedRealtime();
 					navigateLeft = true;
 				}
-			} else
-
-			if (bturnUp.isIn(accMagOrientation[0], accMagOrientation[1])) {
+			} else if (bturnUp.isIn(accMagOrientation[0], accMagOrientation[1])) {
 				if (!navigated) {
 					start = SystemClock.elapsedRealtime();
 					navigateUp = true;
 				}
-			} else
-
-			if (bturnDown.isIn(accMagOrientation[0], accMagOrientation[1])) {
+			} else if (bturnDown.isIn(accMagOrientation[0], accMagOrientation[1])) {
 				if (!navigated) {
 					start = SystemClock.elapsedRealtime();
 					navigateDown = true;
 				}
 			}
-
-			if (middle.isIn(accMagOrientation[0], accMagOrientation[1])
-					&& (navigated)) {
+			
+			//measure time
+			if (middle.isIn(accMagOrientation[0], accMagOrientation[1]) && (navigated)) {
 				end = SystemClock.elapsedRealtime();
 				if (((end - start) / 1000d) < 1) {
-					// TODO debugging
-					// Log.d("Time", String.valueOf((end-start)/1000d));
+
 					if (navigateRight) {
 						direction = NAVIGATE_RIGHT;
 					} else if (navigateLeft) {
@@ -287,7 +263,11 @@ public class Navigation {
 		return direction;
 	}
 
-	// Filter
+	/**
+	 * filters the angle so that it stays within [-180, 180[
+	 * @param tmpAngle
+	 * @return "correct" angle
+	 */
 	private float restrictAngle(float tmpAngle) {
 		while (tmpAngle >= 180)
 			tmpAngle -= 360;
@@ -296,19 +276,20 @@ public class Navigation {
 		return tmpAngle;
 	}
 
-	// x is a raw angle value from getOrientation
-	// y is the current filtered angle value
+	/**
+	 * 
+	 * @param x raw angle value from getOrientation
+	 * @param y current filtered angle value
+	 * @return the new angle
+	 */
 	private float calculateFilteredAngle(float x, float y) {
 		x = (float) Math.toDegrees(x);
 		y = (float) Math.toDegrees(y);
 		float alpha = 0.3f; // empirical tests for a factor
 		float diff = x - y;
 
-		// ensure abs(diff)<=180
 		diff = restrictAngle(diff);
-
 		y += alpha * diff;
-		// ensure that y stays within [-180, 180[ bounds
 		y = restrictAngle(y);
 
 		return (float) Math.toRadians(y);

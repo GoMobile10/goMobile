@@ -16,11 +16,10 @@ import com.gomobile.navigation.ViewWithNavigation;
 import com.gomobile.technicalservices.BarcodeScanner;
 
 /**
- * Displays the shopping cart
+ * View that displays the content of the shopping cart
  * 
  * @author Tim, Arndt and Daniel
- */
-
+ */	
 public class ShoppingCartView extends ViewWithNavigation {
 
 	private ListView mainListView;
@@ -32,19 +31,13 @@ public class ShoppingCartView extends ViewWithNavigation {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_shopping_cart_view);
-		setContentView(createNavigationInfo(R.id.shoppingcartviewId, this,
-				"scan", "detail", null, null));
+		setContentView(createNavigationInfo(R.id.shoppingcartviewId, this, "scan", "detail", null, null));
 
-		// Find the ListView resource.
 		mainListView = (ListView) findViewById(R.id.listViewShoppingCart);
-
-		// Create ArrayAdapter using the planet list.
 		ShoppingCart shoppingcart = ShoppingCart.getInstance();
 		shoppingCartItems = shoppingcart.view();
-		listAdapter = new ShoppingCarListAdapter(this,
-				R.layout.shopping_cart_list, shoppingCartItems);
+		listAdapter = new ShoppingCarListAdapter(this, R.layout.shopping_cart_list, shoppingCartItems);
 
-		// Set the ArrayAdapter as the ListView's adapter.
 		mainListView.setAdapter(listAdapter);
 		mainListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 		mainListView.setItemChecked(0, true);
@@ -55,8 +48,7 @@ public class ShoppingCartView extends ViewWithNavigation {
 		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance();
 		double totalPrice = ShoppingCart.getInstance().getTotalPrice();
 		int totalQuantity = ShoppingCart.getInstance().getTotalQuantity();
-		String totalItems = totalQuantity + " "
-				+ (!(totalQuantity > 1) ? "item" : "items");
+		String totalItems = totalQuantity + " " + (!(totalQuantity > 1) ? "item" : "items");
 
 		TextView textViewItem = (TextView) this.findViewById(R.id.totalPrice);
 		textViewItem.setText(currencyFormatter.format(totalPrice));
@@ -69,8 +61,7 @@ public class ShoppingCartView extends ViewWithNavigation {
 	public void navigateRight() {
 		Intent intent = new Intent(this, LowDetailView.class);
 		intent.putExtra("shoppingCart", true);
-		ScannerController.getInstance().setMaterialInUse(
-				(Material) (shoppingCartItems[listPosition].getItem()));
+		ScannerController.getInstance().setMaterialInUse((Material) (shoppingCartItems[listPosition].getItem()));
 		startActivity(intent);
 	}
 
@@ -84,13 +75,11 @@ public class ShoppingCartView extends ViewWithNavigation {
 	public void navigateUp() {
 		if (listPosition <= 0) {
 			listPosition = 0;
-			((ShoppingCarListAdapter) listAdapter)
-					.setCurrentPosition(listPosition);
+			((ShoppingCarListAdapter) listAdapter).setCurrentPosition(listPosition);
 		} else {
 			mainListView.setItemChecked(listPosition - 1, true);
 			listPosition = listPosition - 1;
-			((ShoppingCarListAdapter) listAdapter)
-					.setCurrentPosition(listPosition);
+			((ShoppingCarListAdapter) listAdapter).setCurrentPosition(listPosition);
 		}
 	}
 
@@ -98,13 +87,11 @@ public class ShoppingCartView extends ViewWithNavigation {
 	public void navigateDown() {
 		if (listPosition >= shoppingCartItems.length - 1) {
 			listPosition = shoppingCartItems.length - 1;
-			((ShoppingCarListAdapter) listAdapter)
-					.setCurrentPosition(listPosition);
+			((ShoppingCarListAdapter) listAdapter).setCurrentPosition(listPosition);
 		} else {
 			mainListView.setItemChecked(listPosition + 1, true);
 			listPosition = listPosition + 1;
-			((ShoppingCarListAdapter) listAdapter)
-					.setCurrentPosition(listPosition);
+			((ShoppingCarListAdapter) listAdapter).setCurrentPosition(listPosition);
 		}
 	}
 

@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.widget.Toast;
+
 import com.gomobile.model.BikeComponentInterface;
 
 /**
- * This class includes the model of the shopping cart
+ * This is the shopping cart with its items and the operations to add or delete
+ * an item
  * 
  * @author Tim
  * 
@@ -17,7 +19,8 @@ public class ShoppingCart {
 	private ArrayList<ShoppingCartItem> cart = new ArrayList<ShoppingCartItem>();
 
 	/**
-	 * Add a component to the shopping card
+	 * Adds a component to the shopping card
+	 * 
 	 * @param item
 	 * @param context
 	 */
@@ -32,6 +35,7 @@ public class ShoppingCart {
 
 	/**
 	 * Removes a component form the shopping card
+	 * 
 	 * @param item
 	 * @param context
 	 */
@@ -45,11 +49,14 @@ public class ShoppingCart {
 			int duration = Toast.LENGTH_SHORT;
 			Toast toast = Toast.makeText(context, text, duration);
 			toast.show();
-		} else {
-
 		}
 	}
 
+	/**
+	 * Adds a component to the shopping card
+	 * 
+	 * @param item
+	 */
 	private void add(BikeComponentInterface item) {
 		ShoppingCartItem cartItem = new ShoppingCartItem(item);
 
@@ -88,7 +95,8 @@ public class ShoppingCart {
 	}
 
 	/**
-	 * Counts the total price
+	 * Gets the total price
+	 * 
 	 * @return the total Price
 	 */
 	public double getTotalPrice() {
@@ -98,8 +106,10 @@ public class ShoppingCart {
 		}
 		return total;
 	}
+
 	/**
-	 * Counts the total Quantity
+	 * Gets the total Quantity
+	 * 
 	 * @return the total quantity
 	 */
 	public int getTotalQuantity() {
@@ -114,7 +124,6 @@ public class ShoppingCart {
 	private static ShoppingCart instance = null;
 
 	private ShoppingCart() {
-
 	}
 
 	public static ShoppingCart getInstance() {
